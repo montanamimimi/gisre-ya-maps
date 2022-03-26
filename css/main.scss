@@ -1,0 +1,100 @@
+@import 'overlay';
+
+.gis-objects-table {
+    margin-top: 20px;
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  .gis-objects-table th {
+    font-weight: bold;
+    color: #fff;
+    background-color: #4d4d4d;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+    text-align: left;
+    padding: 12px 15px;
+    font-size: 12px;
+  }
+  
+  .gis-objects-table td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    font-size: 12px;
+  }
+  
+  .gis-objects-table tr:nth-child(odd) td {
+    background-color: #f1f1f1;
+  }
+  
+  .delete-object-button {
+    border: none;
+    background-color: #e2e2e2;
+    color: red;
+    transform: scaleX(1.2);
+    font-weight: bold;
+    padding: 6px 10px;
+    cursor: pointer;
+    opacity: 0.65;
+  }
+  
+  .delete-object-button:hover {
+    opacity: 1;
+  }
+  
+  .create-object-form {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgb(240, 240, 240);
+    border: 1px solid #ddd;
+  }
+  
+  .create-object-form p {
+    margin-bottom: 15px !important;
+  }
+  
+
+
+  .search-form {
+    padding: 20px;
+  }
+
+  .objects__add-header {
+    padding: 20px;
+  }
+
+  h1, h2, h3 {
+    padding: 10px;
+  }
+
+  .form__button {
+    margin-left: 20px;
+  }
+
+  .objects__form-section {
+    padding: 20px;
+  }
+
+  .edit-object-button {
+    cursor: pointer;
+  }
+
+  .modal {
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width: 100%;
+    background-color: #fff;
+    z-index:100;
+  }
+  .objects__edit {
+    display: none;
+    background-color: #fff;
+  }
+
+  .objects__edit-open {
+    display: block;
+  }
+
+  

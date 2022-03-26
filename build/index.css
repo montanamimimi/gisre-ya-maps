@@ -1,0 +1,194 @@
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./css/main.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+.search-overlay {
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 110;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.96);
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(1.09);
+  transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+  box-sizing: border-box;
+}
+.search-overlay p {
+  padding-top: 15px;
+}
+body.admin-bar .search-overlay {
+  top: 32px;
+}
+.search-overlay__top {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+.search-overlay__icon-image {
+  max-width: 40px;
+  fill: darkblue;
+}
+.search-overlay--active {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1040;
+}
+.search-overlay__section-title {
+  margin: 30px 0 1px 0;
+  font-weight: 400;
+  color: orange;
+  font-size: 2rem;
+  padding: 15px 0;
+  border-bottom: 1px solid #ccc;
+}
+.search-overlay__container {
+  display: flex;
+  align-items: center;
+}
+.search-overlay__close {
+  font-size: 2.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  line-height: 0.7;
+}
+.search-overlay__close-icon {
+  fill: grey;
+  max-width: 30px;
+}
+.search-overlay__close-icon:hover {
+  fill: orange;
+}
+.search-overlay__close:hover {
+  opacity: 1;
+}
+.search-overlay .one-half {
+  padding-bottom: 0;
+}
+.search-overlay__results {
+  background-color: rgba(255, 255, 255, 0.96);
+}
+
+.search-term {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  padding: 15px 0;
+  margin-left: 20px;
+  background-color: transparent;
+  font-size: 1rem;
+  font-weight: 300;
+  outline: none;
+  color: grey;
+}
+
+.body-no-scroll {
+  overflow: hidden;
+}
+
+.search__results {
+  padding: 20px;
+}
+.search__group {
+  padding: 20px;
+}
+
+.gis-objects-table {
+  margin-top: 20px;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.gis-objects-table th {
+  font-weight: bold;
+  color: #fff;
+  background-color: #4d4d4d;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  text-align: left;
+  padding: 12px 15px;
+  font-size: 12px;
+}
+
+.gis-objects-table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  font-size: 12px;
+}
+
+.gis-objects-table tr:nth-child(odd) td {
+  background-color: #f1f1f1;
+}
+
+.delete-object-button {
+  border: none;
+  background-color: #e2e2e2;
+  color: red;
+  transform: scaleX(1.2);
+  font-weight: bold;
+  padding: 6px 10px;
+  cursor: pointer;
+  opacity: 0.65;
+}
+
+.delete-object-button:hover {
+  opacity: 1;
+}
+
+.create-object-form {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
+.create-object-form p {
+  margin-bottom: 15px !important;
+}
+
+.search-form {
+  padding: 20px;
+}
+
+.objects__add-header {
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  padding: 10px;
+}
+
+.form__button {
+  margin-left: 20px;
+}
+
+.objects__form-section {
+  padding: 20px;
+}
+
+.edit-object-button {
+  cursor: pointer;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  z-index: 100;
+}
+
+.objects__edit {
+  display: none;
+  background-color: #fff;
+}
+
+.objects__edit-open {
+  display: block;
+}
+
+/*# sourceMappingURL=index.css.map*/
