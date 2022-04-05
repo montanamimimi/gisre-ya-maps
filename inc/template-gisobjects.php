@@ -115,8 +115,8 @@ get_header();
                   </select>     
                   <select name="function">   
                       <option value="">Неизвестно</option>                                                       
-                      <option value="Автономная">Автономная</option>  
-                      <option value="Сетевая">Сетевая</option>                                          
+                      <option value="a">Автономная</option>  
+                      <option value="s">Сетевая</option>                                          
                   </select>   
                   <label for="pp">ПП</label>
                   <input name="pp" type="checkbox" value="1">  
@@ -169,8 +169,29 @@ get_header();
             <td><?php echo $object->status ?></td>
             <?php 
                 if (current_user_can('administrator')) { ?>
-                    <td id="<?php echo $object->id ?>" class="button-td">
-                      <button class="edit-object-button">Редактировать</button>
+                    <td class="button-td">
+                      <button class="edit-object-button" 
+                        data-id="<?php echo $object->id ?>"
+                        data-type="<?php echo $object->type ?>"
+                        data-name="<?php echo $object->name ?>"
+                        data-lat="<?php echo $object->lat ?>"
+                        data-lon="<?php echo $object->lon ?>"
+                        data-location="<?php echo $object->location ?>"
+                        data-power="<?php echo $object->power ?>"
+                        data-powerpr="<?php echo $object->powerpr ?>"
+                        data-pp="<?php echo $object->pp ?>"
+                        data-gen="<?php echo $object->gen ?>"
+                        data-truthplace="<?php echo $object->truthplace ?>"
+                        data-year="<?php echo $object->year ?>"
+                        data-status="<?php echo $object->status ?>"
+                        data-function="<?php echo $object->function ?>"
+                        data-holder="<?php echo $object->holder ?>"
+                        data-source="<?php echo $object->source ?>"
+                        data-link="<?php echo $object->link ?>"
+                        data-linkshort="<?php echo $object->linkshort ?>"
+                        data-picture="<?php echo $object->picture ?>"
+                        data-date="<?php echo $object->date ?>"
+                        >Редактировать</button>
                     </td>
                     <td>
                     <form action="<?php echo esc_url(admin_url('admin-post.php')) ?>" method="POST">
@@ -192,66 +213,67 @@ get_header();
   </div>
 </section>
 
-<section class="search-overlay">
-                    <form action="<?php echo esc_url(admin_url('admin-post.php')) ?>" class="objects__edit objects__edit-open " method="POST">              
+<section id="edit-overlay" class="edit-overlay">
+                    <form action="<?php echo esc_url(admin_url('admin-post.php')) ?>" class="objects__edit objects__edit-open" method="POST">              
                           <input type="hidden" name="action" value="editobject">
-                          <input type="hidden" name="idtoedit" value="<?php echo $object->id ?>"> 
+                          <input type="hidden" name="idtoedit" value="" id="edit-post-id">
                           <div class="objects__form-section">
-                            <input type="text" name="objectname" placeholder="Имя..." required>    
-                            <select name="objecttype">
+                            <input type="text" name="objectname" id="edit-post-name" placeholder="Имя..." required>    
+                            <select name="objecttype" id="edit-post-type">
                               <?php                                        
                               foreach ($getTypes->types as $key => $value) { 
                                 ?>
-                                <option value="<?php echo $value ?>"><?php echo $key ?></option>
+                                <option id="edit-post-type-<?php echo $value ?>" value="<?php echo $value ?>"><?php echo $key ?></option>
                               <?php }
                               
                               ?>                  
                             </select>            
-                            <input type="number" placeholder="lat" name="lat" step="0.000001" min="0" required>   
-                            <input type="number" placeholder="lon" name="lon" step="0.000001" min="0" required>         
+                            <input type="number" id="edit-post-lat" placeholder="lat" name="lat" step="0.000001" min="0" required>   
+                            <input type="number" id="edit-post-lon" placeholder="lon" name="lon" step="0.000001" min="0" required>         
                           </div>
 
                           <div class="objects__form-section">                 
-                            <textarea name="location" cols="60" rows="2" placeholder="Адрес..."></textarea>
-                            <textarea name="powerpr" cols="30" rows="2" placeholder="Примечание к мощности..."></textarea>
+                            <textarea name="location" id="edit-post-location" cols="60" rows="2" placeholder="Адрес..."></textarea>
+                            <textarea name="powerpr" id="edit-post-powerpr" cols="30" rows="2" placeholder="Примечание к мощности..."></textarea>
                           </div>
 
                           <div class="objects__form-section">
-                            <input type="number" name="power" placeholder="Мощность...">    
-                          <input type="text" name="year" placeholder="Год запуска...">   
+                            <input type="number" name="power" id="edit-post-power" placeholder="Мощность...">    
+                          <input type="text" name="year" id="edit-post-year" placeholder="Год запуска...">   
           
                           <select name="status">                                                        
-                                <option value="d">Действующая</option>  
-                                <option value="s">Строящаяся</option>  
-                                <option value="p">Проектируемая</option>  
-                                <option value="z">Закрыта</option>                                           
+                                <option id="edit-post-status-d" value="d">Действующая</option>  
+                                <option id="edit-post-status-s" value="s">Строящаяся</option>  
+                                <option id="edit-post-status-p" value="p">Проектируемая</option>  
+                                <option id="edit-post-status-z" value="z">Закрыта</option>                                           
                             </select>     
                             <select name="function">   
-                                <option value="">Неизвестно</option>                                                       
-                                <option value="Автономная">Автономная</option>  
-                                <option value="Сетевая">Сетевая</option>                                          
+                                <option value="" selected>Неизвестно</option>                                                       
+                                <option id="edit-post-function-a" value="a">Автономная</option>  
+                                <option id="edit-post-function-s" value="s">Сетевая</option>                                          
                             </select>   
                             <label for="pp">ПП</label>
-                            <input name="pp" type="checkbox" value="1">  
+                            <input name="pp" id="edit-post-pp" type="checkbox" value="1">  
                             <label for="gen">Gen</label>
-                            <input name="gen" type="checkbox" value="1">  
+                            <input name="gen" id="edit-post-gen" type="checkbox" value="1">  
                             <label for="truthplace">Место??</label>
-                            <input name="truthplace" type="checkbox" value="1">  
+                            <input name="truthplace" id="edit-post-truthplace" type="checkbox" value="1">  
                           </div>
 
                           <div class="objects__form-section">
-                            <input type="text" name="holder" placeholder="Владелец...">
-                            <input type="text" name="source" placeholder="Источник...">      
-                            <input type="text" name="link" placeholder="Ссылка...">
-                            <input type="text" name="linkshort" placeholder="кор ссылка...">                  
+                            <input type="text" id="edit-post-holder" name="holder" placeholder="Владелец...">
+                            <input type="text" id="edit-post-source" name="source" placeholder="Источник...">      
+                            <input type="text" id="edit-post-link" name="link" placeholder="Ссылка...">
+                            <input type="text" id="edit-post-linkshort" name="linkshort" placeholder="кор ссылка...">                  
                           </div>
 
                           <div class="objects__form-section">
-                            <input type="picture" name="picture" placeholder="Картинка...">
-                            <input type="date" name="date">
+                            <input type="picture" id="edit-post-picture" name="picture" placeholder="Картинка...">
+                            <input type="date" id="edit-post-date" name="date">
                           </div>
 
-                          <button class="form__button">Редактировать</button>
+                          <button class="form__button" type="submit">Редактировать</button>
+                          <a id="cansel-editing" class="cansel-editing">Отмена</a>
                       </form>
 </section>
 

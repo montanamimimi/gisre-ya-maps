@@ -16,7 +16,7 @@ class GetTypes {
             "Насос" => "TN",
             "Насос+вода" => "TNSVU",
             "Приливная" => "PES",
-            "Малая ГЭМ" => "MGES"           
+            "Малые ГЭС" => "MGES"           
         );
 
         $this->test = "Hello";
