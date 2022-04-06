@@ -26,8 +26,7 @@ class GetObjects {
         return array_filter($temp, function($x) {
             return $x;
         });
-
-      //  return $temp;
+      
     }
 
     function createWhereText() {
