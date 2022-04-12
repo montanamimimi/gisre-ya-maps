@@ -125,7 +125,7 @@ if ($radius < 4) {
   if ($status == "s") { $status = "строящаяся"; $iconstyle = "{weight: 1, color: '#676767'},";} ;
   if ($status == "d") { $status = "действующая"; };
   if ($status == "z") { $status = "<font color=\"red\">не эксплуатируется</font>"; };
-  if ($status == "p") { $status = " проектируемая "; };
+  if ($status == "p") { $status = " проектируемая "; $iconstyle = "{weight: 1, color: '#DDDDDD'},"; $radius = 4;};
 
   $sprite = " iconPieChartRadius: " . $radius . ", iconPieChartCoreRadius: 0"; 
 
@@ -244,7 +244,7 @@ if ($radius < 4) {
 
       <form class="object-types-form" method="GET">
           <div class="object-types-form__type">
-             <input type="radio" name="type" value="ALL" 
+             <input type="radio" name="type" value="ALL" id="ALL"
              <?php if (!$_GET['type'] || $_GET['type'] == 'ALL') {
                  echo 'checked';
              } ?>
@@ -252,10 +252,18 @@ if ($radius < 4) {
              <label for="ALL">Все объекты</label>
           </div>
         <?php                                        
-            foreach ($getTypes->types as $key => $value) { 
+            foreach ($getTypes->energy as $key => $value) { 
         ?>  <div class="object-types-form__type">
-                <input type="radio" name="type" id="<?php echo $value ?>" value="<?php echo $value ?>">
-                <label for="<?php echo $value ?>"><?php echo $key ?></label>
+                <input 
+                  type="radio" 
+                  name="type" 
+                  id="<?php echo $key ?>" 
+                  value="<?php echo $key ?>"
+                  <?php if ($_GET['type'] === $key) {
+                   echo 'checked';
+                   } ?>
+                  >
+                <label for="<?php echo $key ?>"><?php echo $value["runame"];  ?></label>
             </div>                  
 
         <?php } ?>   

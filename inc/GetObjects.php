@@ -1,5 +1,8 @@
 <?php 
 
+require_once plugin_dir_path(__FILE__) . 'GetTypes.php';
+$getTypes = new GetTypes();
+
 class GetObjects {
     function __construct() {
         global $wpdb;
@@ -12,57 +15,73 @@ class GetObjects {
 
     function getArgs() {
 
-        $temp = array(
-            'type' => sanitize_text_field($_GET['type']),
-            'status' => sanitize_text_field($_GET['status']),
-            'name' => "%" . sanitize_text_field($_GET['thename']) . "%",
-            'minpower' => sanitize_text_field($_GET['minpower'])
-        );
-        
-        if ($_GET['type'] == 'ALL') {
-            $temp['type'] = "%";
+        $temp = array();
+
+        if ($_GET['type'] && $_GET['type'] != "ALL") {
+
+            $getTypes = new GetTypes();
+
+            $energyType = $_GET['type'];
+            $energyArray = $getTypes->energy[$energyType]['types'];
+
+            foreach ($energyArray as $energy) {
+                array_push($temp, $energy);
+            }        
+
+            return $temp;
         }
 
-        return array_filter($temp, function($x) {
-            return $x;
-        });
-      
+        if ($_GET['thename']) {
+            $temp = array(        
+                'name' => "%" . sanitize_text_field($_GET['thename']) . "%"
+                );
+
+            return $temp;
+        }           
     }
 
     function createWhereText() {
         $whereQuery = "";
 
-        if (count($this->args)) {
-            $whereQuery .= "WHERE ";
+        if ($_GET['thename']) {
+            $whereQuery .= " WHERE `name` LIKE %s ORDER BY `id` DESC";
         }
 
-        $currentPosition = 0;
-        foreach($this->args as $index => $item) {
+        if ($_GET['type']) {
 
-            $whereQuery .= $this->specificQuery($index);
-            if ($currentPosition != count($this->args) - 1) {
-                $whereQuery .= " AND ";
-            }
-            $currentPosition++;
+            if ($_GET['type'] != "ALL") {
+                $whereQuery .= " WHERE ";
+
+                $currentPosition = 0;
+                
+                foreach($this->args as $arg) {
+    
+                    $whereQuery .= " `type` = %s";
+
+                    if ($currentPosition != count($this->args) - 1)  {
+                        $whereQuery .= " OR ";
+                    }
+                    $currentPosition++;
+                }
+            }               
+            $whereQuery .= " ORDER BY `id` DESC";
         }
-
-        $whereQuery .= " ORDER BY `id` DESC";
 
         return $whereQuery;
     }
 
-    function specificQuery($index) {
-        switch ($index) {
-            case "minpower":
-                return "power >= %d";
-            case "name":
-                return "`name` LIKE %s";
-            case "type": 
-                return "`type` LIKE %s";       
-            default: 
-                return $index . " = %s";
-        }
-    }
+    // function specificQuery($index) {
+    //     switch ($index) {
+    //         case "name":
+    //             return "`name` LIKE %s";
+    //         case "type": {
+    //             $typesRequest = "`type` = %s";
+    //             return $typesRequest;   
+    //         }                   
+    //         default: 
+    //             return $index . " = %s";
+    //     }
+    // }
 }
 
 ?>

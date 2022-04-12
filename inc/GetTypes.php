@@ -18,14 +18,8 @@ class GetTypes {
             "Приливная" => "PES",
             "Малые ГЭС" => "MGES"           
         );       
-    }
 
-}
-
-
-class GetEnergyTypes {
-    function __construct() {
-        $this ->energy = array (
+        $this->energy = array (
             "e-sun" => array(
                 "runame" => "Солнечные электростанции", 
                 "enname" => "Sun energy",
@@ -47,8 +41,8 @@ class GetEnergyTypes {
                 "types" => array("MGES", "PES")
             ),
             "e-bio" => array(
-                "runame" => "МГЭС и ПЭС", 
-                "enname" => "Water energy",
+                "runame" => "Биоэнергетика", 
+                "enname" => "Bio energy",
                 "types" => array("BIO", "BIOC")
             ),
             "e-geo" => array(
@@ -58,5 +52,8 @@ class GetEnergyTypes {
             ),
         );
     }
+
 }
+
+
 ?>

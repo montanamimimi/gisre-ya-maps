@@ -1,0 +1,36 @@
+.sunoptions {
+
+
+    margin-top: -50px;
+    margin-bottom: 30px;
+    display: flex;
+
+    &__surface-item form {
+        display: flex;
+        flex-direction: column;
+        margin-right: 20px;
+        flex-grow: 1;
+        justify-content: space-between;
+        height: 100%;
+        align-items: center;
+    }
+
+    &__button {
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    &__image {
+        max-width: 100px;
+    }
+
+    &__desc {
+        text-align: center;
+        display: block;
+        height: 30%;
+    }
+
+    &__selector {
+        margin-top: 15px;
+    }
+}

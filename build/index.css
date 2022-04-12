@@ -58,6 +58,36 @@
   border: 2px solid #d87233;
 }
 
+.sunoptions {
+  margin-top: -50px;
+  margin-bottom: 30px;
+  display: flex;
+}
+.sunoptions__surface-item form {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+  flex-grow: 1;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+}
+.sunoptions__button {
+  margin-top: 10px;
+  cursor: pointer;
+}
+.sunoptions__image {
+  max-width: 100px;
+}
+.sunoptions__desc {
+  text-align: center;
+  display: block;
+  height: 30%;
+}
+.sunoptions__selector {
+  margin-top: 15px;
+}
+
 .gis-objects-table {
   margin-top: 20px;
   width: 100%;

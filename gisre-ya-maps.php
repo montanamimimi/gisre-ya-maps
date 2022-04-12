@@ -150,6 +150,14 @@ class GisObjectsMapsPlugin {
       return plugin_dir_path(__FILE__) . 'inc/template-gisobjectsmap.php';
     } 
 
+    if (is_page('map-sunres')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-map-sunres.php';
+    } 
+
+    if (is_page('winddata')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-winddata.php';
+    } 
+
     return $template;
   }
 
