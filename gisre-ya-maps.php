@@ -158,6 +158,18 @@ class GisObjectsMapsPlugin {
       return plugin_dir_path(__FILE__) . 'inc/template-winddata.php';
     } 
 
+    if (is_page('geodata')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-geodata.php';
+    } 
+
+    if (is_page('geomap')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-geomap.php';
+    } 
+
+    if (is_page('orgmap')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-orgmap.php';
+    } 
+
     return $template;
   }
 

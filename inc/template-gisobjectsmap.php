@@ -135,7 +135,7 @@ if ($radius < 4) {
   $objrequest.= $iconstyle . " ], iconContent: '" . $iconcontent . "', balloonContentHeader: '" . $name . "', balloonContentBody: '"; 
 
   if ($picture != null and $picture != " ") {
-  $objrequest.= "<br> <img src=\"images/maps/obj/" . $picture . "\" style=\"max-height:150px; width: auto;\" ><br><br>";  };
+  $objrequest.= "<br> <img src=\"" . site_url() . "/wp-content/images/gismaps/" . $picture . "\"  style=\"max-height:150px; width: auto;\" ><br><br>";  };
 
   if ($power != null and $power != " " and $power != "0") {
 
