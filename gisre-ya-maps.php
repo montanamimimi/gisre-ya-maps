@@ -170,6 +170,10 @@ class GisObjectsMapsPlugin {
       return plugin_dir_path(__FILE__) . 'inc/template-orgmap.php';
     } 
 
+    if (is_page('orgdata')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-orgdata.php';
+    } 
+
     return $template;
   }
 

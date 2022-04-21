@@ -1,0 +1,26 @@
+.orgdata {
+
+    &__form {
+        display: flex;
+    }
+
+    &__section {
+        padding-right: 40px;
+    }
+
+    .selectAll, .orgdata__button {
+        display: inline-block;
+        background-color: #ddd;
+        padding: 4px 10px;
+        border: 1px solid rgb(158, 158, 158);
+        cursor: pointer;
+        margin-bottom: 20px;
+    }
+
+    &__select {
+        background-color: #ddd;
+        padding: 6px 10px;
+        border: 1px solid rgb(158, 158, 158);
+    }
+}
+
