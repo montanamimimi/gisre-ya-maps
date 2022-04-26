@@ -1,5 +1,7 @@
 .orgdata {
 
+    padding-bottom: 40px;
+
     &__form {
         display: flex;
     }
@@ -21,6 +23,58 @@
         background-color: #ddd;
         padding: 6px 10px;
         border: 1px solid rgb(158, 158, 158);
+    }
+
+}
+
+.orgdata-results {
+    &__legend {
+        height: 5px;
+        top: 0;
+        left: 0;
+        position: absolute;
+        display: flex;
+    }
+
+    &__label {
+        position: relative;
+    }
+
+    &__item {
+        width: 50px;
+        height: 5px;
+    }
+
+    .sune {
+        background-color: #f7f606;
+    }
+
+    .sunt {
+        background-color: #f5a10a;
+    }
+
+    .wind {
+        background-color: #062194;
+    }
+
+    .bio {
+        background-color: #4d9c29;
+    }
+
+    .gidro {
+        background-color: #6bb7d9;
+    }
+
+    .pri {
+        background-color: #305ec0;
+    }
+
+    .geo {
+        background-color: #e32e0f;
+    }
+
+    .tn {
+        background-color: #510337;
     }
 }
 

@@ -3,7 +3,7 @@ require_once plugin_dir_path(__FILE__) . 'GetOrgdata.php';
 require_once plugin_dir_path(__FILE__) . 'GetRegions.php';
 require_once plugin_dir_path(__FILE__) . 'GetTypes.php';
 $getTypes = new GetTypes();
-$rows = new GetOrgdata();
+$orgdata = new GetOrgdatabase();
 $regions = new GetRegions();
 
 get_header();
@@ -44,7 +44,10 @@ get_header();
                                         type="checkbox" 
                                         id="<?php echo $value ?>" 
                                         name="<?php echo $value ?>"
-                                        checked>
+                                        <?php
+                                        if (!$_GET['type'] || $_GET[$value]) { echo 'checked';}
+                                        ?>                                        
+                                        >
                                         <label for="<?php echo $value ?>"><?php echo $runame ?></label>
                                     </div>
                                 <?php }
@@ -56,9 +59,33 @@ get_header();
                             <option value="-100">--- не важно ---</option>
                             <?php  
                                 foreach ($regions->ruRegions as $value => $runame) { ?>
-                                    <option value="<?php echo $value ?>"><?php echo $runame ?></option>
+                                    <option 
+                                        value="<?php echo $value ?>" 
+                                        <?php
+                                            if ($_GET['regions'] == $value) { echo 'selected';}
+                                        ?>
+                                        >
+                                        <?php echo $runame ?> 
+
+                                    </option>
                                 <?php }
                             ?>
+                        </select>
+                    </div>
+                    <div class="orgdata__section">
+                        <p>Тип организации:</p>
+                        <select name="type" id="type" class="orgdata__select">
+                            <option value="ALL">--- не важно ---</option>
+                            <option value="SCIENSE" 
+                            <?php 
+                                if ($_GET['type'] == 'SCIENSE') { echo 'selected';}
+                            ?>
+                            >Научные</option>
+                            <option value="SALES"
+                            <?php 
+                                if ($_GET['type'] == 'SALES') { echo 'selected';}
+                            ?>
+                            >Коммерческие</option>
                         </select>
                     </div>
                     <div class="orgdata__section">
@@ -68,10 +95,50 @@ get_header();
                 </div>
             </form>
         </div>
+
+        <div class="orgdata-results">
+            <?php
+
+            if (!$orgdata->data) { echo '<p>Нет данных по введенным параметрам</p>'; }
+ 
+            foreach ($orgdata->data as $item) { ?>
+                 
+                <div class="gistables-tab">
+                    <input class="gistables-input" type="checkbox" id="chck<?php echo $item->id ?>">
+                        <label 
+                        class="tab-label orgdata-results__label" 
+                        for="chck<?php echo $item->id ?>">
+                            <?php echo $item->name . ', ' . $item->city?> 
+
+
+                            <div class="orgdata-results__legend">
+                                <?php echo $orgdata->createLegend($item); ?>
+                            </div>
+                        </label>
+                    <div class="tab-content">
+                        <p>
+                            <b>Регион:</b> <?php echo $regions->ruRegions[$item->region]; ?> <br>
+                            <b>Адрес:</b> <?php echo $item->adress; ?> <br>
+                            <b>Направление:</b> <?php echo $item->type; ?> <br>
+                            <?php if ($item->phone) { echo '<b>Телефон:</b> ' . $item->phone . '<br>';} ?>
+                            <?php if ($item->email) { echo '<b>Email:</b> ' . $item->email . '<br>';} ?>
+                            <?php if ($item->link) { ?>
+                                <a href="<?php echo $item->link ?>" target="_blank">Перейти на сайт</a>
+                            <?php } ?>
+                        </p>
+                        <?php 
+
+                        
+                        ?>
+                    </div>
+                </div>
+              
+            <?php }
+            
+            ?>
+        </div>
   </div>
 </section>
-
-
 
 
 

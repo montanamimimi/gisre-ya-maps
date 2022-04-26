@@ -70,18 +70,6 @@ class GetObjects {
         return $whereQuery;
     }
 
-    // function specificQuery($index) {
-    //     switch ($index) {
-    //         case "name":
-    //             return "`name` LIKE %s";
-    //         case "type": {
-    //             $typesRequest = "`type` = %s";
-    //             return $typesRequest;   
-    //         }                   
-    //         default: 
-    //             return $index . " = %s";
-    //     }
-    // }
 }
 
 ?>

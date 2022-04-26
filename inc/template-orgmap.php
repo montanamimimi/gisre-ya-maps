@@ -47,7 +47,6 @@ foreach ($rows->data as $row):
   $email = $row -> email;
   $link = $row -> link;
   $type = $row -> type;
-  $region_name = $row -> region_name;
   $sune = $row -> sune;
   $sunt = $row -> sunt;
   $wind = $row -> wind;
