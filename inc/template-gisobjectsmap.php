@@ -4,6 +4,21 @@ require_once plugin_dir_path(__FILE__) . 'GetTypes.php';
 $getObjects = new GetObjects();
 $getTypes = new GetTypes();
 
+$availableColors = $getTypes->colors;
+
+if (!$_GET['type'] || $_GET['type'] == "ALL") {
+  $colorsArray = $availableColors;
+} else {
+  $typesForLegend = $getTypes->energy[$_GET['type']]['legend']; 
+  $colorsArray = array();
+  foreach ($availableColors as $key => $value) {
+    if (in_array($key, $typesForLegend)) {
+      $colorsArray[$key] = $value;
+    }
+  }
+}
+
+
 get_header();
 
 $myCounter = 0;
@@ -269,6 +284,25 @@ if ($radius < 4) {
         <?php } ?>   
         <button type="submit" class="object-types-form__button"> Применить фильтр </button>
       </form>
+
+      <div class="legend">
+        <h4>Условные обозначения:</h4>
+        <div class="legend__items">
+          <?php 
+            foreach ($colorsArray as $key => $value) { ?>
+              <div class="legend__item">
+                <div class="legend__round" style="background-color: <?php echo $value['color'] ?>">
+
+                </div>
+                <div class="legend__desc">
+                 <?php echo $value['name'] ?>
+                </div>
+              </div>
+            <?php }
+          ?>
+
+        </div>
+      </div>
   </div>
 </section>
 
@@ -298,7 +332,7 @@ if ($radius < 4) {
     </div>
 </section>
 
-<div id="map" style="position: relative; width: 100%; height: 700px;"></div>
+<div id="map" class="yandex-map"></div>
 
 
 <?php get_footer(); ?>

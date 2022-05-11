@@ -11,7 +11,7 @@ $min = $winddata->min;
 $max = $winddata->max;
 $delta = $max - $min;
 
-$colorArray = array();
+//$colorArray = array();
 
 $currentType = $_GET['datatype'];
 $currentHeight = $_GET['height'];
@@ -65,6 +65,20 @@ elseif ($data < $min + $delta*0.9) {$color = "0c1457";}
 else { $color = "040b4d"; };
 
 
+$windcolors = array(
+  strval(ceil($min + $delta*0.1)) => 'd1d4ee',
+  strval(ceil($min + $delta*0.2)) => 'b3b7dc',
+  strval(ceil($min + $delta*0.3)) => '979ece',
+  strval(ceil($min + $delta*0.4)) => '7f86bd',
+  strval(ceil($min + $delta*0.5)) => '636ba8',
+  strval(ceil($min + $delta*0.6)) => '424b8d',
+  strval(ceil($min + $delta*0.7)) => '2c367a',
+  strval(ceil($min + $delta*0.8)) => '1c266d',
+  strval(ceil($min + $delta*0.9)) => '0c1457',
+  'Более' => '040b4d'
+);
+
+
 $mrect = "myRectangle" . $id . " = new ymaps.Rectangle([ [ ";
 $mrect .= $lat . ", " . $lon . "] , [" . $lat1 . ", " . $lon1 . "] ], ";
 $mrect .= " { hintContent: ' " . $windtype . " <br> " . $data . " " . $unittype . " ";
@@ -87,70 +101,100 @@ $mrect .= "  myMap.geoObjects .add(myRectangle" . $id . ");";
   </div>
 </section>
 
-<section class="single-text">
+<section >
   <div class="container">
-      <div class="single-text__desc">
+      <div class="plugin-text">
         
-        <div class="single-text__content">
+
           <?php the_content(); ?>
           
+
+      </div>
+  </div>
+</section>
+
+<section class="windres-option">
+  <div class="container">
+
+    <form class="windoptions__form" method="GET">    
+      
+      
+      <div class="windoptions__form-item">
+
+        <select id="datatype" name="datatype" class="windoptions__selector" required>
+            <option value=""> -- тип данных -- </option>
+            <?php 
+            foreach ($windoptions->options as $key => $value) { ?>
+              <option value="<?php echo $key ?>" 
+              <?php if ($key == $_GET['datatype']) { echo 'selected';} ?>
+              ><?php echo $value['runame']; ?></option>
+            <?php }
+            ?>              
+        </select> 
+      </div>
+      <div class="windoptions__form-item">
+        <select id="height" name="height" class="windoptions__selector" required>
+          <option value=""> -- параметр -- </option>
+          <?php 
+            $currentDatatype = $_GET['datatype'];
+            $currentHeight = $windoptions->options[$currentDatatype]['height'];        
+            
+            foreach ($currentHeight as $item) { ?>
+              <option class="height-option" value="<?php echo $item; ?>"
+              <?php if ($item == $_GET['height']) { echo 'selected';} ?>
+              ><?php echo $item . ' ' . $windoptions->options[$currentDatatype]['ruoption']; ?></option>
+            <?php }
+          ?>                        
+        </select> 
+      </div>
+      <div class="windoptions__form-item">
+        <button type="submit" class="windoptions__button"> Показать</button>
+      </div>
+      
+    </form>
+  </div>
+</section>
+  
+<section>
+  <div class="container">
+      <div class="suncolors__legend">
+        <p>Значение в единицах: <?php echo  $unittype ?></p>
+        <div class="suncolors__items">
+          
+          <?php 
+            foreach ($windcolors as $key => $value) { ?>
+              <div class="suncolors__item">
+                <div class="suncolors__color" style="background-color: #<?php echo $value ?>;">
+
+                </div>
+                <div class="suncolors__desc">
+                  <small><?php echo $key ?></small>
+                </div>
+              </div>
+            <?php }
+          
+          ?>
+        </div>
+      </div>
+      <div class="suncolors__legend-mob">
+        <div class="suncolors__legend-mob-desc">
+          <div class="from">
+              
+            <?php echo strval(ceil($min)) . ' ' . $unittype ?>
+          </div>
+          <div class="to">
+          <?php echo strval(ceil($max)) . ' ' . $unittype ?>
+            </div>
+        </div>
+        <div class="windcolors__legend-mob-colors">
+
         </div>
       </div>
   </div>
 </section>
 
-<section>
-    <div class="container">
-        <div class="sunoptions">
-                
-            <?php                                        
-                foreach ($windoptions->options as $key => $value) { 
-            ?>  <div class="sunoptions__surface-item">
-                    <form class="sunoptions__form" method="GET">
-                    <input 
-                    type="hidden" 
-                    name="datatype" 
-                    id="<?php echo $key ?>" 
-                    value="<?php echo $key ?>"
-                    >
-                    
-                        <p class="sunoptions__desc"><?php echo $value['runame'] ?></p>                      
-      
 
-                    <select name="height" class="sunoptions__selector">
-                    <option disabled="disabled" 
-                    <?php 
-                    if ($currentType != $key) { ?> selected="true" <?php } ?>
-                    > -- выбрать -- </option>
-                    <?php                                        
-                    foreach ($value['height'] as $height) { 
-                      ?>
-                      <option value="<?php echo $height ?>" 
-                      <?php
-                      if (($currentType == $key) && ($currentHeight == $height)) { ?>
-                          selected="true" 
-                      <?php }
-                      ?>
-                      ><?php echo $height . ' ' . $value['ruoption']?></option>
-                    <?php }
-                    
-                    ?>                  
-                    </select> 
-                    <button type="submit" class="sunoptions__button"> Показать</button>
-                    </form>
-                </div>                  
-
-            <?php } ?>   
-
-        
-      
-
-        </div>
-    </div>
-</section>
-
-  
-<div id="YMapsID"  style="position: relative; width: 100%; height: 500px;"></div>
+<div id="YMapsID"  class="yandex-map"></div>
 
 
 <?php get_footer(); ?>

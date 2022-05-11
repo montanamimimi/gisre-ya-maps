@@ -4,6 +4,25 @@ require_once plugin_dir_path(__FILE__) . 'GetSunoptions.php';
 $rows = new GetSundata();
 $sunOptions = new GetSunoptions();
 
+$suncolors = array (
+  '2.0' => 'fffbbf',
+  '2.5' => 'fff785',
+  '3.0' => 'fff34d',
+  '3.2' => 'ffed00',
+  '3.4' => 'ffdc00',
+  '3.6' => 'fecc00',
+  '3.8' => 'fbba00',
+  '4.0' => 'f7a600',
+  '4.2' => 'f39100',
+  '4.4' => 'f07b00',
+  '4.6' => 'ec6500',
+  '4.8' => 'e84c03',
+  '5.0' => 'e52e0a',
+  '5.5' => 'e00202',
+  '6.5' => 'd00303',
+  'Более' => 'c00000',
+);
+
 
 get_header(); ?>
 
@@ -82,75 +101,108 @@ $mrect .= "  myMap.geoObjects .add(myRectangle" . $id . ");";
   </div>
 </section>
 
-<section class="single-text">
+<section>
   <div class="container">
-      <div class="single-text__desc">
-        
-        <div class="single-text__content">
+      <div class="plugin-text">
           <?php the_content(); ?>
+      </div>
+  </div>
+</section>
+
+
+<section class="sunoptions sunres-option">
+  <div class="container">
+
+    <form class="sunoptions__form" method="GET">    
+      
+      <div class="sunoptions__form-item">
+        <img class="sunoptions__image" src="<?php echo plugin_dir_url(__FILE__) . "images/" . $_GET['surface'] . ".png"; ?>">
+      </div>
+      
+      <div class="sunoptions__form-item">
+
+        <select id="surface" name="surface" class="sunoptions__selector" required>
+            <option value=""> -- угол наклона -- </option>
+            <?php 
+            foreach ($sunOptions->surface as $key => $value) { ?>
+              <option value="<?php echo $key ?>" 
+              <?php if ($key == $_GET['surface']) { echo 'selected';} ?>
+              ><?php echo $value['runame']; ?></option>
+            <?php }
+            ?>              
+        </select> 
+      </div>
+      <div class="sunoptions__form-item">
+        <select id="period" name="period" class="sunoptions__selector" required>
+          <option value=""> -- период -- </option>
+          <?php 
+            $currentSurface = $_GET['surface'];
+            $currentPeriods = $sunOptions->surface[$currentSurface]['periods'];        
+            
+            foreach ($currentPeriods as $key => $value) { ?>
+              <option class="period-option" value="<?php echo $key; ?>"
+              <?php if ($key == $_GET['period']) { echo 'selected';} ?>
+              ><?php echo $value; ?></option>
+            <?php }
+          ?>                        
+        </select> 
+      </div>
+      <div class="sunoptions__form-item">
+        <button type="submit" class="sunoptions__button"> Показать</button>
+      </div>
+      
+    </form>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+      <div class="suncolors__legend">
+        <p>Значения в кВтч/м<sup>2</sup> в день</p>
+        <div class="suncolors__items">
+              <div class="suncolors__item">
+                <div class="suncolors__color-white" style="background-color: white;">
+
+                </div>
+                <div class="suncolors__desc">
+                  <small>Нет&nbsp;данных</small>
+                </div>
+              </div>
+          <?php 
+            foreach ($suncolors as $key => $value) { ?>
+              <div class="suncolors__item">
+                <div class="suncolors__color" style="background-color: #<?php echo $value ?>;">
+
+                </div>
+                <div class="suncolors__desc">
+                  <small><?php echo $key ?></small>
+                </div>
+              </div>
+            <?php }
+          
+          ?>
+        </div>
+      </div>
+      <div class="suncolors__legend-mob">
+        <div class="suncolors__legend-mob-desc">
+          <div class="from">
+              
+            2.0 кВтч/м<sup>2</sup> в день
+          </div>
+          <div class="to">
+            6.5 кВтч/м<sup>2</sup> в день
+            </div>
+        </div>
+        <div class="suncolors__legend-mob-colors">
+
         </div>
       </div>
   </div>
 </section>
 
 
-<section>
-    <div class="container">
-        <div class="sunoptions">
-                
-            <?php                                        
-                foreach ($sunOptions->surface as $key => $value) { 
-            ?>  <div class="sunoptions__surface-item">
-                    <form class="sunoptions__form" method="GET">
-                    <input 
-                    type="hidden" 
-                    name="surface" 
-                    id="<?php echo $key ?>" 
-                    value="<?php echo $key ?>"
-                    >
-                    
-                        <p class="sunoptions__desc"><?php echo $value['runame'] ?></p>
-                        <img class="sunoptions__image" src="<?php echo plugin_dir_url(__FILE__) . "images/" . $key . ".png"; ?>">
-      
-
-                    <select name="period" class="sunoptions__selector">
-                    <option 
-                    
-                    <?php 
-
-                    if ($_GET['surface'] != $key) {
-                      ?> selected="true" <?php  }  ?> 
-                    
-                    disabled="disabled"> -- выбрать -- </option>
-                    <?php                                        
-                    foreach ($value['periods'] as $period => $text) { 
-                      ?>
-                      <option value="<?php echo $period ?>" 
-                      <?php  
-
-                      if (($_GET['surface'] == $key) && $_GET['period'] == $period) {
-                        ?> selected="true" <?php
-                      }
-                      
-                      ?>  ><?php echo $text ?></option>
-                    <?php }
-                    
-                    ?>                  
-                    </select> 
-                    <button type="submit" class="sunoptions__button"> Показать</button>
-                    </form>
-                </div>                  
-
-            <?php } ?>   
-
-        
-      
-
-        </div>
-    </div>
-</section>
   
-<div id="YMapsID"  style="position: relative; width: 100%; height: 500px;"></div>
+<div id="YMapsID"  class="yandex-map"></div>
 
 
 

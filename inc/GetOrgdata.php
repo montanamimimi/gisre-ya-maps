@@ -181,14 +181,27 @@ class GetOrgdatabase {
         
         $legend = '';
         
-        foreach ($getTypes->orgs as $value => $runame) {
-            if ($item->$value) {
-                $legend.= '<div class="orgdata-results__item ' . $value . '"></div>';
+        foreach ($getTypes->orgs as $key => $value) {
+            if ($item->$key) {
+                $legend.= '<div class="orgdata-results__item" style="background-color: ' . $value['color'] .'"></div>';
             }
         }
         
         return $legend;
         }
+
+    function createMainLegend() {
+
+        $getTypes = new GetTypes();
+            
+        $legend = '';
+            
+        foreach ($getTypes->orgs as $key => $value) {    
+                $legend.= '<div class="orgdata-results__item" style="background-color: ' . $value['color'] .'"></div>';
+            }
+            
+        return $legend;
+        }    
 
 }
 

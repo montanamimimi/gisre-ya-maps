@@ -37,18 +37,21 @@ get_header();
                         <p>Направление деятельности:</p>   
                                 <span id="selectAll" class="selectAll">Выбрать все</span>                       
                             <?php  
-                                foreach ($getTypes->orgs as $value => $runame) { ?>
+                                foreach ($getTypes->orgs as $key => $value) { ?>
                                     <div class="orgdata__type">
                                         <input 
                                         class="orgdata__type-item" 
                                         type="checkbox" 
-                                        id="<?php echo $value ?>" 
-                                        name="<?php echo $value ?>"
+                                        id="<?php echo $key ?>" 
+                                        name="<?php echo $key ?>"                                        
                                         <?php
-                                        if (!$_GET['type'] || $_GET[$value]) { echo 'checked';}
+                                        if (!$_GET['type'] || $_GET[$key]) { echo 'checked';}
                                         ?>                                        
                                         >
-                                        <label for="<?php echo $value ?>"><?php echo $runame ?></label>
+                                        <label for="<?php echo $key ?>"><?php echo $value['name'] ?>
+                                            
+                                        </label>
+                                        <div style="width: 10px; height: 10px; background-color: <?php echo $value['color'] ?>;"></div>
                                     </div>
                                 <?php }
                             ?>
@@ -94,6 +97,7 @@ get_header();
                     </div>
                 </div>
             </form>
+
         </div>
 
         <div class="orgdata-results">

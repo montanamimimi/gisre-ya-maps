@@ -92,7 +92,6 @@ get_header(); ?>
   $absolute = $row -> absolute; 
   $potresourse = $row -> potresourse; 
   $debit = $row -> debit;
- 
 
 
   $objrequest = '<div class="gistables-tab"><input class="gistables-input" type="checkbox" id="chck' . $id .'">';
@@ -159,6 +158,9 @@ get_header(); ?>
 
   if ($potresourse != null and $potresourse != " ") {
   $objrequest.= "<b>Потенциальные ресурсы термальных вод: </b>" . $potresourse . " <br>" ; }; 
+
+  if ($pp != null and $pp != " ") {
+    $objrequest.= $pp . " <br>" ; }; 
 
 
   $objrequest.= '</div></div>'; 

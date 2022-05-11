@@ -206,6 +206,6 @@ endforeach; endif; ?>
     </div>
 </section>
 
-<div id="map" style="position: relative; width: 100%; height: 500px;"></div>
+<div id="map" class="yandex-map"></div>
 
 <?php get_footer(); ?>

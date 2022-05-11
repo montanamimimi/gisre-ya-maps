@@ -1,0 +1,111 @@
+.legend {
+
+    padding-top: 20px;
+
+    &__items {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 4px;
+        font-size: 0.8rem;
+        width: 100px;
+    }
+
+    &__round {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+}
+
+.suncolors {
+
+    &__legend {
+        max-width: 600px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    &__legend-mob {
+        display: none;
+    }
+
+    &__items {
+        display: flex;
+    }
+
+    &__color {
+        min-width: 50px;
+        height: 20px;
+        border: 1px solid #e6e2c1;
+    }
+
+    &__color-white {
+        min-width: 80px;
+        height: 20px;
+        border: 1px solid #e6e2c1;
+    }
+}
+
+
+@media (max-width: 1040px) {
+    .suncolors {
+
+        &__legend {
+            display: none
+        }
+
+        &__legend-mob {
+            display: block;
+            padding-bottom: 20px;
+            
+            &-colors {
+                height: 40px;
+                width: 100%;
+                background: rgb(255,251,191);
+                background: linear-gradient(90deg, rgba(255,251,191,1) 0%, rgba(243,145,0,1) 35%, rgba(192,0,0,1) 100%); 
+            }
+
+            &-desc {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+    }
+
+
+    .windcolors {
+
+        &__legend {
+            display: none
+        }
+
+        &__legend-mob {
+            display: block;
+            padding-bottom: 20px;
+            
+            &-colors {
+                height: 40px;
+                width: 100%;
+                background: rgb(209,212,238);
+                background: linear-gradient(90deg, rgba(209,212,238,1) 0%, rgba(99,107,168,1) 35%, rgba(4,11,77,1) 100%);
+            }
+
+            &-desc {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+    }
+
+    
+    
+}

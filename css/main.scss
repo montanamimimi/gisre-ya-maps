@@ -3,6 +3,19 @@
 @import 'sunoptions';
 @import 'gistables';
 @import 'orgdata';
+@import 'legend';
+
+
+.yandex-map {
+  position: relative; 
+  width: 100%; 
+  height: 600px;
+}
+
+.plugin-text {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 
 
 .gis-objects-table {
@@ -102,4 +115,19 @@
     display: block;
   }
 
+
+@media (max-width: 1040px) {
+    .yandex-map {
+      height: 500px;
+    }
+}
   
+@media (max-width: 640px) {
+  .yandex-map {
+    height: 400px;
+  }
+
+  .plugin-text {
+    padding-bottom: 0;
+  }
+}
