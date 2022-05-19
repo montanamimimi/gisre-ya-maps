@@ -170,15 +170,17 @@
 .orgdata__type {
   display: flex;
   align-items: center;
+  padding-right: 20px;
+  min-width: 300px;
 }
 .orgdata__type label {
   padding: 5px;
 }
-.orgdata__form {
-  display: flex;
-}
 .orgdata__section {
-  padding-right: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-bottom: 15px;
 }
 .orgdata .selectAll, .orgdata .orgdata__button {
   display: inline-block;
@@ -192,6 +194,10 @@
   background-color: #ddd;
   padding: 6px 10px;
   border: 1px solid #9e9e9e;
+  margin-left: 20px;
+}
+.orgdata__button {
+  margin-left: 20px;
 }
 
 .orgdata-results__legend {

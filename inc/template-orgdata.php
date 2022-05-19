@@ -33,9 +33,11 @@ get_header();
       <div class="orgdata">
             <form method="GET">
                 <div class="orgdata__form">
+                <p>Направление деятельности:</p>                           
+                <span id="selectAll" class="selectAll">Выбрать все</span>    
                     <div class="orgdata__section">
-                        <p>Направление деятельности:</p>   
-                                <span id="selectAll" class="selectAll">Выбрать все</span>                       
+
+                                                   
                             <?php  
                                 foreach ($getTypes->orgs as $key => $value) { ?>
                                     <div class="orgdata__type">

@@ -146,32 +146,36 @@ class GisObjectsMapsPlugin {
       return plugin_dir_path(__FILE__) . 'inc/template-gisobjects.php';
     } 
 
-    if (is_page('gis-objects-map')) {
+    if (is_page('gis-objects-map') OR is_page(1228)) {
       return plugin_dir_path(__FILE__) . 'inc/template-gisobjectsmap.php';
     } 
 
-    if (is_page('map-sunres')) {
+    if (is_page('map-sunres') OR is_page(1233)) {
       return plugin_dir_path(__FILE__) . 'inc/template-map-sunres.php';
     } 
 
-    if (is_page('winddata')) {
+    if (is_page('winddata') OR is_page(1237)) {
       return plugin_dir_path(__FILE__) . 'inc/template-winddata.php';
     } 
 
-    if (is_page('geodata')) {
+    if (is_page('geodata') OR is_page(1256)) {
       return plugin_dir_path(__FILE__) . 'inc/template-geodata.php';
     } 
 
-    if (is_page('geomap')) {
+    if (is_page('geomap') OR is_page(1253)) {
       return plugin_dir_path(__FILE__) . 'inc/template-geomap.php';
     } 
 
-    if (is_page('orgmap')) {
+    if (is_page('orgmap') OR is_page(1248)) {
       return plugin_dir_path(__FILE__) . 'inc/template-orgmap.php';
     } 
 
-    if (is_page('orgdata')) {
+    if (is_page('orgdata') OR is_page(1264)) {
       return plugin_dir_path(__FILE__) . 'inc/template-orgdata.php';
+    } 
+
+    if (is_page('mges-table') OR is_page(1260)) {
+      return plugin_dir_path(__FILE__) . 'inc/template-mgesdata.php';
     } 
 
     return $template;

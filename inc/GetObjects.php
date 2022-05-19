@@ -63,7 +63,7 @@ class GetObjects {
                     }
                     $currentPosition++;
                 }
-            }               
+            }
             $whereQuery .= " ORDER BY `id` DESC";
         }
 

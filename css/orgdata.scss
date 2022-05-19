@@ -3,6 +3,8 @@
     &__type {
         display: flex;
         align-items: center;
+        padding-right: 20px;
+        min-width: 300px;
 
         label{
             padding: 5px;
@@ -11,12 +13,11 @@
 
     padding-bottom: 40px;
 
-    &__form {
-        display: flex;
-    }
-
     &__section {
-        padding-right: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding-bottom: 15px;
     }
 
     .selectAll, .orgdata__button {
@@ -32,6 +33,11 @@
         background-color: #ddd;
         padding: 6px 10px;
         border: 1px solid rgb(158, 158, 158);
+        margin-left: 20px;
+    }
+
+    &__button {
+        margin-left: 20px;
     }
 
 }
