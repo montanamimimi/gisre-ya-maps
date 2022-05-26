@@ -1,0 +1,105 @@
+// Карта ФЭМ 
+
+.yandex-map-fot {
+    width: 600px;
+    height: 400px;
+  }
+  
+  .fot-container {
+    display: flex;
+  }
+  
+  .femtable {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  
+    &__row {
+      display: flex;
+      width: 100%;
+    }
+  
+    &__col {
+      border: 1px solid rgb(182, 182, 182);
+      padding: 5px;
+      width: 7%;
+      display: flex;
+      justify-content: center;
+    }
+  
+  }
+  
+  .fot-form-items {
+    display: flex;
+    align-items: flex-end;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  
+    label {
+      padding-right: 20px;
+    }
+  
+    input {
+      background-color: #fff;
+      transition: 0.4s;
+    }
+  
+    .lat-selected {
+      background-color: rgba(255, 208, 0, 0.496);
+      transition: 0.4s;
+    }
+  }
+  
+  
+  .fot-desc {
+    padding: 50px;
+  }
+  
+  @media (max-width: 1100px) {
+    .fot-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+    .fot-map {
+        width: 100%;
+    }
+
+    .yandex-map-fot {
+        width: 100%;
+        height: 280px;
+    }
+
+    .fot-desc {
+        padding: 20px;
+      }
+
+    .femtable {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        
+        &__col {
+            padding: 2px;
+            font-size: 13px;
+
+
+            &-small {
+                display: none;            
+            }
+        }
+    
+    }
+  }
+
+  @media (max-width: 640px) {
+    .femtable {
+        display: flex;
+        
+        &__row {
+            flex-direction: column;
+        }
+
+        &__col {
+            width: 100%;
+        }
+    }
+  }

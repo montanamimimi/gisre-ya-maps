@@ -178,6 +178,10 @@ class GisObjectsMapsPlugin {
       return plugin_dir_path(__FILE__) . 'inc/template-mgesdata.php';
     } 
 
+    if (is_page('fem-efficiency')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-fotdatabase.php';
+    } 
+
     return $template;
   }
 
