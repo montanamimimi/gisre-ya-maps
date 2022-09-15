@@ -215,9 +215,6 @@
   height: 5px;
 }
 
-.legend {
-  padding-top: 20px;
-}
 .legend__items {
   display: flex;
   flex-wrap: wrap;
@@ -232,8 +229,8 @@
   width: 100px;
 }
 .legend__round {
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
 }
 
@@ -450,7 +447,16 @@
 }
 
 .search-form {
+  margin-top: -20px;
   padding: 20px;
+}
+.search-form__body {
+  padding: 0 20px;
+}
+
+.search-items {
+  display: flex;
+  align-items: center;
 }
 
 .objects__add-header {

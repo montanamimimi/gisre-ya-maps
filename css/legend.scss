@@ -1,6 +1,5 @@
 .legend {
 
-    padding-top: 20px;
 
     &__items {
         display: flex;
@@ -18,8 +17,8 @@
     }
 
     &__round {
-        width: 40px;
-        height: 40px;
+        width: 25px;
+        height: 25px;
         border-radius: 50%;
     }
 }

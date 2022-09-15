@@ -7,7 +7,7 @@ class GetTypes {
             "Солнце+ветер" => "SV",
             "Солнце+дизель" => "SD",
             "Солнце-ветер-дилзель" => "SVD",
-            "Водонагреватель" => "SVU",
+            "Теплоснабжение" => "SVU",
             "ВЭС" => "VES",
             "Ветер+дизель" => "VDES",
             "Био" => "BIO",
@@ -51,7 +51,7 @@ class GetTypes {
                 "legend" => array("BIO", "STR", "PRO")
             ),
             "e-geo" => array(
-                "runame" => "Геоэнергетика", 
+                "runame" => "Геотермальные объекты", 
                 "enname" => "Geo energy",
                 "types" => array("GEOE", "TN", "TNSVU"),
                 "legend" => array("GEO", "TN", "SVU", "STR", "PRO")
@@ -108,7 +108,7 @@ class GetTypes {
             ),
             'SVU' => array (
                 'color' => '#f5a10a',
-                'name' => 'Водонагреватель'
+                'name' => 'Теплоснабжение'
             ),
             'BIO' => array (
                 'color' => '#4d9c29',
@@ -116,7 +116,7 @@ class GetTypes {
             ),
             'GEO' => array (
                 'color' => '#e32e0f',
-                'name' => 'Геоэнергетика'
+                'name' => 'Электро-снабжение'
             ),
             'TN' => array (
                 'color' => '#510337',

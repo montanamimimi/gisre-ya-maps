@@ -234,7 +234,22 @@ if ($radius < 4) {
 <section class="single-banner">
   <div class="container">
     <div>
-     <h1><?php the_title(); ?></h1>
+     <h1><?php  
+     
+        if (!isset($_GET['type']) || ($_GET['type'] == 'ALL')) {
+          the_title();
+        } else {
+
+          if (get_locale() == 'ru_RU') { 
+            echo $getTypes->energy[$_GET['type']]['runame']; 
+            echo ' на карте';
+          } else { 
+            echo $getTypes->energy[$_GET['type']]['enname']; 
+            echo ' on map';
+          }
+         
+        }
+     ?></h1>
     </div>
   </div>
 </section>
@@ -280,10 +295,33 @@ if ($radius < 4) {
       <?php }
       
       ?>
-      <form class="search-form__body" method="GET">
-        <input name="thename" id="thename" type="text" placeholder="Название объекта..." value="<?php $searchtext ?>">
-        <button type="submit">Поиск</button>
-      </form>
+      <div class="search-items">
+        <form class="search-form__body" method="GET">
+          <input name="thename" id="thename" type="text" placeholder="Название объекта..." value="<?php $searchtext ?>">
+          <button type="submit">Поиск</button>
+        </form>
+
+        
+        <div class="legend">
+          <h4>Условные обозначения:</h4>
+          <div class="legend__items">
+            <?php 
+              foreach ($colorsArray as $key => $value) { ?>
+                <div class="legend__item">
+                  <div class="legend__round" style="background-color: <?php echo $value['color'] ?>">
+
+                  </div>
+                  <div class="legend__desc">
+                  <?php echo $value['name'] ?>
+                  </div>
+                </div>
+              <?php }
+            ?>
+
+          </div>
+        </div>
+      </div>
+
 
       <form class="object-types-form" method="GET">
           <div class="object-types-form__type">
@@ -313,24 +351,6 @@ if ($radius < 4) {
         <button type="submit" class="object-types-form__button"> Применить фильтр </button>
       </form>
 
-      <div class="legend">
-        <h4>Условные обозначения:</h4>
-        <div class="legend__items">
-          <?php 
-            foreach ($colorsArray as $key => $value) { ?>
-              <div class="legend__item">
-                <div class="legend__round" style="background-color: <?php echo $value['color'] ?>">
-
-                </div>
-                <div class="legend__desc">
-                 <?php echo $value['name'] ?>
-                </div>
-              </div>
-            <?php }
-          ?>
-
-        </div>
-      </div>
   </div>
 </section>
 

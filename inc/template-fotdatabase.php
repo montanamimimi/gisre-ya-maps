@@ -198,6 +198,21 @@ function init () {
                 <?php
 
                 $hevelData = $fotdata->getType($fotdata->data, 'Hevel395');
+
+                if (in_array($_GET['comment'], $optionsArray)) {
+
+                    $i = 0;
+
+                    while ($i < 6) {
+                        if ($hevelData->param1[$i]->comment != $_GET['comment']) {
+                            unset($hevelData->param1[$i]);
+                            unset($hevelData->param2[$i]);
+                        }
+
+                        $i++;
+                    }
+                } 
+
                 echo $fotdata->generateTable($hevelData->param1); 
 
                 ?> 
@@ -213,6 +228,21 @@ function init () {
                 <?php
 
                 $jamData = $fotdata->getType($fotdata->data, 'JAM72S');
+
+                if (in_array($_GET['comment'], $optionsArray)) {
+
+                    $i = 0;
+
+                    while ($i < 6) {
+                        if ($jamData->param1[$i]->comment != $_GET['comment']) {
+                            unset($jamData->param1[$i]);
+                            unset($jamData->param2[$i]);
+                        }
+
+                        $i++;
+                    }
+                } 
+
                 echo $fotdata->generateTable($jamData->param1); 
                 ?>
                 <h5>Производительность на единицу площади (кВтч/м2) </h5> 

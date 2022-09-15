@@ -15,6 +15,7 @@ class GisObjectsMapsPlugin {
   function __construct() {
     global $wpdb;
     $this->tablename = $wpdb->prefix . "reomap";
+    $this->create_post_type();
 
     add_action('wp_enqueue_scripts', array($this, 'loadAssets'));    
     add_action('admin_post_createobject', array($this, 'createObject'));
@@ -25,6 +26,30 @@ class GisObjectsMapsPlugin {
     add_action('admin_post_nopriv_editobject', array($this, 'editObject'));
     add_filter('template_include', array($this, 'loadTemplate'), 99);
   }
+
+  protected function create_post_type() {
+    add_action( 'init', array( $this, 'custom_post_type'));
+  }
+
+  function custom_post_type() {
+    register_post_type( 'ymap', [
+      'public' => true, 
+      'label' => 'YMaps',
+      'menu_icon' => 'dashicons-location-alt',
+      'show_in_rest' => true,
+    ]);
+  }
+
+  function activate() {
+    require_once plugin_dir_path( __FILE__) . 'inc/gisre-ya-maps-plugin-activate.php';
+    GisreYaMapsActivate::activate();
+  }
+
+  function deactivate() {
+    require_once plugin_dir_path( __FILE__) . 'inc/gisre-ya-maps-plugin-deactivate.php';
+    GisreYaMapsPluginDeactivate::deactivate();
+  }
+
 
   function editObject() {
     if (current_user_can('administrator')) {
