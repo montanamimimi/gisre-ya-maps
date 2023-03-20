@@ -4,12 +4,18 @@ require_once plugin_dir_path(__FILE__) . 'GetTypes.php';
 $getObjects = new GetObjects();
 $getTypes = new GetTypes();
 
+if (isset($_GET['type'])) {
+  $typesearch = $_GET['type'];
+} else {
+  $typesearch = false;
+}
+
 $availableColors = $getTypes->colors;
 
-if (!$_GET['type'] || $_GET['type'] == "ALL") {
+if (!$typesearch || $typesearch == "ALL") {
   $colorsArray = $availableColors;
 } else {
-  $typesForLegend = $getTypes->energy[$_GET['type']]['legend']; 
+  $typesForLegend = $getTypes->energy[$typesearch]['legend']; 
   $colorsArray = array();
   foreach ($availableColors as $key => $value) {
     if (in_array($key, $typesForLegend)) {
@@ -164,7 +170,15 @@ if ($radius < 4) {
   $objrequest.= $iconstyle . " ], iconContent: '', balloonContentHeader: '" . $name . "', balloonContentBody: '"; 
 
   if ($picture != null and $picture != " ") {
-  $objrequest.= "<br> <img src=\"" . site_url() . "/wp-content/images/gismaps/" . $picture . "\"  style=\"max-height:150px; width: auto;\" ><br><br>";  };
+
+    if (is_numeric($picture)) {
+      $pictureUrl = wp_get_attachment_image_url($picture, 'medium');
+    } else {    
+      $pictureUrl = site_url() . "/wp-content/images/gismaps/" . $picture;
+    }
+    $objrequest.= "<br> <img src=\"" . $pictureUrl . "\"  style=\"max-height:150px; width: auto;\" ><br><br>";  
+
+  };
 
   if ($power != null and $power != " " and $power != "0") {
 
@@ -236,15 +250,15 @@ if ($radius < 4) {
     <div>
      <h1><?php  
      
-        if (!isset($_GET['type']) || ($_GET['type'] == 'ALL')) {
+        if (!$typesearch || ($typesearch == 'ALL')) {
           the_title();
         } else {
 
           if (get_locale() == 'ru_RU') { 
-            echo $getTypes->energy[$_GET['type']]['runame']; 
+            echo $getTypes->energy[$typesearch]['runame']; 
             echo ' на карте';
           } else { 
-            echo $getTypes->energy[$_GET['type']]['enname']; 
+            echo $getTypes->energy[$typesearch]['enname']; 
             echo ' on map';
           }
          
@@ -273,7 +287,7 @@ if ($radius < 4) {
       
       $searchtext = "";
 
-      if ($_GET['thename']) {         
+      if (isset($_GET['thename'])) {         
         $searchtext = $_GET['thename']; 
       ?>
         
@@ -326,9 +340,10 @@ if ($radius < 4) {
       <form class="object-types-form" method="GET">
           <div class="object-types-form__type">
              <input type="radio" name="type" value="ALL" id="ALL"
-             <?php if (!$_GET['type'] || $_GET['type'] == 'ALL') {
-                 echo 'checked';
-             } ?>
+             <?php if (!$typesearch || $typesearch == 'ALL') {
+              echo 'checked';
+                   
+             }  ?>
              >
              <label for="ALL">Все объекты</label>
           </div>
@@ -340,7 +355,7 @@ if ($radius < 4) {
                   name="type" 
                   id="<?php echo $key ?>" 
                   value="<?php echo $key ?>"
-                  <?php if ($_GET['type'] === $key) {
+                  <?php if ($typesearch === $key) {
                    echo 'checked';
                    } ?>
                   >

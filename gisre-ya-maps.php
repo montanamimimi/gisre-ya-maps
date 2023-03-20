@@ -9,6 +9,9 @@
 
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 require_once plugin_dir_path(__FILE__) . 'inc/generateObject.php';
+require_once(ABSPATH . 'wp-admin/includes/media.php');
+require_once(ABSPATH . 'wp-admin/includes/file.php');
+require_once(ABSPATH . 'wp-admin/includes/image.php');
 
 
 class GisObjectsMapsPlugin {
@@ -25,10 +28,35 @@ class GisObjectsMapsPlugin {
     add_action('admin_post_editobject', array($this, 'editObject'));
     add_action('admin_post_nopriv_editobject', array($this, 'editObject'));
     add_filter('template_include', array($this, 'loadTemplate'), 99);
+    add_filter('wp_nav_menu_items', [ $this, 'menuItems' ], 10, 2 );
+    add_filter( 'widget_text', 'do_shortcode' );
   }
 
   protected function create_post_type() {
     add_action( 'init', array( $this, 'custom_post_type'));
+  }
+
+  function menuItems( $items, $args ) {
+
+    if ( 'headerMenuLocation' === $args->theme_location ) {
+
+
+      if( is_user_logged_in() ) {
+ 
+        $user = wp_get_current_user();
+     
+        $roles = ( array ) $user->roles;
+     
+        if ($roles[0] == 'administrator') {
+           $items      .= "<li class='menu-item item__cases'><a href='" . home_url() . "/gis-objects'>АДМИН</a></li>";
+        }
+     
+      } 
+
+		}
+
+		return $items;
+
   }
 
   function custom_post_type() {
@@ -56,12 +84,34 @@ class GisObjectsMapsPlugin {
 
       $id = sanitize_text_field($_POST['idtoedit']);
 
-      if ($_POST['date']) {
-        $date = $_POST['date'];
-      } else {
-        $date = getdate();
-        $date = date( 'Y-m-d H:i:s', $date[0] );     
-      }
+      $date = getdate();
+      $date = date( 'Y-m-d H:i:s', $date[0] );    
+      $image_id = '';
+
+      if (isset($_FILES['picture'])){
+
+        $uploaded_file = $_FILES['picture'];
+
+        if ($uploaded_file['size']) {
+          $upload_overrides = array( 'test_form' => false );
+          $movefile = wp_handle_upload( $uploaded_file, $upload_overrides );
+          if ( $movefile && ! isset( $movefile['error'] ) ) {
+         
+  
+              $url  = $movefile['url'];
+  
+              $src = media_sideload_image( $url, null, null, 'src' );
+              $image_id = attachment_url_to_postid( $src );
+      
+          } 
+        } else if (isset($_POST['oldpicture'])) {
+          $image_id = (int) $_POST['oldpicture'];
+        } else if (isset($_POST['reloadpicture'])) {
+          $src = media_sideload_image( $_POST['reloadpicture'], null, null, 'src' );
+          $image_id = attachment_url_to_postid( $src );
+        }
+
+      } 
 
       $newdata = array (
         "name" => sanitize_text_field($_POST['objectname']),
@@ -78,14 +128,30 @@ class GisObjectsMapsPlugin {
         "source" => sanitize_text_field($_POST['source']),
         "link" => sanitize_text_field($_POST['link']),
         "linkshort" => sanitize_text_field($_POST['linkshort']),
-        "picture" => sanitize_text_field($_POST['picture']),
+        "picture" => $image_id,
         "date" => $date,
-        'pp' => intval($_POST['pp']),
-        'gen' => intval($_POST['gen']),
-        'truthplace' => intval($_POST['truthplace'])
       );
 
+      if (isset($_POST['pp'])) {
+        $newdata['pp'] = 1;
+      } else {
+        $newdata['pp'] = 0;
+      }
+
+      if (isset($_POST['gen'])) {
+        $newdata['gen'] = 1;
+      } else {
+        $newdata['gen'] = 0;
+      }
+
+      if (isset($_POST['truthplace'])) {
+        $newdata['truthplace'] = 1;
+      } else {
+        $newdata['truthplace'] = 0;
+      }
+
       $object = generateObject($newdata);
+
 
       global $wpdb;
       $wpdb->delete($this->tablename, array('id' => $id));
@@ -99,14 +165,33 @@ class GisObjectsMapsPlugin {
     exit;
   }
 
+
   function createObject() {
     if (current_user_can('administrator')) {
 
-      if ($_POST['date']) {
-        $date = $_POST['date'];
-      } else {
-        $date = getdate();
-        $date = date( 'Y-m-d H:i:s', $date[0] );     
+      $date = getdate();
+      $date = date( 'Y-m-d H:i:s', $date[0] );     
+
+      $image_id = '';
+
+
+      if (isset($_FILES['picture'])){
+
+        $uploaded_file = $_FILES['picture'];
+        $upload_overrides = array( 'test_form' => false );
+        $movefile = wp_handle_upload( $uploaded_file, $upload_overrides );
+        if ( $movefile && ! isset( $movefile['error'] ) ) {
+            // The file was uploaded successfully, do something with the $movefile array
+
+            $url  = $movefile['url'];
+
+            $src = media_sideload_image( $url, null, null, 'src' );
+            $image_id = attachment_url_to_postid( $src );
+    
+        } else {
+            $image_id = '';
+        }
+
       }
 
       $newdata = array (
@@ -114,22 +199,37 @@ class GisObjectsMapsPlugin {
         "type" => sanitize_text_field($_POST['objecttype']),
         "lat" => floatval($_POST['lat']),
         "lon" => floatval($_POST['lon']),
+        "status" => sanitize_text_field($_POST['status']),
+        "function" => sanitize_text_field($_POST['function']),
+        "picture" => $image_id,
+        "date" => $date,
         "location" => sanitize_text_field($_POST['location']),
         'power' => $_POST['power'],
         "powerpr" => sanitize_text_field($_POST['powerpr']),
-        "status" => sanitize_text_field($_POST['status']),
         "year" => sanitize_text_field($_POST['year']),
-        "function" => sanitize_text_field($_POST['function']),
         "holder" => sanitize_text_field($_POST['holder']),
         "source" => sanitize_text_field($_POST['source']),
         "link" => sanitize_text_field($_POST['link']),
         "linkshort" => sanitize_text_field($_POST['linkshort']),
-        "picture" => sanitize_text_field($_POST['picture']),
-        "date" => $date,
-        'pp' => intval($_POST['pp']),
-        'gen' => intval($_POST['gen']),
-        'truthplace' => intval($_POST['truthplace'])
       );
+
+      if (isset($_POST['pp'])) {
+        $newdata['pp'] = 1;
+      } else {
+        $newdata['pp'] = 0;
+      }
+
+      if (isset($_POST['gen'])) {
+        $newdata['gen'] = 1;
+      } else {
+        $newdata['gen'] = 0;
+      }
+
+      if (isset($_POST['truthplace'])) {
+        $newdata['truthplace'] = 1;
+      } else {
+        $newdata['truthplace'] = 0;
+      }
 
       $object = generateObject($newdata);
 
@@ -203,8 +303,12 @@ class GisObjectsMapsPlugin {
       return plugin_dir_path(__FILE__) . 'inc/template-mgesdata.php';
     } 
 
-    if (is_page('fem-efficiency')) {
-      return plugin_dir_path(__FILE__) . 'inc/template-fotdatabase.php';
+    if (is_page('newobject')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-newobject.php';
+    } 
+
+    if (is_page('editobject')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-editobject.php';
     } 
 
     return $template;
@@ -213,3 +317,23 @@ class GisObjectsMapsPlugin {
 }
 
 $gisObjectsMapsPlugin = new GisObjectsMapsPlugin();
+
+
+function gisre_get_one_object($id) {
+  global $wpdb;
+  $tablename = $wpdb->prefix . 'reomap';
+
+  $query = "SELECT * FROM $tablename WHERE id = '%d'";
+
+  $out = $wpdb->get_results($wpdb->prepare($query, array(
+    $id
+  )));
+
+  if (isset($out[0])){
+    $res = $out[0];
+  } else {
+    $res = false;
+  }
+
+  return $res;
+}
