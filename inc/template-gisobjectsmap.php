@@ -206,7 +206,14 @@ if ($radius < 4) {
   $objrequest.= "<b> Водный объект: </b>" . $river . "<br>";  };
 
   if ($function != null and $function != " ") {
-  $objrequest.= "<b>Назначение: </b> " . $function . "<br>";  };
+    if ($function == 's') {
+      $f = 'сетевая';
+    }
+
+    if ($function == 'a') {
+      $f = 'автономная';
+    } 
+  $objrequest.= "<b>Назначение: </b> " . $f . "<br>";  };
   
   if ($gen == 1) {
   $objrequest.= "<font color=\"green\">Является квалифицированным генерирующим объектом, функционирующим на основе использования ВИЭ</font> <br>" ;  };
