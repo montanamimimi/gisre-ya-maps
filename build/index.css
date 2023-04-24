@@ -473,6 +473,19 @@
   width: 20%;
 }
 
+.edit-switcher {
+  display: flex;
+}
+.edit-switcher__divider {
+  margin-bottom: 40px;
+}
+.edit-switcher__item {
+  margin-right: 30px;
+}
+.edit-switcher__link {
+  text-decoration: underline;
+}
+
 .yandex-map {
   position: relative;
   width: 100%;

@@ -18,12 +18,16 @@ class GisObjectsMapsPlugin {
   function __construct() {
     global $wpdb;
     $this->tablename = $wpdb->prefix . "reomap";
+    $this->orgstable = $wpdb->prefix . "orgdata";
     $this->create_post_type();
 
     add_action('wp_enqueue_scripts', array($this, 'loadAssets'));    
     add_action('admin_post_createobject', array($this, 'createObject'));
     add_action('admin_post_nopriv_createobject', array($this, 'createObject'));
+    add_action('admin_post_createorg', array($this, 'createOrg'));
+    add_action('admin_post_nopriv_createorg', array($this, 'createOrg'));
     add_action('admin_post_deleteobject', array($this, 'deleteObject'));
+    add_action('admin_post_deleteorg', array($this, 'deleteOrg'));
     add_action('admin_post_nopriv_deleteobject', array($this, 'deleteObject'));
     add_action('admin_post_editobject', array($this, 'editObject'));
     add_action('admin_post_nopriv_editobject', array($this, 'editObject'));
@@ -131,6 +135,11 @@ class GisObjectsMapsPlugin {
         "picture" => $image_id,
         "date" => $date,
       );
+      $newdata['holder'] = str_replace('"','&quot;',$newdata['holder']);
+      $newdata['holder'] = str_replace('\\','',$newdata['holder']);
+      $newdata['name'] = str_replace('"','&quot;',$newdata['name']);
+      $newdata['name'] = str_replace('\\','',$newdata['name']);
+
 
       if (isset($_POST['pp'])) {
         $newdata['pp'] = 1;
@@ -213,6 +222,11 @@ class GisObjectsMapsPlugin {
         "linkshort" => sanitize_text_field($_POST['linkshort']),
       );
 
+      $newdata['holder'] = str_replace('"','&quot;',$newdata['holder']);
+      $newdata['holder'] = str_replace('\\','',$newdata['holder']);
+      $newdata['name'] = str_replace('"','&quot;',$newdata['name']);
+      $newdata['name'] = str_replace('\\','',$newdata['name']);
+
       if (isset($_POST['pp'])) {
         $newdata['pp'] = 1;
       } else {
@@ -244,6 +258,56 @@ class GisObjectsMapsPlugin {
     exit;
   }
 
+  function createOrg() {
+    if (current_user_can('administrator')) {
+
+      $newdata = array (
+        "name" => sanitize_text_field($_POST['orgname']),
+        "region" => sanitize_text_field($_POST['region']),
+        "lat" => floatval($_POST['lat']),
+        "lon" => floatval($_POST['lon']),
+        "adress" => sanitize_text_field($_POST['adress']),
+        "country" => sanitize_text_field($_POST['country']),
+        "city" => sanitize_text_field($_POST['city']),
+        "type_number" => sanitize_text_field($_POST['type_number']),
+        "type" => sanitize_text_field($_POST['type']),
+        "phone" => sanitize_text_field($_POST['phone']),
+        "email" => sanitize_text_field($_POST['email']),
+        "link" => sanitize_text_field($_POST['link']),
+      );
+
+      $newdata['name'] = str_replace('"','&quot;',$newdata['name']);
+      $newdata['name'] = str_replace('\\','',$newdata['name']);
+
+      $typesList = array('sune', 'sunt', 'wind', 'bio', 'gidro', 'geo', 'pri', 'tn');
+
+      foreach ($typesList as $item) {
+        if (isset($_POST[$item])) {
+          $newdata[$item] = 1;
+        } else {
+          $newdata[$item] = 0;
+        }
+      }
+
+      $newdata['published'] = 1;
+      global $wpdb;
+
+      if (isset($_POST['org_id'])) {
+        $id = (int) $_POST['org_id'];
+        $wpdb->delete($this->orgstable, array('id' => $id));
+      }
+
+
+      $wpdb->insert($this->orgstable, $newdata);
+      wp_safe_redirect(site_url('/organizations/'));
+
+    } else {
+      wp_safe_redirect(site_url());
+    }
+
+    exit;
+  }
+
   function deleteObject() {
     if (current_user_can('administrator')) {
      
@@ -259,7 +323,20 @@ class GisObjectsMapsPlugin {
     exit;
   }
 
+  function deleteOrg() {
+    if (current_user_can('administrator')) {
+     
+      $id = sanitize_text_field($_POST['idtodelete']);
+      global $wpdb;
+      $wpdb->delete($this->orgstable, array('id' => $id));
+      wp_safe_redirect(site_url('/organizations/'));
 
+    } else {
+      wp_safe_redirect(site_url());
+    }
+
+    exit;
+  }
 
   function loadAssets() {
     wp_enqueue_style('reomapscss', plugin_dir_url(__FILE__) . 'build/index.css');
@@ -307,8 +384,20 @@ class GisObjectsMapsPlugin {
       return plugin_dir_path(__FILE__) . 'inc/template-newobject.php';
     } 
 
+    if (is_page('neworg')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-neworg.php';
+    } 
+
     if (is_page('editobject')) {
       return plugin_dir_path(__FILE__) . 'inc/template-editobject.php';
+    } 
+
+    if (is_page('editorg')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-editorg.php';
+    } 
+
+    if (is_page('organizations')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-organizations.php';
     } 
 
     return $template;
@@ -322,6 +411,25 @@ $gisObjectsMapsPlugin = new GisObjectsMapsPlugin();
 function gisre_get_one_object($id) {
   global $wpdb;
   $tablename = $wpdb->prefix . 'reomap';
+
+  $query = "SELECT * FROM $tablename WHERE id = '%d'";
+
+  $out = $wpdb->get_results($wpdb->prepare($query, array(
+    $id
+  )));
+
+  if (isset($out[0])){
+    $res = $out[0];
+  } else {
+    $res = false;
+  }
+
+  return $res;
+}
+
+function gisre_get_one_org($id) {
+  global $wpdb;
+  $tablename = $wpdb->prefix . 'orgdata';
 
   $query = "SELECT * FROM $tablename WHERE id = '%d'";
 

@@ -17,33 +17,42 @@ class GetOrgdata {
 
         $options = array('SCIENSE', 'SALES');
 
-        $suggestedType = $_GET['type'];
+        $args = array();
 
-        if ($suggestedType && in_array($suggestedType, $options)) {
+        if (isset($_GET['type'])) {
+            $suggestedType = $_GET['type'];
+            if ($suggestedType && in_array($suggestedType, $options)) {
+                return $suggestedType;
+            }
+        } 
 
-            return $suggestedType;
 
-        } else {
+        if (isset($_GET['thename'])) {
+            return "%" . sanitize_text_field($_GET['thename']) . "%";
+        }
 
-            return array();
+        return 0;
 
-        }      
+
     }
 
     function createWhereText() {
 
-        $suggestedType = $_GET['type'];
-        $options = array('SCIENSE', 'SALES');        
+        $options = array('SCIENSE', 'SALES');    
 
-        if ($suggestedType && in_array($suggestedType, $options)) {
+        if (isset($_GET['type'])) {
+            $suggestedType = $_GET['type'];
+            if ($suggestedType && in_array($suggestedType, $options)) {
+                return " WHERE `type_number` = %s ORDER BY id DESC";
+            }
+        } 
 
-            return " WHERE `type_number` = %s";
 
-        } else {
-
-            return "";
-
+        if (isset($_GET['thename'])) {
+            return " WHERE `name` LIKE %s ORDER BY `id` DESC";
         }
+
+        return " WHERE id > %d ORDER BY id DESC";
 
     }
 }

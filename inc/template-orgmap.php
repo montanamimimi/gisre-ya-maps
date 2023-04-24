@@ -2,7 +2,15 @@
 require_once plugin_dir_path(__FILE__) . 'GetOrgdata.php';
 $rows = new GetOrgdata();
 
-get_header(); ?>
+get_header(); 
+
+if (isset($_GET['type'])){
+    $type = $_GET['type'];
+} else {
+    $type = 'ALL';
+}
+
+?>
 
 
 <script src="https://api-maps.yandex.ru/2.1/?apikey=b6a7a43d-4ce5-45d6-9b18-5eb8015dbbfa&lang=ru_RU" type="text/javascript"></script>
@@ -175,7 +183,7 @@ endforeach; endif; ?>
             <form class="object-types-form" method="GET">
             <div class="object-types-form__type">
                 <input type="radio" name="type" value="ALL" id="ALL"
-                <?php if (!$_GET['type'] || $_GET['type'] == 'ALL') {
+                <?php if ($type == 'ALL') {
                     echo 'checked';
                 } ?>
                 >
@@ -191,7 +199,7 @@ endforeach; endif; ?>
                     name="type" 
                     id="<?php echo $key ?>" 
                     value="<?php echo $key ?>"
-                    <?php if ($_GET['type'] === $key) {
+                    <?php if ($type === $key) {
                     echo 'checked';
                     } ?>
                     >

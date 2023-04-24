@@ -1,18 +1,28 @@
 <?php
 
-require_once plugin_dir_path(__FILE__) . 'GetObjects.php';
-require_once plugin_dir_path(__FILE__) . 'GetTypes.php';
+require_once plugin_dir_path(__FILE__) . 'GetOrgdata.php';
+require_once plugin_dir_path(__FILE__) . 'GetRegions.php';
+$orgdata = new GetOrgdata();
+$regions = new GetRegions();
+$ruRegions = $regions->ruRegions;
 
-$getObjects = new GetObjects();
-$getTypes = new GetTypes();
+if ($orgdata) {
+    $data = $orgdata->data;
+}
 
 get_header();
-
-$searchtext = "";
 
 if (isset($_GET['thename'])) {
 
   $searchtext = $_GET['thename'];
+} else {
+    $searchtext = "";
+}
+
+if (isset($_GET['type'])){
+    $type = $_GET['type'];
+} else {
+    $type = 'ALL';
 }
 
 ?>
@@ -21,17 +31,6 @@ if (isset($_GET['thename'])) {
   <div class="container">
     <div class="single-banner__content">
       <h1><?php the_title(); ?></h1>
-      <p>
-
-        <?php
-        $theParent = wp_get_post_parent_id(get_the_ID());
-
-        if ($theParent) { ?>
-          <a href="<?php echo get_permalink($theParent) ?>">Go to <?php echo get_the_title($theParent) ?> </a>
-        <?php
-        }
-        ?>
-      </p>
     </div>
   </div>
 </section>
@@ -41,8 +40,8 @@ if (isset($_GET['thename'])) {
   <div class="container">
 
     <div class="edit-switcher">
-      <div class="edit-switcher__item edit-switcher__current"><h3>Редактирование объектов</h3></div>
-      <div class="edit-switcher__item edit-switcher__link"><h3><a href="<?php echo home_url() . '/organizations'; ?>">Редактирование организаций</a></h3></div>
+      <div class="edit-switcher__item edit-switcher__link"><h3><a href="<?php echo home_url() . '/gis-objects'; ?>">Редактирование объектов</a></h3></div>
+      <div class="edit-switcher__item"><h3>Редактирование организаций</a></h3></div>
     </div>
     <hr class="edit-switcher__divider">
 
@@ -54,16 +53,13 @@ if (isset($_GET['thename'])) {
     }
     ?>
 
-
-
-
     <form class="search-form__body" method="GET">
       <input name="thename" id="thename" type="text" placeholder="Введите название..." value="<?php echo $searchtext ?>">
       <button type="submit">Поиск</button>
       <?php
 
       if ($searchtext) {
-        echo '<a href="' . site_url('/gis-objects/') . '">Очистить поиск</a>';
+        echo '<a href="' . site_url('/organizations/') . '">Очистить поиск</a>';
       }
       ?>
 
@@ -75,17 +71,10 @@ if (isset($_GET['thename'])) {
 <section class="objects">
   <div class="container">
     <div class="objects__table">
-      <p><?php
-
-
-
-          ?></p>
-
       <?php
 
-
       if (current_user_can('administrator')) { ?>
-        <a class="button" href="<?php echo home_url() . '/newobject'; ?>">Добавить новый объект</a>
+        <a class="button" href="<?php echo home_url() . '/neworg'; ?>">Добавить организацию</a>
 
       <?php }
       ?>
@@ -93,9 +82,7 @@ if (isset($_GET['thename'])) {
         <tr>
           <th>ID</th>
           <th>Название</th>
-          <th>Тип</th>
-          <th>Мощность</th>
-          <th>Статус</th>
+          <th>Регион</th>
           <?php
           if (current_user_can('administrator')) { ?>
             <th>Редактировать</th>
@@ -105,26 +92,23 @@ if (isset($_GET['thename'])) {
         </tr>
         <?php
 
-        foreach ($getObjects->objects as $object) {           
+        foreach ($data as $item) {           
           ?>
 
           <tr>
-            <td><?php echo $object->id ?>
-          </td>
-            <td><?php echo $object->name ?></td>
-            <td><?php echo $object->type ?></td>
-            <td><?php echo $object->power ?></td>
-            <td><?php echo $object->status ?></td>
+            <td><?php echo $item->id ?></td>
+            <td><?php echo $item->name ?></td>
+            <td><?php echo $ruRegions[$item->region]; ?></td>
             <?php
             if (current_user_can('administrator')) { ?>
               <td class="button-td">
-                <a class="button" href="<?php echo site_url() . '/editobject/?id=' . $object->id; ?>" class="edit-object-button">Редактировать</a>
+                <a class="button" href="<?php echo site_url() . '/editorg/?id=' . $item->id; ?>" class="edit-object-button">Редактировать</a>
               </td>
               <td>
-                <form id="delete-form-<?php echo $object->id ?>" action="<?php echo esc_url(admin_url('admin-post.php')) ?>" method="POST">
-                  <input type="hidden" name="action" value="deleteobject">
-                  <input type="hidden" name="idtodelete" value="<?php echo $object->id ?>">
-                  <span class="delete-object-button" data-id="<?php echo $object->id ?>">X</span>
+                <form id="delete-form-<?php echo $item->id ?>" action="<?php echo esc_url(admin_url('admin-post.php')) ?>" method="POST">
+                  <input type="hidden" name="action" value="deleteorg">
+                  <input type="hidden" name="idtodelete" value="<?php echo $item->id ?>">
+                  <span class="delete-object-button" data-id="<?php echo $item->id ?>">X</span>
                 </form>
               </td>
 

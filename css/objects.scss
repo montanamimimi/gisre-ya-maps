@@ -68,3 +68,20 @@
 .button-td {
     width: 20%;
 }
+
+.edit-switcher {
+
+    display: flex;
+
+    &__divider {
+        margin-bottom: 40px;
+    }
+
+    &__item {
+        margin-right: 30px;
+    }
+
+    &__link {
+        text-decoration: underline;
+    }
+}
