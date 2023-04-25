@@ -24,8 +24,6 @@ if ($_GET['id']) {
 
   $objectData = gisre_get_one_object($_GET['id']);
 
-  var_dump($objectData->name);
-
   $objectData->name = str_replace('"','&quot;',$objectData->name);
   $objectData->holder = str_replace('"','&quot;',$objectData->holder);
 

@@ -56,6 +56,7 @@ class Editor {
             if (this.deleteButtons) {
                 Array.from(this.deleteButtons).forEach(deleteButton => {
                     deleteButton.addEventListener('click', (e) => {
+                        console.log('test');
                         start.dataset.id = e.target.dataset.id;
                
                         this.modaldel.style.display = 'block';
