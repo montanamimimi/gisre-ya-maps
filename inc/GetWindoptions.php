@@ -3,12 +3,12 @@
 class GetWindoptions {
     function __construct() {
         $this->options = array(
-            "vp" => array(
-                'runame' => 'Валовый потенциал',
-                'ruunit' => 'МВт·ч/год',
-                'height' => array('30', '50', '100', '120'),
-                'ruoption' => 'м'
-            ),
+            // "vp" => array(
+            //     'runame' => 'Валовый потенциал',
+            //     'ruunit' => 'МВт·ч/год',
+            //     'height' => array('30', '50', '100', '120'),
+            //     'ruoption' => 'м'
+            // ),
             "lull" => array(
                 'runame' => 'Энергетические затишья',
                 'ruunit' => '%',
@@ -33,12 +33,12 @@ class GetWindoptions {
                 'height' => array('10', '30', '50', '100', '120'),
                 'ruoption' => 'м'
             ),
-            "pot" => array(
-                'runame' => 'Технический потенциал',
-                'ruunit' => 'МВт·ч/год',
-                'height' => array('30', '50', '100', '120'),
-                'ruoption' => 'м'
-            )
+            // "pot" => array(
+            //     'runame' => 'Технический потенциал',
+            //     'ruunit' => 'МВт·ч/год',
+            //     'height' => array('30', '50', '100', '120'),
+            //     'ruoption' => 'м'
+            // )
            
         );      
     }
