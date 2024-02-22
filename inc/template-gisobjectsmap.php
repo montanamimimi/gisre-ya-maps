@@ -117,10 +117,10 @@ $index = 0;
   $date = $row -> date;
   $pubdate = substr($date, 0, 10);
 
-  trim($status);
-  trim($picture);
-  trim($link);
-  trim($type);
+  if ($status) { trim($status); }
+  if ($picture) { trim($picture); }
+  if ($link) { trim($link); }
+  if ($type) { trim($type); }
 
 // Определяем цвет иконки. По дефолту розовый - поиск ошибок
 $iconstyle = "{weight: 1, color: '#ff49e7'},";
@@ -167,7 +167,12 @@ if ($radius < 4) {
  
   $objrequest = "geoObjects[" . $index ."] = new ymaps.Placemark([" . $lat . ", " . $lon . "], { data: [ ";
 
-  $objrequest.= $iconstyle . " ], iconContent: '', balloonContentHeader: '" . $name . "', balloonContentBody: '"; 
+  $objrequest.= $iconstyle . " ], iconContent: '";
+
+  if ($function == 's') {
+    $objrequest.= "&#9741;";
+  } 
+  $objrequest.="', balloonContentHeader: '" . $name . "', balloonContentBody: '"; 
 
   if ($picture != null and $picture != " ") {
 
@@ -337,8 +342,28 @@ if ($radius < 4) {
                   </div>
                 </div>
               <?php }
-            ?>
+            ?>                
+                <div class="legend__item">
+                  <div class="legend__round" style="background-color: #EEEEEE">
+                  &#9741;
+                  </div>
+                  <div class="legend__desc">
+                    Сетевой объект
+                  </div>
+                </div>
+                <div class="legend__item">
+                  <div class="legend-power">
 
+                    <div class="legend-power__item legend-power__small"></div>
+                    <div class="legend-power__item legend-power__divider">&#8594;</div>
+                    <div class="legend-power__item legend-power__large"></div>
+
+                  </div>
+                  <div class="legend__desc">
+                  Мощность<br>
+                  1кВт &#8594; 30МВт
+                  </div>
+                </div>
           </div>
         </div>
       </div>

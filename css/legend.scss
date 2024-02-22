@@ -20,6 +20,35 @@
         width: 25px;
         height: 25px;
         border-radius: 50%;
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+    }
+
+    &-power {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &__small {
+            width: 7px;
+            height: 7px;
+            background-color: gray;
+            border-radius: 50%;
+
+        }
+
+        &__item {
+            margin: 2px 4px;
+        }
+
+        &__large {
+            width: 35px;
+            height: 35px;
+            background-color: gray;
+            border-radius: 50%;
+        }
     }
 }
 

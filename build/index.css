@@ -232,6 +232,29 @@
   width: 25px;
   height: 25px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.legend-power {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.legend-power__small {
+  width: 7px;
+  height: 7px;
+  background-color: gray;
+  border-radius: 50%;
+}
+.legend-power__item {
+  margin: 2px 4px;
+}
+.legend-power__large {
+  width: 35px;
+  height: 35px;
+  background-color: gray;
+  border-radius: 50%;
 }
 
 .suncolors__legend {
