@@ -1,0 +1,64 @@
+.map-container {
+    margin-bottom: 40px;
+
+    .container {
+        display: flex;
+    }
+
+    .legend {
+        width: 25%;
+    }
+
+    .map {
+        width: 75%;
+    }
+
+    .search-form {
+        margin-bottom: 24px;
+    }
+
+    .map-legend {
+        margin-top: 24px;
+        h4 {
+            margin-bottom: 12px;
+        }
+    }
+
+}
+
+@media (max-width: 1000px) {
+    .map-container {
+        .legend {
+            width: 40%;
+        }
+    
+        .map {
+            width: 60%;
+        }
+    
+
+    }
+}
+
+@media (max-width: 700px) {
+    .map-container {
+        .container {
+            flex-direction: column;
+        }
+
+        .legend {
+            width: 100%;
+
+            .legend__items {
+                max-width: unset;
+            }
+        }
+    
+        .map {
+            width: 100%;
+        }
+        
+    
+
+    }
+}

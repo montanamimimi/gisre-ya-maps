@@ -101,108 +101,105 @@ $mrect .= "  myMap.geoObjects .add(myRectangle" . $id . ");";
   </div>
 </section>
 
-<section>
+<section class="single-text">
   <div class="container">
-      <div class="plugin-text">
-          <?php the_content(); ?>
+      <div >            
+          <?php the_content(); ?>        
       </div>
   </div>
 </section>
 
 
-<section class="sunoptions sunres-option">
+<section class="map-container">
   <div class="container">
-
-    <form class="sunoptions__form" method="GET">    
+    <div class="legend">
+    <div class="sunoptions sunres-option">
       
-      <div class="sunoptions__form-item">
-        <img class="sunoptions__image" src="<?php echo plugin_dir_url(__FILE__) . "images/" . $_GET['surface'] . ".png"; ?>">
-      </div>
-      
-      <div class="sunoptions__form-item">
 
-        <select id="surface" name="surface" class="sunoptions__selector" required>
-            <option value=""> -- угол наклона -- </option>
-            <?php 
-            foreach ($sunOptions->surface as $key => $value) { ?>
-              <option value="<?php echo $key ?>" 
-              <?php if ($key == $_GET['surface']) { echo 'selected';} ?>
-              ><?php echo $value['runame']; ?></option>
-            <?php }
-            ?>              
-        </select> 
-      </div>
-      <div class="sunoptions__form-item">
-        <select id="period" name="period" class="sunoptions__selector" required>
-          <option value=""> -- период -- </option>
-          <?php 
-            $currentSurface = $_GET['surface'];
-            $currentPeriods = $sunOptions->surface[$currentSurface]['periods'];        
-            
-            foreach ($currentPeriods as $key => $value) { ?>
-              <option class="period-option" value="<?php echo $key; ?>"
-              <?php if ($key == $_GET['period']) { echo 'selected';} ?>
-              ><?php echo $value; ?></option>
-            <?php }
-          ?>                        
-        </select> 
-      </div>
-      <div class="sunoptions__form-item">
-        <button type="submit" class="sunoptions__button"> Показать</button>
-      </div>
-      
-    </form>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-      <div class="suncolors__legend">
-        <p>Значения в кВтч/м<sup>2</sup> в день</p>
-        <div class="suncolors__items">
-              <div class="suncolors__item">
-                <div class="suncolors__color-white" style="background-color: white;">
-
-                </div>
-                <div class="suncolors__desc">
-                  <small>Нет&nbsp;данных</small>
-                </div>
-              </div>
-          <?php 
-            foreach ($suncolors as $key => $value) { ?>
-              <div class="suncolors__item">
-                <div class="suncolors__color" style="background-color: #<?php echo $value ?>;">
-
-                </div>
-                <div class="suncolors__desc">
-                  <small><?php echo $key ?></small>
-                </div>
-              </div>
-            <?php }
+        <form class="sunoptions__form" method="GET">    
           
-          ?>
-        </div>
-      </div>
-      <div class="suncolors__legend-mob">
-        <div class="suncolors__legend-mob-desc">
-          <div class="from">
-              
-            2.0 кВтч/м<sup>2</sup> в день
+          <div class="sunoptions__form-item">
+            <img class="sunoptions__image" src="<?php echo plugin_dir_url(__FILE__) . "images/" . $_GET['surface'] . ".png"; ?>">
           </div>
-          <div class="to">
-            6.5 кВтч/м<sup>2</sup> в день
-            </div>
-        </div>
-        <div class="suncolors__legend-mob-colors">
+          
+          <div class="sunoptions__form-item">
 
+            <select id="surface" name="surface" class="sunoptions__selector" required>
+                <option value=""> -- угол наклона -- </option>
+                <?php 
+                foreach ($sunOptions->surface as $key => $value) { ?>
+                  <option value="<?php echo $key ?>" 
+                  <?php if ($key == $_GET['surface']) { echo 'selected';} ?>
+                  ><?php echo $value['runame']; ?></option>
+                <?php }
+                ?>              
+            </select> 
+          </div>
+          <div class="sunoptions__form-item">
+            <select id="period" name="period" class="sunoptions__selector" required>
+              <option value=""> -- период -- </option>
+              <?php 
+                $currentSurface = $_GET['surface'];
+                $currentPeriods = $sunOptions->surface[$currentSurface]['periods'];        
+                
+                foreach ($currentPeriods as $key => $value) { ?>
+                  <option class="period-option" value="<?php echo $key; ?>"
+                  <?php if ($key == $_GET['period']) { echo 'selected';} ?>
+                  ><?php echo $value; ?></option>
+                <?php }
+              ?>                        
+            </select> 
+          </div>
+          <div class="sunoptions__form-item">
+            <button type="submit" class="sunoptions__button"> Показать</button>
+          </div>
+          
+        </form>
+
+        <div class="suncolors">
+          <div class="suncolors__legend">
+          <p>Значения в кВтч/м<sup>2</sup> в день</p>
+          <div class="suncolors__items">
+                <div class="suncolors__item">
+                  <div class="suncolors__color-white" style="background-color: white;">
+
+                  </div>
+                  <div class="suncolors__desc">
+                    <small>Нет&nbsp;данных</small>
+                  </div>
+                </div>
+            <?php 
+              foreach ($suncolors as $key => $value) { ?>
+                <div class="suncolors__item">
+                  <div class="suncolors__color" style="background-color: #<?php echo $value ?>;">
+
+                  </div>
+                  <div class="suncolors__desc">
+                    <small><?php echo $key ?></small>
+                  </div>
+                </div>
+              <?php }
+            
+            ?>
+          </div>
         </div>
-      </div>
+        </div>
+      
+    </div>
+    </div>
+    <div class="map">
+      <div id="YMapsID"  class="yandex-map"></div>
+    </div>
   </div>
 </section>
+
+
+
+
 
 
   
-<div id="YMapsID"  class="yandex-map"></div>
+
 
 
 

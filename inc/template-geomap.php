@@ -48,7 +48,7 @@ get_header(); ?>
   $lat = $row -> lat;
   $lon = $row -> lon;
   $oopt = $row -> power;
-  $sovrIspolz = $row -> powerpr;
+  $ispolzovanie = $row -> powerpr;
   $balneolog = $row -> river;
   $minerals = $row -> year;
   $location = $row -> location;
@@ -100,8 +100,8 @@ $radius = 10;
   if ($date != null and $date != " ") {
   $objrequest.= "<b>Количество источников: </b>" . $date . " <br>" ; }; 
 
-  if ($sovrIspolz != null and $sovrIspoolz != " ") {
-  $objrequest.= "<b>Современное использование: </b>" . $sovrIspolz . "<br>";  };
+  if ($ispolzovanie != null and $ispolzovanie != " ") {
+  $objrequest.= "<b>Современное использование: </b>" . $ispolzovanie . "<br>";  };
 
   if ($check_obj != null and $check_obj != " ") {
   $objrequest.= "<b>Перспективная область эксплуатации:  </b>" . $check_obj . " <br>" ; }; 
@@ -167,16 +167,21 @@ $radius = 10;
 
 <section class="single-text">
   <div class="container">
-      <div class="single-text__desc">
-        
-        <div class="single-text__content">
-          <?php the_content(); ?>
-        </div>
 
-      </div>
   </div>
 </section>
 
-<div id="map" class="yandex-map"></div>
+<section class="map-container">
+  <div class="container">
+    <div class="legend">
+    <?php the_content(); ?>
+    </div>
+    <div class="map">
+      <div id="map" class="yandex-map"></div>
+    </div>
+  </div>
+</section>
+
+
 
 <?php get_footer(); ?>

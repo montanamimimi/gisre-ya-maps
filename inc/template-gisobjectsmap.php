@@ -10,6 +10,11 @@ if (isset($_GET['type'])) {
   $typesearch = false;
 }
 
+$searchtext = false;
+if (isset($_GET['thename'])) {         
+  $searchtext = $_GET['thename']; 
+}
+
 $availableColors = $getTypes->colors;
 
 if (!$typesearch || $typesearch == "ALL") {
@@ -282,152 +287,139 @@ if ($radius < 4) {
 
 <section class="single-text">
   <div class="container">
-
-        
-        <div class="single-text__content">
-          <?php the_content();  ?> 
-        </div>
+    <div class="single-text__content">       
+      <p><?php echo the_content(); ?></p>
+    </div>
   </div>
 </section>
 
-
-
-<section class="search-form">
+<section class="map-container">
   <div class="container">
+    <div class="legend">
 
-      <?php 
-      
-      $searchtext = "";
+        <div class="search-items">
+          <form class="search-form" method="GET">
+            <input name="thename" id="thename" type="text" placeholder="Название объекта..." value="<?php echo $searchtext ?>">
+            <button class="btn btn--light btn--small" type="submit">Поиск</button>
+          
 
-      if (isset($_GET['thename'])) {         
-        $searchtext = $_GET['thename']; 
-      ?>
+          <?php 
         
-      <p>
-    
-      <?php
-        if (count($getObjects->objects) == 0) {
-            echo "Ни одного объекта не найдено для ";
-        } else {
-            echo "Результат поиска для ";
-        }
-
-        echo "&quot;" . $searchtext . "&quot;";
-
-      ?>
-      
-      . <a href="<?php echo site_url('/gis-objects-map/'); ?>">Очистить поиск</a></p>
-      
-      <?php }
-      
-      ?>
-      <div class="search-items">
-        <form class="search-form__body" method="GET">
-          <input name="thename" id="thename" type="text" placeholder="Название объекта..." value="<?php $searchtext ?>">
-          <button type="submit">Поиск</button>
+        if ($searchtext) {         
+          
+          echo '<p>';
+          echo  (count($getObjects->objects) == 0) ? "Ни одного объекта не найдено для " : "Результат поиска для ";
+          echo "&quot;" . $searchtext . "&quot; .</p>";
+          echo '<a class="btn btn--light btn--small" href="' . site_url('/gis-objects-map/') . '">Очистить поиск</a>';
+         }
+        
+        ?>
+        </div>
         </form>
 
+        <form method="GET">
+
+          <div class="object-types-form">
+          
+            <div class="object-types-form__type">
+              <input type="radio" name="type" value="ALL" id="ALL"
+              <?php if (!$typesearch || $typesearch == 'ALL') {
+                echo 'checked';
+                    
+              }  ?>
+              >
+              <label for="ALL">Все объекты</label>
+            </div>
+          <?php                                        
+              foreach ($getTypes->energy as $key => $value) { 
+          ?>  <div class="object-types-form__type">
+                  <input 
+                    type="radio" 
+                    name="type" 
+                    id="<?php echo $key ?>" 
+                    value="<?php echo $key ?>"
+                    <?php if ($typesearch === $key) {
+                    echo 'checked';
+                    } ?>
+                    >
+                  <label for="<?php echo $key ?>"><?php echo $value["runame"];  ?></label>
+              </div>                  
+
+          <?php } ?>   
+          </div>
+          <button type="submit" class="btn btn--light btn--small"> Применить фильтр </button>
+        </form>
+
+        <div class="map-legend">
+            <h4>Условные обозначения:</h4>
+            <div class="legend__items">
+              <?php 
+                foreach ($colorsArray as $key => $value) { ?>
+                  <div class="legend__item">
+                    <div class="legend__round" style="background-color: <?php echo $value['color'] ?>">
+
+                    </div>
+                    <div class="legend__desc">
+                    <?php echo $value['name'] ?>
+                    </div>
+                  </div>
+                <?php }
+              ?>                
+                  <div class="legend__item">
+                    <div class="legend__round" style="background-color: #EEEEEE">
+                    &#9741;
+                    </div>
+                    <div class="legend__desc">
+                      Сетевой объект
+                    </div>
+                  </div>
+                  <div class="legend__item">
+                    <div class="legend-power">
+
+                      <div class="legend-power__item legend-power__small"></div>
+                      <div class="legend-power__item legend-power__divider">&#8594;</div>
+                      <div class="legend-power__item legend-power__large"></div>
+
+                    </div>
+                    <div class="legend__desc">
+                    Мощность<br>
+                    1кВт &#8594; 30МВт
+                    </div>
+                  </div>
+            </div>
+          </div>
+      
+    </div>
+    <div class="map">
+      <div class="total"> 
         
-        <div class="legend">
-          <h4>Условные обозначения:</h4>
-          <div class="legend__items">
-            <?php 
-              foreach ($colorsArray as $key => $value) { ?>
-                <div class="legend__item">
-                  <div class="legend__round" style="background-color: <?php echo $value['color'] ?>">
+                <p>
+                <?php  
 
-                  </div>
-                  <div class="legend__desc">
-                  <?php echo $value['name'] ?>
-                  </div>
-                </div>
-              <?php }
-            ?>                
-                <div class="legend__item">
-                  <div class="legend__round" style="background-color: #EEEEEE">
-                  &#9741;
-                  </div>
-                  <div class="legend__desc">
-                    Сетевой объект
-                  </div>
-                </div>
-                <div class="legend__item">
-                  <div class="legend-power">
+                //  RESULT POWER 
 
-                    <div class="legend-power__item legend-power__small"></div>
-                    <div class="legend-power__item legend-power__divider">&#8594;</div>
-                    <div class="legend-power__item legend-power__large"></div>
+                    if ($myCounter > 999999 ) {
 
-                  </div>
-                  <div class="legend__desc">
-                  Мощность<br>
-                  1кВт &#8594; 30МВт
-                  </div>
-                </div>
-          </div>
-        </div>
+                        if ($myCounter < 1000000000 ) {
+                            $myCounter = $myCounter/1000000;
+                        $myCounter = round($myCounter, 2);
+                            $myCounter.= " МВт";
+                        } elseif ($myCounter >= 1000000000 ) {
+                            $myCounter = $myCounter/1000000000;
+                        $myCounter = round($myCounter, 2);
+                            $myCounter.= " ГВт";
+                        };
+
+                        echo "Итого, известная мощность обозначенных на карте действующих объектов: " . $myCounter; 
+                    }
+                ?> 
+                </p>
+        
       </div>
-
-
-      <form class="object-types-form" method="GET">
-          <div class="object-types-form__type">
-             <input type="radio" name="type" value="ALL" id="ALL"
-             <?php if (!$typesearch || $typesearch == 'ALL') {
-              echo 'checked';
-                   
-             }  ?>
-             >
-             <label for="ALL">Все объекты</label>
-          </div>
-        <?php                                        
-            foreach ($getTypes->energy as $key => $value) { 
-        ?>  <div class="object-types-form__type">
-                <input 
-                  type="radio" 
-                  name="type" 
-                  id="<?php echo $key ?>" 
-                  value="<?php echo $key ?>"
-                  <?php if ($typesearch === $key) {
-                   echo 'checked';
-                   } ?>
-                  >
-                <label for="<?php echo $key ?>"><?php echo $value["runame"];  ?></label>
-            </div>                  
-
-        <?php } ?>   
-        <button type="submit" class="object-types-form__button"> Применить фильтр </button>
-      </form>
-
+      <div id="map" class="yandex-map"></div>
+    </div>
   </div>
 </section>
-
-<section> 
-    <div class="container">
-            <p>
-            <?php  
-
-            //  RESULT POWER 
-
-                if ($myCounter > 999999 ) {
-
-                    if ($myCounter < 1000000000 ) {
-                        $myCounter = $myCounter/1000000;
-                    $myCounter = round($myCounter, 2);
-                        $myCounter.= " МВт";
-                    } elseif ($myCounter >= 1000000000 ) {
-                        $myCounter = $myCounter/1000000000;
-                    $myCounter = round($myCounter, 2);
-                        $myCounter.= " ГВт";
-                    };
-
-                    echo "Итого, известная мощность обозначенных на карте действующих объектов: " . $myCounter; 
-                }
-            ?> 
-            </p>
-    </div>
-</section>
-
-<div id="map" class="yandex-map"></div>
 
 
 <?php get_footer(); ?>

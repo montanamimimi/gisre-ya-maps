@@ -1,3 +1,4 @@
+@import 'base';
 @import 'overlay';
 @import 'radioblock';
 @import 'sunoptions';
@@ -8,6 +9,7 @@
 @import 'modal';
 @import 'buttons';
 @import 'objects';
+@import 'maps';
 
 
 .yandex-map {
@@ -77,22 +79,6 @@
     margin-bottom: 15px !important;
   }
   
-
-
-  .search-form {
-    margin-top: -20px;
-    padding: 20px;
-
-    &__body {
-      padding: 0 20px;
-    }
-  }
-
-
-  .search-items {
-    display: flex;
-    align-items: center;
-  }
 
   .objects__add-header {
     padding: 20px;

@@ -54,7 +54,7 @@ foreach ($rows->data as $row):
   $phone = $row -> phone;
   $email = $row -> email;
   $link = $row -> link;
-  $type = $row -> type;
+  $typeX = $row -> type;
   $sune = $row -> sune;
   $sunt = $row -> sunt;
   $wind = $row -> wind;
@@ -66,9 +66,12 @@ foreach ($rows->data as $row):
 
   $name = trim(preg_replace('/\s{2,}/', ' ', $name));
   $adress = trim(preg_replace('/\s{2,}/', ' ', $adress));
-  $type = trim(preg_replace('/\s{2,}/', ' ', $type));
+  $typeX = trim(preg_replace('/\s{2,}/', ' ', $typeX));
   $link = trim(preg_replace('/\s{2,}/', ' ', $link));
-  $phone = trim(preg_replace('/\s{2,}/', ' ', $phone));
+
+  if ($phone) {
+    $phone = trim(preg_replace('/\s{2,}/', ' ', $phone));
+  }  
   $email = trim(preg_replace('/\s{2,}/', ' ', $email));
 
 
@@ -149,7 +152,7 @@ foreach ($rows->data as $row):
   };
   
   
-  $objrequest.= "', balloonContentFooter: '<br><br>Тип организации: " . $type . "' }, ";
+  $objrequest.= "', balloonContentFooter: '<br><br>Тип организации: " . $typeX . "' }, ";
   $objrequest.= "{ preset: 'islands#icon', iconColor: '#0e4779', iconLayout: 'default#pieChart', iconPieChartRadius: 22, iconPieChartCoreRadius: 0, }))";
   echo $objrequest;
 
@@ -176,44 +179,50 @@ endforeach; endif; ?>
   </div>
 </section>
 
-<section>
-    <div class="container">
-        <div class="geodata__options">
 
-            <form class="object-types-form" method="GET">
-            <div class="object-types-form__type">
-                <input type="radio" name="type" value="ALL" id="ALL"
-                <?php if ($type == 'ALL') {
-                    echo 'checked';
-                } ?>
-                >
-                <label for="ALL">Все организации</label>
-            </div>
-            <?php        
+<section class="map-container">
+    <div class="container">
+        <div class="legend">
+        <form class="object-types-form" method="GET">
+            <div class="geodata__options">
             
-                $orgoptions = array('SCIENSE' => 'Научные организации', 'SALES' => 'Коммерческие организации');
-                foreach ($orgoptions as $key => $value) { 
-            ?>  <div class="object-types-form__type">
-                    <input 
-                    type="radio" 
-                    name="type" 
-                    id="<?php echo $key ?>" 
-                    value="<?php echo $key ?>"
-                    <?php if ($type === $key) {
-                    echo 'checked';
+                <div class="object-types-form__type">
+                    <input type="radio" name="type" value="ALL" id="ALL"
+                    <?php if ($type == 'ALL') {
+                        echo ' checked ';
                     } ?>
                     >
-                    <label for="<?php echo $key ?>"><?php echo $value;  ?></label>
-                </div>                  
+                    <label for="ALL">Все организации</label>
+                </div>
+                <?php        
+                
+                    $orgoptions = array('SCIENSE' => 'Научные организации', 'SALES' => 'Коммерческие организации');
+                    foreach ($orgoptions as $key => $value) { 
+                ?>  <div class="object-types-form__type">
+                        <input 
+                        type="radio" 
+                        name="type" 
+                        id="<?php echo $key ?>" 
+                        value="<?php echo $key ?>"
+                        <?php if ($type == $key) {
+                        echo 'checked';
+                        } ?>
+                        >
+                        <label for="<?php echo $key ?>"><?php echo $value;  ?></label>
+                    </div>                  
 
-            <?php } ?>   
-            <button type="submit" class="object-types-form__button"> Применить фильтр </button>
+                <?php } ?>   
+                <button type="submit" class="object-types-form__button"> Применить фильтр </button>
+        
+
+            </div>
         </form>
-
+        </div>
+        <div class="map">
+            <div id="map" class="yandex-map"></div>
         </div>
     </div>
 </section>
 
-<div id="map" class="yandex-map"></div>
 
 <?php get_footer(); ?>

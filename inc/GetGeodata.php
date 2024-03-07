@@ -16,7 +16,13 @@ class GetGeodata {
 
         $options = new GetGeooptions();
 
-        $suggestedType = $_GET['type'];
+        $suggestedType = false;
+
+        if (isset($_GET['type'])) {
+            $suggestedType = $_GET['type'];
+        }
+
+        
 
         if ($suggestedType && in_array($suggestedType, $options->entypes)) {
 
@@ -30,8 +36,13 @@ class GetGeodata {
     }
 
     function createWhereText() {
+        $suggestedType = false;
+        
+        if (isset($_GET['type'])) {
+            $suggestedType = $_GET['type'];
+        }
 
-        $suggestedType = $_GET['type'];
+       
         $options = new GetGeooptions();        
 
         if ($suggestedType && in_array($suggestedType, $options->entypes)) {

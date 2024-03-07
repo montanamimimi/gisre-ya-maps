@@ -101,62 +101,53 @@ $mrect .= "  myMap.geoObjects .add(myRectangle" . $id . ");";
   </div>
 </section>
 
-<section >
+<section class="single-text">
   <div class="container">
-      <div class="plugin-text">
+      <div >            
+          <?php the_content(); ?>        
+      </div>
+  </div>
+</section>
+
+<section class="map-container">
+  <div class="container">
+    <div class="legend">
+      <form class="windoptions__form" method="GET">    
         
+        
+        <div class="windoptions__form-item">
 
-          <?php the_content(); ?>
-          
-
-      </div>
-  </div>
-</section>
-
-<section class="windres-option">
-  <div class="container">
-
-    <form class="windoptions__form" method="GET">    
-      
-      
-      <div class="windoptions__form-item">
-
-        <select id="datatype" name="datatype" class="windoptions__selector" required>
-            <option value=""> -- тип данных -- </option>
+          <select id="datatype" name="datatype" class="windoptions__selector" required>
+              <option value=""> -- тип данных -- </option>
+              <?php 
+              foreach ($windoptions->options as $key => $value) { ?>
+                <option value="<?php echo $key ?>" 
+                <?php if ($key == $_GET['datatype']) { echo 'selected';} ?>
+                ><?php echo $value['runame']; ?></option>
+              <?php }
+              ?>              
+          </select> 
+        </div>
+        <div class="windoptions__form-item">
+          <select id="height" name="height" class="windoptions__selector" required>
+            <option value=""> -- параметр -- </option>
             <?php 
-            foreach ($windoptions->options as $key => $value) { ?>
-              <option value="<?php echo $key ?>" 
-              <?php if ($key == $_GET['datatype']) { echo 'selected';} ?>
-              ><?php echo $value['runame']; ?></option>
-            <?php }
-            ?>              
-        </select> 
-      </div>
-      <div class="windoptions__form-item">
-        <select id="height" name="height" class="windoptions__selector" required>
-          <option value=""> -- параметр -- </option>
-          <?php 
-            $currentDatatype = $_GET['datatype'];
-            $currentHeight = $windoptions->options[$currentDatatype]['height'];        
-            
-            foreach ($currentHeight as $item) { ?>
-              <option class="height-option" value="<?php echo $item; ?>"
-              <?php if ($item == $_GET['height']) { echo 'selected';} ?>
-              ><?php echo $item . ' ' . $windoptions->options[$currentDatatype]['ruoption']; ?></option>
-            <?php }
-          ?>                        
-        </select> 
-      </div>
-      <div class="windoptions__form-item">
-        <button type="submit" class="windoptions__button"> Показать</button>
-      </div>
-      
-    </form>
-  </div>
-</section>
-  
-<section>
-  <div class="container">
+              $currentDatatype = $_GET['datatype'];
+              $currentHeight = $windoptions->options[$currentDatatype]['height'];        
+              
+              foreach ($currentHeight as $item) { ?>
+                <option class="height-option" value="<?php echo $item; ?>"
+                <?php if ($item == $_GET['height']) { echo 'selected';} ?>
+                ><?php echo $item . ' ' . $windoptions->options[$currentDatatype]['ruoption']; ?></option>
+              <?php }
+            ?>                        
+          </select> 
+        </div>
+        <div class="windoptions__form-item">
+          <button type="submit" class="windoptions__button"> Показать</button>
+        </div>
+        
+      </form>
       <div class="suncolors__legend">
         <p>Значение в единицах: <?php echo  $unittype ?></p>
         <div class="suncolors__items">
@@ -176,25 +167,24 @@ $mrect .= "  myMap.geoObjects .add(myRectangle" . $id . ");";
           ?>
         </div>
       </div>
-      <div class="suncolors__legend-mob">
-        <div class="suncolors__legend-mob-desc">
-          <div class="from">
-              
-            <?php echo strval(ceil($min)) . ' ' . $unittype ?>
-          </div>
-          <div class="to">
-          <?php echo strval(ceil($max)) . ' ' . $unittype ?>
-            </div>
-        </div>
-        <div class="windcolors__legend-mob-colors">
+    </div>
 
-        </div>
-      </div>
+    <div class="map">
+      <div id="YMapsID"  class="yandex-map"></div>
+    </div>
   </div>
 </section>
 
 
-<div id="YMapsID"  class="yandex-map"></div>
+  
+<section>
+  <div class="container">
+
+  </div>
+</section>
+
+
+
 
 
 <?php get_footer(); ?>
