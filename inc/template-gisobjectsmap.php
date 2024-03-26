@@ -165,6 +165,7 @@ if ($radius < 4) {
   if ($status == "s") { $status = "строящаяся"; $iconstyle = "{weight: 1, color: '#676767'},";} ;
   if ($status == "d") { $status = "действующая"; };
   if ($status == "z") { $status = "<font color=\"red\">не эксплуатируется</font>"; };
+  if ($status == "x") { $status = "<font color=\"red\">объект не построен</font>"; $iconstyle = "{weight: 1, color: '#DDDDDD'},"; $radius = 4; };
   if ($status == "p") { $status = " проектируемая "; $iconstyle = "{weight: 1, color: '#DDDDDD'},"; $radius = 4;};
 
   $sprite = " iconPieChartRadius: " . $radius . ", iconPieChartCoreRadius: 0"; 

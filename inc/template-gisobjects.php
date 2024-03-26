@@ -43,6 +43,7 @@ if (isset($_GET['thename'])) {
     <div class="edit-switcher">
       <div class="edit-switcher__item edit-switcher__current"><h3>Редактирование объектов</h3></div>
       <div class="edit-switcher__item edit-switcher__link"><h3><a href="<?php echo home_url() . '/organizations'; ?>">Редактирование организаций</a></h3></div>
+      <div class="edit-switcher__item edit-switcher__link"><h3><a href="<?php echo home_url() . '/editgeodata'; ?>">Редактирование георесурсы</a></h3></div>
     </div>
     <hr class="edit-switcher__divider">
 
@@ -105,7 +106,28 @@ if (isset($_GET['thename'])) {
         </tr>
         <?php
 
-        foreach ($getObjects->objects as $object) {           
+        foreach ($getObjects->objects as $object) {   
+          
+          switch ($object->status) {
+            case 's':
+              $stat = 'строящийся';
+              break;
+            case 'd': 
+              $stat = 'действующий';
+              break;
+            case 'p': 
+              $stat = 'проектируемый';
+              break;
+            case 'z':
+              $stat = 'не эксплуатируется';
+              break;
+            case 'x':
+              $stat = 'не построен';
+              break;
+            default: 
+              $stat = $object->status;
+              break;
+          }
           ?>
 
           <tr>
@@ -114,7 +136,7 @@ if (isset($_GET['thename'])) {
             <td><?php echo $object->name ?></td>
             <td><?php echo $object->type ?></td>
             <td><?php echo $object->power ?></td>
-            <td><?php echo $object->status ?></td>
+            <td><?php echo $stat; ?></td>
             <?php
             if (current_user_can('administrator')) { ?>
               <td class="button-td">

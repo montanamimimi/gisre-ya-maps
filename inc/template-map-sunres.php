@@ -110,7 +110,7 @@ $mrect .= "  myMap.geoObjects .add(myRectangle" . $id . ");";
 </section>
 
 
-<section class="map-container">
+<section class="res-container">
   <div class="container">
     <div class="legend">
     <div class="sunoptions sunres-option">

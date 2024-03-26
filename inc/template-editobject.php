@@ -148,6 +148,7 @@ if ($_GET['id']) {
               <option value="s" <?php echo ($objectData->status == 's') ? ' selected ' : ''; ?>>Строящаяся</option>
               <option value="p" <?php echo ($objectData->status == 'p') ? ' selected ' : ''; ?>>Проектируемая</option>
               <option value="z" <?php echo ($objectData->status == 'z') ? ' selected ' : ''; ?>>Закрыта</option>
+              <option value="x" <?php echo ($objectData->status == 'x') ? ' selected ' : ''; ?>>Объект не построен</option>
             </select>
           </div>
           <div class="objects__item">

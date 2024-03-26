@@ -4,6 +4,12 @@ require_once plugin_dir_path(__FILE__) . 'GetGeooptions.php';
 $geodata = new GetGeodata();
 $geooptions = new GetGeooptions();
 
+$searchType = false;
+
+if (isset($_GET['type'])) {
+  $searchType = $_GET['type'];
+}
+
 get_header(); ?>
 
 <section class="single-banner">
@@ -31,7 +37,7 @@ get_header(); ?>
             <form class="object-types-form" method="GET">
             <div class="object-types-form__type">
                 <input type="radio" name="type" value="ALL" id="ALL"
-                <?php if (!$_GET['type'] || $_GET['type'] == 'ALL') {
+                <?php if (!$searchType || $searchType == 'ALL') {
                     echo 'checked';
                 } ?>
                 >
@@ -45,7 +51,7 @@ get_header(); ?>
                     name="type" 
                     id="<?php echo $key ?>" 
                     value="<?php echo $key ?>"
-                    <?php if ($_GET['type'] === $key) {
+                    <?php if ($searchType === $key) {
                     echo 'checked';
                     } ?>
                     >
@@ -109,7 +115,7 @@ get_header(); ?>
   $objrequest.= "<b> Координаты </b>" . $lat . ", " . $lon . "<br>";
 
   if ($oopt != null and $oopt != " ") {
-  $objrequest.= "<b> В состав какого ООПТ входит: : </b>" . $oopt . "<br>";  };
+  $objrequest.= "<b> В состав какого ООПТ входит: </b>" . $oopt . "<br>";  };
 
   if ($holder != null and $holder != " ") {
   $objrequest.= "<b>Геотермальная провинция: </b>" . $holder . "<br>"; };
@@ -120,7 +126,7 @@ get_header(); ?>
   if ($date != null and $date != " ") {
   $objrequest.= "<b>Количество источников: </b>" . $date . " <br>" ; }; 
 
-  if ($sovrIspolz != null and $sovrIspoolz != " ") {
+  if ($sovrIspolz != null and $sovrIspolz != " ") {
   $objrequest.= "<b>Современное использование: </b>" . $sovrIspolz . "<br>";  };
 
   if ($check_obj != null and $check_obj != " ") {

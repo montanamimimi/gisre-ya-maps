@@ -19,6 +19,7 @@ class GisObjectsMapsPlugin {
     global $wpdb;
     $this->tablename = $wpdb->prefix . "reomap";
     $this->orgstable = $wpdb->prefix . "orgdata";
+    $this->geotable = $wpdb->prefix . "geodata";
     $this->create_post_type();
 
     add_action('wp_enqueue_scripts', array($this, 'loadAssets'));    
@@ -28,6 +29,7 @@ class GisObjectsMapsPlugin {
     add_action('admin_post_nopriv_createorg', array($this, 'createOrg'));
     add_action('admin_post_deleteobject', array($this, 'deleteObject'));
     add_action('admin_post_deleteorg', array($this, 'deleteOrg'));
+    add_action('admin_post_deletegeodata', array($this, 'deleteGeoItem'));
     add_action('admin_post_nopriv_deleteobject', array($this, 'deleteObject'));
     add_action('admin_post_editobject', array($this, 'editObject'));
     add_action('admin_post_nopriv_editobject', array($this, 'editObject'));
@@ -338,6 +340,22 @@ class GisObjectsMapsPlugin {
     exit;
   }
 
+  
+  function deleteGeoItem() {
+    if (current_user_can('administrator')) {
+     
+      $id = sanitize_text_field($_POST['idtodelete']);
+      global $wpdb;
+      $wpdb->delete($this->geotable, array('id' => $id));
+      wp_safe_redirect(site_url('/editgeodata/'));
+
+    } else {
+      wp_safe_redirect(site_url());
+    }
+
+    exit;
+  }
+
   function loadAssets() {
     wp_enqueue_style('reomapscss', plugin_dir_url(__FILE__) . 'build/index.css');
     wp_enqueue_script( 'reomapsjs', plugin_dir_url(__FILE__) . 'build/index.js', array(), null, true );
@@ -388,6 +406,10 @@ class GisObjectsMapsPlugin {
       return plugin_dir_path(__FILE__) . 'inc/template-neworg.php';
     } 
 
+    if (is_page('newgeodata')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-newgeodata.php';
+    } 
+
     if (is_page('editobject')) {
       return plugin_dir_path(__FILE__) . 'inc/template-editobject.php';
     } 
@@ -398,6 +420,10 @@ class GisObjectsMapsPlugin {
 
     if (is_page('organizations')) {
       return plugin_dir_path(__FILE__) . 'inc/template-organizations.php';
+    } 
+
+    if (is_page('editgeodata')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-editgeodata.php';
     } 
 
     return $template;

@@ -109,6 +109,7 @@ get_header();
               <option value="s">Строящаяся</option>
               <option value="p">Проектируемая</option>
               <option value="z">Закрыта</option>
+              <option value="x">Объект не построен</option>
             </select>
           </div>
           <div class="objects__item">

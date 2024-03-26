@@ -1,29 +1,17 @@
 <?php
 
-require_once plugin_dir_path(__FILE__) . 'GetOrgdata.php';
-require_once plugin_dir_path(__FILE__) . 'GetRegions.php';
-$orgdata = new GetOrgdata();
-$regions = new GetRegions();
-$ruRegions = $regions->ruRegions;
-
-if ($orgdata) {
-    $data = $orgdata->data;
-}
+require_once plugin_dir_path(__FILE__) . 'GetGeodata.php';
+$geodata = new GetGeodata();
 
 get_header();
+
+$searchtext = "";
 
 if (isset($_GET['thename'])) {
 
   $searchtext = $_GET['thename'];
-} else {
-    $searchtext = "";
 }
 
-if (isset($_GET['type'])){
-    $type = $_GET['type'];
-} else {
-    $type = 'ALL';
-}
 
 ?>
 
@@ -41,8 +29,8 @@ if (isset($_GET['type'])){
 
     <div class="edit-switcher">
       <div class="edit-switcher__item edit-switcher__link"><h3><a href="<?php echo home_url() . '/gis-objects'; ?>">Редактирование объектов</a></h3></div>
-      <div class="edit-switcher__item"><h3>Редактирование организаций</h3></div>
-      <div class="edit-switcher__item edit-switcher__link"><h3><a href="<?php echo home_url() . '/editgeodata'; ?>">Редактирование георесурсы</a></h3></div>
+      <div class="edit-switcher__item edit-switcher__link"><h3><a href="<?php echo home_url() . '/organizations'; ?>">Редактирование организаций</a></h3></div>
+      <div class="edit-switcher__item"><h3>Редактирование георесурсы</h3></div>
     </div>
     <hr class="edit-switcher__divider">
 
@@ -60,7 +48,7 @@ if (isset($_GET['type'])){
       <?php
 
       if ($searchtext) {
-        echo '<a href="' . site_url('/organizations/') . '">Очистить поиск</a>';
+        echo '<a href="' . site_url('/editgeodata/') . '">Очистить поиск</a>';
       }
       ?>
 
@@ -75,7 +63,7 @@ if (isset($_GET['type'])){
       <?php
 
       if (current_user_can('administrator')) { ?>
-        <a class="button" href="<?php echo home_url() . '/neworg'; ?>">Добавить организацию</a>
+        <a class="button" href="<?php echo home_url() . '/newgeodata'; ?>">Добавить месторождение</a>
 
       <?php }
       ?>
@@ -93,21 +81,21 @@ if (isset($_GET['type'])){
         </tr>
         <?php
 
-        foreach ($data as $item) {           
+        foreach ($geodata->data as $item) {           
           ?>
 
           <tr>
             <td><?php echo $item->id ?></td>
             <td><?php echo $item->name ?></td>
-            <td><?php echo $ruRegions[$item->region]; ?></td>
+            <td><?php echo $item->location; ?></td>
             <?php
             if (current_user_can('administrator')) { ?>
               <td class="button-td">
-                <a class="button" href="<?php echo site_url() . '/editorg/?id=' . $item->id; ?>" class="edit-object-button">Редактировать</a>
+                <a class="button" href="<?php echo site_url() . '/editgeo/?id=' . $item->id; ?>" class="edit-object-button">Редактировать</a>
               </td>
               <td>
                 <form id="delete-form-<?php echo $item->id ?>" action="<?php echo esc_url(admin_url('admin-post.php')) ?>" method="POST">
-                  <input type="hidden" name="action" value="deleteorg">
+                  <input type="hidden" name="action" value="deletegeodata">
                   <input type="hidden" name="idtodelete" value="<?php echo $item->id ?>">
                   <span class="delete-object-button" data-id="<?php echo $item->id ?>">X</span>
                 </form>

@@ -238,27 +238,30 @@
   border-radius: 50%;
 }
 
-.suncolors {
-  margin-right: 24px;
+.res-container .legend {
+  max-width: unset;
+}
+
+.suncolors__legend {
+  max-width: 600px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .suncolors__legend-mob {
   display: none;
 }
 .suncolors__items {
   display: flex;
-  flex-direction: column;
-}
-.suncolors__item {
-  display: flex;
 }
 .suncolors__color {
+  min-width: 50px;
   height: 20px;
-  width: 70%;
+  border: 1px solid #e6e2c1;
 }
 .suncolors__color-white {
+  min-width: 80px;
   height: 20px;
-  width: 70%;
-  border: 1px solid #d4d4d4;
+  border: 1px solid #e6e2c1;
 }
 .suncolors__desc {
   margin-left: 8px;
