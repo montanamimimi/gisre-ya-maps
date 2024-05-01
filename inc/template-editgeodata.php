@@ -43,12 +43,12 @@ if (isset($_GET['thename'])) {
     ?>
 
     <form class="search-form__body" method="GET">
-      <input name="thename" id="thename" type="text" placeholder="Введите название..." value="<?php echo $searchtext ?>">
+      <input name="thename" id="thename" type="text" placeholder="<?php echo __('Введите название...', 'gisre-plugin'); ?>" value="<?php echo $searchtext ?>">
       <button type="submit">Поиск</button>
       <?php
 
       if ($searchtext) {
-        echo '<a href="' . site_url('/editgeodata/') . '">Очистить поиск</a>';
+        echo '<a href="' . site_url('/editgeodata/') . '">' . __('Очистить поиск', 'gisre-plugin') . ' </a>';
       }
       ?>
 
@@ -56,22 +56,26 @@ if (isset($_GET['thename'])) {
   </div>
 </section>
 
+<section class="new-button">
+  <div class="container">
+    <?php
+    if (current_user_can('administrator')) { ?>
+      <a class="button" href="<?php echo home_url() . '/newgeodata'; ?>">Добавить месторождение</a>
+
+    <?php }
+    ?>
+  </div>
+</section>
 
 <section class="objects">
   <div class="container">
     <div class="objects__table">
-      <?php
-
-      if (current_user_can('administrator')) { ?>
-        <a class="button" href="<?php echo home_url() . '/newgeodata'; ?>">Добавить месторождение</a>
-
-      <?php }
-      ?>
       <table class="gis-objects-table">
         <tr>
           <th>ID</th>
           <th>Название</th>
           <th>Регион</th>
+          <th>Перевод?</th>
           <?php
           if (current_user_can('administrator')) { ?>
             <th>Редактировать</th>
@@ -88,6 +92,7 @@ if (isset($_GET['thename'])) {
             <td><?php echo $item->id ?></td>
             <td><?php echo $item->name ?></td>
             <td><?php echo $item->location; ?></td>
+            <td><?php echo $item->translated ? '&#10004;' : '&#10006;'; ?></td>
             <?php
             if (current_user_can('administrator')) { ?>
               <td class="button-td">

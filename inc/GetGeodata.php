@@ -17,41 +17,52 @@ class GetGeodata {
         $options = new GetGeooptions();
 
         $suggestedType = false;
+        $search = false;
 
         if (isset($_GET['type'])) {
             $suggestedType = $_GET['type'];
         }
 
-        
+        if (isset($_GET['thename'])) {
+            $search = $_GET['thename'];
+        }        
 
         if ($suggestedType && in_array($suggestedType, $options->entypes)) {
 
             return $suggestedType;
 
+        } else if ($search) {
+
+            return "%" . sanitize_text_field($search) . "%";
+ 
         } else {
-
-            return array();
-
-        }      
+            return 0;
+        }     
     }
 
     function createWhereText() {
         $suggestedType = false;
+        $search = false;
         
         if (isset($_GET['type'])) {
             $suggestedType = $_GET['type'];
         }
-
        
+        if (isset($_GET['thename'])) {
+            $search = $_GET['thename'];
+        }   
+
         $options = new GetGeooptions();        
 
         if ($suggestedType && in_array($suggestedType, $options->entypes)) {
 
-            return " WHERE `type` = %s";
+            return " WHERE `type` = %s ORDER BY id DESC" ;
 
+        } else if ($search) {
+            return " WHERE `name` LIKE %s ORDER BY id DESC";
         } else {
 
-            return "";
+            return " WHERE `id` > %d ORDER BY id DESC";
 
         }
 

@@ -5,6 +5,8 @@
   Version: 1.0
   Author: montana_mimimi
   Author URI: https://github.com/montanamimimi/
+  Text domain: gisre-plugin
+  Domain Path: /languages
 */
 
 if( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -22,8 +24,10 @@ class GisObjectsMapsPlugin {
     $this->geotable = $wpdb->prefix . "geodata";
     $this->create_post_type();
 
+    add_action('init', array($this, 'loadTextDomain') );
     add_action('wp_enqueue_scripts', array($this, 'loadAssets'));    
     add_action('admin_post_createobject', array($this, 'createObject'));
+    add_action('admin_post_creategeodata', array($this, 'createGeoData'));
     add_action('admin_post_nopriv_createobject', array($this, 'createObject'));
     add_action('admin_post_createorg', array($this, 'createOrg'));
     add_action('admin_post_nopriv_createorg', array($this, 'createOrg'));
@@ -36,6 +40,10 @@ class GisObjectsMapsPlugin {
     add_filter('template_include', array($this, 'loadTemplate'), 99);
     add_filter('wp_nav_menu_items', [ $this, 'menuItems' ], 10, 2 );
     add_filter( 'widget_text', 'do_shortcode' );
+  }
+
+  function loadTextDomain() {
+    load_plugin_textdomain('gisre-plugin', false, dirname(plugin_basename(__FILE__)) . '/languages/');
   }
 
   protected function create_post_type() {
@@ -310,6 +318,89 @@ class GisObjectsMapsPlugin {
     exit;
   }
 
+  function createGeoData() {
+
+    error_log('creating');
+
+    if (current_user_can('administrator')) {
+
+      $newdata = array (
+        "name" => sanitize_text_field($_POST['orgname']),
+        "name_en" => sanitize_text_field($_POST['name_en']),
+        "lat" => floatval($_POST['lat']),
+        "lon" => floatval($_POST['lon']),
+        "location" => sanitize_text_field($_POST['location']),
+        "location_en" => sanitize_text_field($_POST['location_en']),
+        "oopt_en" => sanitize_text_field($_POST['oopt_en']),
+        "ready_en" => sanitize_text_field($_POST['ready_en']),
+        "ph_en" => sanitize_text_field($_POST['ph_en']),
+        "minclass_en" => sanitize_text_field($_POST['minclass_en']),
+        "balneol_en" => sanitize_text_field($_POST['balneol_en']),
+        "perspective_en" => sanitize_text_field($_POST['perspective_en']),
+        "type" => sanitize_text_field($_POST['type']),
+        "power" => sanitize_text_field($_POST['power']),
+        "link" => sanitize_text_field($_POST['link']),
+        "absolute" => sanitize_text_field($_POST['absolute']),
+        "check_obj" => sanitize_text_field($_POST['check_obj']),
+        "river" => sanitize_text_field($_POST['river']),
+        "year" => sanitize_text_field($_POST['year']),
+        "function" => sanitize_text_field($_POST['function']),
+        "truthplace" => sanitize_text_field($_POST['truthplace']),
+        "linkshort" => sanitize_text_field($_POST['linkshort']),
+        "source" => sanitize_text_field($_POST['source']),
+        "powerpr" => sanitize_text_field($_POST['powerpr']),
+        "powerpr_en" => sanitize_text_field($_POST['powerpr_en']),
+        "pp" => sanitize_text_field($_POST['pp']),
+        "gen" => sanitize_text_field($_POST['gen']),
+        "tclass_en" => sanitize_text_field($_POST['tclass_en']),
+        "date" => sanitize_text_field($_POST['date']),
+        "wellsnumber_en" => sanitize_text_field($_POST['wellsnumber_en']),
+        "holder" => sanitize_text_field($_POST['holder']),
+        "province_en" => sanitize_text_field($_POST['province_en']),
+        "picture" => sanitize_text_field($_POST['picture']),
+        "temperaturedep_en" => sanitize_text_field($_POST['temperaturedep_en']),
+        "potresourse" => sanitize_text_field($_POST['potresourse']),
+        "potresourse_en" => sanitize_text_field($_POST['potresourse_en']),
+        "debit_en" => sanitize_text_field($_POST['debit_en']),
+        "debit" => sanitize_text_field($_POST['debit']),
+        "dop_en" => sanitize_text_field($_POST['dop_en']),
+      );
+
+      $newdata['name'] = str_replace('"','&quot;',$newdata['name']);
+      $newdata['name'] = str_replace('\\','',$newdata['name']);
+
+      $newdata['name_en'] = str_replace('"','&quot;',$newdata['name_en']);
+      $newdata['name_en'] = str_replace('\\','',$newdata['name_en']);
+
+      $newdata['published'] = 1;
+
+      if (isset($_POST['translated'])) {
+        $newdata['translated'] = 1;
+      } else {
+        $newdata['translated'] = 0;
+      }
+
+    //  var_dump($_POST);
+      global $wpdb;
+
+      if (isset($_POST['org_id'])) {
+          error_log('id set');
+
+        $id = (int) $_POST['org_id'];
+        $wpdb->delete($this->geotable, array('id' => $id));
+      }
+
+
+      $wpdb->insert($this->geotable, $newdata);
+      wp_safe_redirect(site_url('/editgeodata/'));
+
+    } else {
+      wp_safe_redirect(site_url());
+    }
+
+    exit;
+  }
+
   function deleteObject() {
     if (current_user_can('administrator')) {
      
@@ -407,7 +498,7 @@ class GisObjectsMapsPlugin {
     } 
 
     if (is_page('newgeodata')) {
-      return plugin_dir_path(__FILE__) . 'inc/template-newgeodata.php';
+      return plugin_dir_path(__FILE__) . 'inc/template-editgeo.php';
     } 
 
     if (is_page('editobject')) {
@@ -416,6 +507,10 @@ class GisObjectsMapsPlugin {
 
     if (is_page('editorg')) {
       return plugin_dir_path(__FILE__) . 'inc/template-editorg.php';
+    } 
+
+    if (is_page('editgeo')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-editgeo.php';
     } 
 
     if (is_page('organizations')) {
@@ -456,6 +551,25 @@ function gisre_get_one_object($id) {
 function gisre_get_one_org($id) {
   global $wpdb;
   $tablename = $wpdb->prefix . 'orgdata';
+
+  $query = "SELECT * FROM $tablename WHERE id = '%d'";
+
+  $out = $wpdb->get_results($wpdb->prepare($query, array(
+    $id
+  )));
+
+  if (isset($out[0])){
+    $res = $out[0];
+  } else {
+    $res = false;
+  }
+
+  return $res;
+}
+
+function gisre_get_one_geo($id) {
+  global $wpdb;
+  $tablename = $wpdb->prefix . 'geodata';
 
   $query = "SELECT * FROM $tablename WHERE id = '%d'";
 

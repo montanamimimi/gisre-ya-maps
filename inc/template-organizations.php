@@ -55,30 +55,33 @@ if (isset($_GET['type'])){
     ?>
 
     <form class="search-form__body" method="GET">
-      <input name="thename" id="thename" type="text" placeholder="Введите название..." value="<?php echo $searchtext ?>">
+      <input name="thename" id="thename" type="text" placeholder="<?php echo __('Введите название...', 'gisre-plugin'); ?>" value="<?php echo $searchtext ?>">
       <button type="submit">Поиск</button>
       <?php
 
       if ($searchtext) {
-        echo '<a href="' . site_url('/organizations/') . '">Очистить поиск</a>';
+        echo '<a href="' . site_url('/organizations/') . '">' . __('Очистить поиск', 'gisre-plugin') . '</a>';
       }
       ?>
 
     </form>
   </div>
 </section>
+<section class="new-button">
+  <div class="container">
+    <?php
+    if (current_user_can('administrator')) { ?>
+      <a class="button" href="<?php echo home_url() . '/neworg'; ?>">Добавить организацию</a>
 
+    <?php }
+    ?>
+  </div>
+</section>
 
 <section class="objects">
   <div class="container">
     <div class="objects__table">
-      <?php
 
-      if (current_user_can('administrator')) { ?>
-        <a class="button" href="<?php echo home_url() . '/neworg'; ?>">Добавить организацию</a>
-
-      <?php }
-      ?>
       <table class="gis-objects-table">
         <tr>
           <th>ID</th>

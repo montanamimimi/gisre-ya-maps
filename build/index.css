@@ -460,6 +460,14 @@
   text-decoration: underline;
 }
 
+.new-button {
+  margin-top: 24px;
+}
+
+.objects__table {
+  margin-bottom: 40px;
+}
+
 .map-container {
   margin-bottom: 40px;
 }

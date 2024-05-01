@@ -311,7 +311,7 @@ if ($radius < 4) {
           echo '<p>';
           echo  (count($getObjects->objects) == 0) ? "Ни одного объекта не найдено для " : "Результат поиска для ";
           echo "&quot;" . $searchtext . "&quot; .</p>";
-          echo '<a class="btn btn--light btn--small" href="' . site_url('/gis-objects-map/') . '">Очистить поиск</a>';
+          echo '<a class="btn btn--light btn--small" href="' . site_url('/gis-objects-map/') . '">' . __('Очистить поиск', 'gisre-plugin') . '</a>';
          }
         
         ?>

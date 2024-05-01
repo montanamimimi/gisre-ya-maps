@@ -59,7 +59,7 @@ if (isset($_GET['thename'])) {
 
 
     <form class="search-form__body" method="GET">
-      <input name="thename" id="thename" type="text" placeholder="Введите название..." value="<?php echo $searchtext ?>">
+      <input name="thename" id="thename" type="text" placeholder="<?php echo __('Введите название...', 'gisre-plugin'); ?>" value="<?php echo $searchtext ?>">
       <button type="submit">Поиск</button>
       <?php
 
@@ -69,27 +69,25 @@ if (isset($_GET['thename'])) {
       ?>
 
     </form>
+
   </div>
 </section>
 
+<section class="new-button">
+  <div class="container">
+    <?php
+    if (current_user_can('administrator')) { ?>
+      <a class="button" href="<?php echo home_url() . '/newobject'; ?>">Добавить новый объект</a>
+
+    <?php }
+    ?>
+  </div>
+</section>
 
 <section class="objects">
   <div class="container">
     <div class="objects__table">
-      <p><?php
 
-
-
-          ?></p>
-
-      <?php
-
-
-      if (current_user_can('administrator')) { ?>
-        <a class="button" href="<?php echo home_url() . '/newobject'; ?>">Добавить новый объект</a>
-
-      <?php }
-      ?>
       <table class="gis-objects-table">
         <tr>
           <th>ID</th>
