@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gis Objects on maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-26 05:25+0000\n"
+"POT-Creation-Date: 2024-04-26 08:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -28,16 +28,20 @@ msgstr ""
 msgid "montana_mimimi"
 msgstr ""
 
-#: inc/template-editgeodata.php:46 inc/template-geomap.php:186
+#: inc/template-editgeodata.php:46 inc/template-geomap.php:229
 #: inc/template-gisobjects.php:62 inc/template-organizations.php:58
 msgid "Введите название..."
 msgstr ""
 
-#: inc/template-editgeodata.php:51 inc/template-geomap.php:191
+#: inc/template-geomap.php:174
+msgid "Классификация по pH"
+msgstr ""
+
+#: inc/template-editgeodata.php:51 inc/template-geomap.php:237
 #: inc/template-gisobjectsmap.php:314 inc/template-organizations.php:63
 msgid "Очистить поиск"
 msgstr ""
 
-#: inc/template-geomap.php:187
+#: inc/template-geomap.php:230
 msgid "Поиск"
 msgstr ""

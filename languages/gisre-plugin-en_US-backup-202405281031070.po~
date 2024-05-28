@@ -1,14 +1,13 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Gis Objects on maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-28 10:29+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"POT-Creation-Date: 2024-04-26 05:11+0000\n"
+"PO-Revision-Date: 2024-05-28 09:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: English (United States)\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,118 +17,110 @@ msgstr ""
 
 #. Name of the plugin
 msgid "Gis Objects on maps"
-msgstr ""
+msgstr "Gis Objects on maps"
 
 #. Author URI of the plugin
 msgid "https://github.com/montanamimimi/"
-msgstr ""
+msgstr "https://github.com/montanamimimi/"
 
 #. Author of the plugin
 msgid "montana_mimimi"
-msgstr ""
+msgstr "montana_mimimi"
 
-#: inc/template-geodata.php:121 inc/template-geomap.php:19
+#: inc/template-geomap.php:38
 msgid "Абсолютная отметка"
-msgstr ""
+msgstr "Absolute elevation"
 
-#: inc/template-geodata.php:136 inc/template-geomap.php:11
+#: inc/template-geomap.php:30
 msgid "Бальнеологическая характеристика вод"
-msgstr ""
+msgstr "Balneological characteristics of waters"
 
-#: inc/template-geodata.php:115 inc/template-geomap.php:6
+#: inc/template-geomap.php:25
 msgid "В состав какого ООПТ входит"
-msgstr ""
+msgstr "Which protected area is included in"
 
-#: inc/template-editgeodata.php:46 inc/template-geomap.php:196
+#: inc/template-editgeodata.php:46 inc/template-geomap.php:236
 #: inc/template-gisobjects.php:62 inc/template-organizations.php:58
 msgid "Введите название..."
-msgstr ""
+msgstr "Enter the title..."
 
 #: inc/template-geodata.php:44
 msgid "Все регионы"
-msgstr ""
+msgstr "All regions"
 
-#: inc/template-geodata.php:118 inc/template-geomap.php:7
+#: inc/template-geomap.php:26
 msgid "Геотермальная провинция"
-msgstr ""
+msgstr "Geothermal province"
 
 #: inc/GetGeooptions.php:7
 msgid "Камчатка"
-msgstr ""
+msgstr "Kamchatka"
 
-#: inc/template-geodata.php:148 inc/template-geomap.php:16
+#: inc/template-geomap.php:35
 msgid "Классификация по pH"
-msgstr ""
+msgstr "pH classification"
 
-#: inc/template-geodata.php:142 inc/template-geomap.php:13
+#: inc/template-geomap.php:32
 msgid "Классификация по минерализации"
-msgstr ""
+msgstr "Classification by mineralization"
 
-#: inc/template-geodata.php:154 inc/template-geomap.php:15
+#: inc/template-geomap.php:34
 msgid "Классификация по температуре"
-msgstr ""
+msgstr "Temperature classification"
 
-#: inc/template-geodata.php:124 inc/template-geomap.php:8
+#: inc/template-geomap.php:27
 msgid "Количество источников"
-msgstr ""
-
-#: inc/template-geodata.php:112
-msgid "Координаты"
-msgstr ""
+msgstr "Number of wells"
 
 #: inc/GetGeooptions.php:6
 msgid "Курильские острова"
-msgstr ""
+msgstr "Kurile Islands"
 
-#: inc/template-geodata.php:151 inc/template-geomap.php:14
+#: inc/template-geomap.php:33
 msgid "Максимальная температура"
-msgstr ""
+msgstr "Maximum temperature"
 
-#: inc/template-geodata.php:139 inc/template-geomap.php:12
+#: inc/template-geomap.php:31
 msgid "Минерализация г/л"
-msgstr ""
+msgstr "Mineralization g/l"
 
-#: inc/template-editgeodata.php:51 inc/template-geomap.php:204
+#: inc/template-editgeodata.php:51 inc/template-geomap.php:244
 #: inc/template-gisobjectsmap.php:314 inc/template-organizations.php:63
 msgid "Очистить поиск"
-msgstr ""
+msgstr "Clear search"
 
-#: inc/template-geodata.php:130 inc/template-geomap.php:10
+#: inc/template-geomap.php:29
 msgid "Перспективная область эксплуатации"
-msgstr ""
+msgstr "Promising area of operation"
 
-#: inc/template-geomap.php:197
+#: inc/template-geomap.php:237
 msgid "Поиск"
-msgstr ""
+msgstr "Search"
 
-#: inc/template-geodata.php:163 inc/template-geomap.php:20
+#: inc/template-geomap.php:39
 msgid "Потенциальные ресурсы термальных вод"
-msgstr ""
+msgstr "Forecast parameters"
 
 #: inc/template-geodata.php:62
 msgid "Применить фильтр"
-msgstr ""
+msgstr "Apply filter"
 
 #: inc/GetGeooptions.php:8
 msgid "Северный Кавказ"
-msgstr ""
+msgstr "North Caucasus"
 
-#: inc/template-geodata.php:127 inc/template-geomap.php:9
+#: inc/template-geomap.php:28
 msgid "Современное использование"
-msgstr ""
+msgstr "Contemporary use"
 
-#: inc/template-geodata.php:157 inc/template-geomap.php:21
+#: inc/template-geomap.php:40
 msgid "Суммарный дебит, л/с или кг/с"
-msgstr ""
+msgstr "Total flow rate, l/s or kg/s"
 
-#: inc/template-geodata.php:160 inc/template-geomap.php:18
+#: inc/template-geomap.php:37
 msgid "Температура на глубине"
-msgstr ""
+msgstr "Temperature at depth"
 
-#: inc/template-geodata.php:133 inc/template-geomap.php:17
+#: inc/template-geomap.php:36
 msgid "Уровень подготовленности и использования"
-msgstr ""
-
-#: inc/template-geodata.php:108
-msgid "геотермальная провинция"
-msgstr ""
+msgstr "Level of amenities and use"

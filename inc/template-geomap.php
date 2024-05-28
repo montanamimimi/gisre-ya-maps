@@ -3,41 +3,22 @@ require_once plugin_dir_path(__FILE__) . 'GetGeodata.php';
 $rows = new GetGeodata();
 $current_lang = apply_filters( 'wpml_current_language', NULL );
 
-if ($current_lang == 'en') {
-  $Toopt = 'Which protected area is included in';
-  $Tprovince = 'Geothermal province';
-  $Twellsnumber = 'Number of wells';
-  $Tispolzovanie = 'Contemporary use';
-  $Tperspective = 'Promising area of operation';
-  $Tbalneolog = 'Balneological characteristics of waters';
-  $Tminerals = 'Mineralization g/l';
-  $Tfunction = 'Classification by mineralization';
-  $Tmaxtemperature = 'Maximum temperature';
-  $Ttemperatureclass = 'Temperature classification';
-  $Tphclass = 'pH classification';
-  $Treadyness = 'Level of amenities and use';
-  $Ttemperaturedep = 'Temperature at depth';
-  $Tabsolute = 'Absolute elevation'; 
-  $Tpotresourse = 'Forecast parameters'; 
-  $Tdebit = 'Total flow rate, l/s or kg/s';
-} else {
-  $Toopt = 'В состав какого ООПТ входит';
-  $Tprovince = 'Геотермальная провинция';
-  $Twellsnumber = 'Количество источников';
-  $Tispolzovanie = 'Современное использование';
-  $Tperspective = 'Перспективная область эксплуатации';
-  $Tbalneolog = 'Бальнеологическая характеристика вод';
-  $Tminerals = 'Минерализация г/л';
-  $Tfunction = 'Классификация по минерализации';
-  $Tmaxtemperature = 'Максимальная температура';
-  $Ttemperatureclass = 'Классификация по температуре';
-  $Tphclass = 'Классификация по pH';
-  $Treadyness = 'Уровень подготовленности и использования';
-  $Ttemperaturedep = 'Температура на глубине';
-  $Tabsolute = 'Абсолютная отметка'; 
-  $Tpotresourse = 'Потенциальные ресурсы термальных вод'; 
-  $Tdebit = 'Суммарный дебит, л/с или кг/с';
-}
+$Toopt = __('В состав какого ООПТ входит', 'gisre-plugin');
+$Tprovince = __('Геотермальная провинция', 'gisre-plugin');
+$Twellsnumber = __('Количество источников', 'gisre-plugin');
+$Tispolzovanie = __('Современное использование', 'gisre-plugin');
+$Tperspective = __('Перспективная область эксплуатации', 'gisre-plugin');
+$Tbalneolog = __('Бальнеологическая характеристика вод', 'gisre-plugin');
+$Tminerals = __('Минерализация г/л', 'gisre-plugin');
+$Tfunction = __('Классификация по минерализации', 'gisre-plugin');
+$Tmaxtemperature = __('Максимальная температура', 'gisre-plugin');
+$Ttemperatureclass = __('Классификация по температуре', 'gisre-plugin');
+$Tphclass = __('Классификация по pH', 'gisre-plugin');
+$Treadyness = __('Уровень подготовленности и использования', 'gisre-plugin');
+$Ttemperaturedep = __('Температура на глубине', 'gisre-plugin');
+$Tabsolute = __('Абсолютная отметка', 'gisre-plugin'); 
+$Tpotresourse = __('Потенциальные ресурсы термальных вод', 'gisre-plugin'); 
+$Tdebit = __('Суммарный дебит, л/с или кг/с', 'gisre-plugin');
 
 $searchtext = "";
 
@@ -49,7 +30,6 @@ if (isset($_GET['thename'])) {
 get_header(); 
 
 ?>
-
   <script src="https://api-maps.yandex.ru/2.1/?apikey=b6a7a43d-4ce5-45d6-9b18-5eb8015dbbfa&lang=ru_RU" type="text/javascript"></script>
     <script type="text/javascript">
    ymaps.ready(function () {
@@ -83,48 +63,28 @@ get_header();
  <?php if ($rows): ?>
  <?php foreach ($rows->data as $row): 
 
-  if (($current_lang == 'en') && $row->translated) {
-    $name = $row -> name_en;
-    $oopt = $row -> oopt_en;
-    $location = $row -> location_en;
-    $readyness= $row -> ready_en;
-    $phclass = $row -> ph_en;
-    $function = $row -> minclass_en;
-    $balneolog = $row -> balneol_en;
-    $perspective = $row -> perspective_en;
-    $ispolzovanie = $row -> powerpr_en;
-    $pp = $row -> dop_en;
-    $temperatureclass = $row -> tclass_en;
-    $wellsnumber = $row -> wellsnumber_en;
-    $province = $row -> province_en;
-    $temperaturedep = $row -> temperaturedep_en;
-    $potresourse = $row -> potresourse_en; 
-    $debit = $row -> debit_en;
-  } else {
-    $name = $row -> name;
-    $oopt = $row -> power;
-    $location = $row -> location;
-    $readyness= $row -> link;
-    $phclass = $row -> source;
-    $function = $row -> function;
-    $balneolog = $row -> river;
-    $perspective = $row -> check_obj;
-    $ispolzovanie = $row -> powerpr;
-    $pp = $row -> pp;
-    $temperatureclass = $row -> gen;
-    $wellsnumber = $row -> date;
-    $province = $row -> holder;
-    $temperaturedep = $row -> picture;
-    $potresourse = $row -> potresourse; 
-    $debit = $row -> debit;
-  }
- 
-  $lat = $row -> lat;
-  $lon = $row -> lon;
-  $ph = $row -> linkshort;
-  $absolute = $row -> absolute;
-  $maxtemperature = $row -> truthplace;
-  $minerals = $row -> year;
+$name = $row -> name;
+$oopt = $row -> oopt;
+$location = $row -> location;
+$readyness= $row -> ready;
+$phclass = $row -> ph;
+$function = $row -> minclass;
+$balneolog = $row -> balneol;
+$perspective = $row -> perspective;
+$ispolzovanie = $row -> powerpr;
+$pp = $row -> dop;
+$temperatureclass = $row -> tclass;
+$wellsnumber = $row -> wellsnumber;
+$province = $row -> province;
+$temperaturedep = $row -> temperaturedep;
+$potresourse = $row -> potresourse; 
+$debit = $row -> debit;
+$lat = $row -> lat;
+$lon = $row -> lon;
+$ph = $row -> linkshort;
+$absolute = $row -> absolute;
+$maxtemperature = $row -> truthplace;
+$minerals = $row -> year;
  
 $iconstyle = "{weight: 1, color: '#e32e0f'},";
 

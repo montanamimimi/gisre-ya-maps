@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Gis Objects on maps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-26 05:11+0000\n"
-"PO-Revision-Date: 2024-04-26 05:17+0000\n"
+"PO-Revision-Date: 2024-05-28 09:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -27,6 +27,28 @@ msgstr "https://github.com/montanamimimi/"
 msgid "montana_mimimi"
 msgstr "montana_mimimi"
 
-#: inc/template-geomap.php:187
+#: inc/template-editgeodata.php:46 inc/template-geomap.php:236
+#: inc/template-gisobjects.php:62 inc/template-organizations.php:58
+msgid "Введите название..."
+msgstr "Enter the title..."
+
+#: inc/GetGeooptions.php:7
+msgid "Камчатка"
+msgstr "Kamchatka"
+
+#: inc/GetGeooptions.php:6
+msgid "Курильские острова"
+msgstr "Kurile Islands"
+
+#: inc/template-editgeodata.php:51 inc/template-geomap.php:244
+#: inc/template-gisobjectsmap.php:314 inc/template-organizations.php:63
+msgid "Очистить поиск"
+msgstr "Clear search"
+
+#: inc/template-geomap.php:237
 msgid "Поиск"
 msgstr "Search"
+
+#: inc/GetGeooptions.php:8
+msgid "Северный Кавказ"
+msgstr "North Caucasus"

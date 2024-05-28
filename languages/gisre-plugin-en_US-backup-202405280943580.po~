@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Gis Objects on maps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-26 05:11+0000\n"
-"PO-Revision-Date: 2024-04-26 05:23+0000\n"
+"PO-Revision-Date: 2024-05-28 09:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -27,11 +27,40 @@ msgstr "https://github.com/montanamimimi/"
 msgid "montana_mimimi"
 msgstr "montana_mimimi"
 
-#: inc/template-editgeodata.php:46 inc/template-geomap.php:186
+#: inc/template-geomap.php:25
+msgid "В состав какого ООПТ входит"
+msgstr "Which protected area is included in"
+
+#: inc/template-editgeodata.php:46 inc/template-geomap.php:236
 #: inc/template-gisobjects.php:62 inc/template-organizations.php:58
 msgid "Введите название..."
 msgstr "Enter the title..."
 
-#: inc/template-geomap.php:187
+#: inc/template-geodata.php:44
+msgid "Все регионы"
+msgstr "All regions"
+
+#: inc/GetGeooptions.php:7
+msgid "Камчатка"
+msgstr "Kamchatka"
+
+#: inc/GetGeooptions.php:6
+msgid "Курильские острова"
+msgstr "Kurile Islands"
+
+#: inc/template-editgeodata.php:51 inc/template-geomap.php:244
+#: inc/template-gisobjectsmap.php:314 inc/template-organizations.php:63
+msgid "Очистить поиск"
+msgstr "Clear search"
+
+#: inc/template-geomap.php:237
 msgid "Поиск"
 msgstr "Search"
+
+#: inc/template-geodata.php:62
+msgid "Применить фильтр"
+msgstr "Apply filter"
+
+#: inc/GetGeooptions.php:8
+msgid "Северный Кавказ"
+msgstr "North Caucasus"

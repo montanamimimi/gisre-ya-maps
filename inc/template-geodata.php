@@ -41,7 +41,7 @@ get_header(); ?>
                     echo 'checked';
                 } ?>
                 >
-                <label for="ALL">Все регионы</label>
+                <label for="ALL"><?php echo __('Все регионы', 'gisre-plugin') ?></label>
             </div>
             <?php                                        
                 foreach ($geooptions->types as $key => $value) { 
@@ -59,7 +59,7 @@ get_header(); ?>
                 </div>                  
 
             <?php } ?>   
-            <button type="submit" class="object-types-form__button"> Применить фильтр </button>
+            <button type="submit" class="object-types-form__button"><?php echo __('Применить фильтр', 'gisre-plugin') ?></button>
         </form>
 
         </div>
@@ -74,31 +74,28 @@ get_header(); ?>
  <?php foreach ($geodata->data as $row) {
  
   $name = $row -> name;
-
   $id = $row -> id;
   $lat = $row -> lat;
   $lon = $row -> lon;
-  $oopt = $row -> power;
-  $sovrIspolz = $row -> powerpr;
-  $balneolog = $row -> river;
-  $minerals = $row -> year;
+  $oopt = $row ->oopt;
   $location = $row -> location;
-  $status = $row -> status;
-  $function = $row -> function;
   $truthplace = $row -> truthplace;
-  $pp = $row -> pp;
-  $gen = $row -> gen;
-  $holder = $row -> holder;
-  $source = $row -> source;
-  $link = $row -> link;
+  $sovrIspolz = $row -> powerpr;
+  $balneolog = $row -> balneol;
+  $minerals = $row -> year;
+  $function = $row -> minclass;
+  $pp = $row -> dop;
+  $gen = $row -> tclass;
+  $holder = $row ->province;
+  $source = $row -> ph;
+  $link = $row -> ready;
   $linkshort = $row -> linkshort;
-  $picture = $row -> picture;
-  $date = $row -> date;
-  $check_obj = $row -> check_obj;
+  $picture = $row -> temperaturedep;
+  $date = $row -> wellsnumber;
+  $check_obj = $row -> perspective;
   $absolute = $row -> absolute; 
   $potresourse = $row -> potresourse; 
-  $debit = $row -> debit;
-
+  $debit = $row->debit;
 
   $objrequest = '<div class="gistables-tab"><input class="gistables-input" type="checkbox" id="chck' . $id .'">';
 
@@ -108,62 +105,62 @@ get_header(); ?>
     $objrequest.= ", " . $location;  };
   
   if ($holder != null and $holder != " ") {
-        $objrequest.= ", геотермальная провинция: " . $holder; };    
+        $objrequest.= ", " . __('геотермальная провинция', 'gisre-plugin') .": " . $holder; };    
   
   $objrequest.= '</label><div class="tab-content">'; 
                                                                          
-  $objrequest.= "<b> Координаты </b>" . $lat . ", " . $lon . "<br>";
+  $objrequest.= "<b>" . __('Координаты', 'gisre-plugin') . "</b>: " . $lat . ", " . $lon . "<br>";
 
   if ($oopt != null and $oopt != " ") {
-  $objrequest.= "<b> В состав какого ООПТ входит: </b>" . $oopt . "<br>";  };
+  $objrequest.= "<b>" . __('В состав какого ООПТ входит', 'gisre-plugin') .":</b> " . $oopt . "<br>";  };
 
   if ($holder != null and $holder != " ") {
-  $objrequest.= "<b>Геотермальная провинция: </b>" . $holder . "<br>"; };
+  $objrequest.= "<b>" . __('Геотермальная провинция', 'gisre-plugin') .":</b> " . $holder . "<br>"; };
 
   if ($absolute != null and $absolute != " ") {
-  $objrequest.= "<b>Абсолютная отметка: </b>" . $absolute . "<br>"; };
+  $objrequest.= "<b>". __('Абсолютная отметка', 'gisre-plugin') . ":</b> " . $absolute . "<br>"; };
 
   if ($date != null and $date != " ") {
-  $objrequest.= "<b>Количество источников: </b>" . $date . " <br>" ; }; 
+  $objrequest.= "<b>" . __('Количество источников', 'gisre-plugin') .":</b> " . $date . " <br>" ; }; 
 
   if ($sovrIspolz != null and $sovrIspolz != " ") {
-  $objrequest.= "<b>Современное использование: </b>" . $sovrIspolz . "<br>";  };
+  $objrequest.= "<b>" . __('Современное использование', 'gisre-plugin') . ":</b> " . $sovrIspolz . "<br>";  };
 
   if ($check_obj != null and $check_obj != " ") {
-  $objrequest.= "<b>Перспективная область эксплуатации:  </b>" . $check_obj . " <br>" ; }; 
+  $objrequest.= "<b>" . __('Перспективная область эксплуатации', 'gisre-plugin') . ":</b> " . $check_obj . " <br>" ; }; 
   
   if ($link != null and $link != " ") {
-  $objrequest.= "<b>Уровень подготовленности и использования: </b>" . $link . " <br>" ; }; 
+  $objrequest.= "<b>" . __('Уровень подготовленности и использования', 'gisre-plugin') . ":</b> " . $link . " <br>" ; }; 
 
   if ($balneolog != null and $balneolog != " ") {
-  $objrequest.= "<b> Бальнеологическая характеристика вод: </b>" . $balneolog . "<br>";  };
+  $objrequest.= "<b>" . __('Бальнеологическая характеристика вод', 'gisre-plugin') . ":</b> " . $balneolog . "<br>";  };
 
   if ($minerals != null and $minerals != " ") {
-  $objrequest.= "<b> Минерализация г/л: </b>" . $minerals . "<br>";  };
+  $objrequest.= "<b>" . __('Минерализация г/л', 'gisre-plugin') . ":</b> " . $minerals . "<br>";  };
 
   if ($function != null and $function != " ") {
-  $objrequest.= "<b>Классификация по минерализации: </b> " . $function . "<br>";  };
+  $objrequest.= "<b>" . __('Классификация по минерализации', 'gisre-plugin') . ":</b> " . $function . "<br>";  };
 
   if ($linkshort != null and $linkshort != " ") {
   $objrequest.= "<b>pH: </b>" . $linkshort . " <br>" ; }; 
 
   if ($source != null and $source != " ") {
-  $objrequest.= "<b>Классификация по pH: </b> " . $source . "<br>" ; };
+  $objrequest.= "<b>" . __('Классификация по pH', 'gisre-plugin') . ":</b> " . $source . "<br>" ; };
   
   if ($truthplace != null and $truthplace != " ") {
-  $objrequest.= "<b>Максимальная температура: </b>" . $truthplace . "&deg;C<br>" ;  };
+  $objrequest.= "<b>" . __('Максимальная температура', 'gisre-plugin') . ":</b> " . $truthplace . "&deg;C<br>" ;  };
 
   if ($gen != null and $gen != " ") {
-  $objrequest.= "<b>Классификация по температуре: </b>" . $gen . "<br>" ;  };
+  $objrequest.= "<b>" . __('Классификация по температуре', 'gisre-plugin') . ":</b> " . $gen . "<br>" ;  };
 
   if ($debit  != null and $debit  != " ") {
-  $objrequest.= "<b>Суммарный дебит,  л/с или кг/с: </b>" . $debit  . " <br>" ; }; 
+  $objrequest.= "<b>" . __('Суммарный дебит, л/с или кг/с', 'gisre-plugin') . ":</b> " . $debit  . " <br>" ; }; 
 
   if ($picture != null and $picture != " ") {
-  $objrequest.= "<b>Температура на глубине:</b> " . $picture . "&deg;C <br>";  };
+  $objrequest.= "<b>" . __('Температура на глубине', 'gisre-plugin') . ":</b> " . $picture . "&deg;C <br>";  };
 
   if ($potresourse != null and $potresourse != " ") {
-  $objrequest.= "<b>Потенциальные ресурсы термальных вод: </b>" . $potresourse . " <br>" ; }; 
+  $objrequest.= "<b>" . __('Потенциальные ресурсы термальных вод', 'gisre-plugin') . ":</b> " . $potresourse . " <br>" ; }; 
 
   if ($pp != null and $pp != " ") {
     $objrequest.= $pp . " <br>" ; }; 

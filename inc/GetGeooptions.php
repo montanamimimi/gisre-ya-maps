@@ -3,9 +3,10 @@
 class GetGeooptions {
     function __construct() {
         $this->types = array(
-            'KUR' => 'Курильские острова', 
-            'GEOE' => 'Камчатка',
-            'KAV' => 'Северный Кавказ');      
+            'KUR' =>  __('Курильские острова', 'gisre-plugin'), 
+            'GEOE' => __('Камчатка', 'gisre-plugin'),
+            'KAV' => __('Северный Кавказ', 'gisre-plugin')
+            );      
         $this->entypes = $this->getEnTypes();     
     }
 
