@@ -96,7 +96,7 @@ class GetGeodata {
 
         } else if ($search) {
 
-            return "%" . sanitize_text_field($search) . "%";
+            return array("%" . sanitize_text_field($search) . "%", "%" . sanitize_text_field($search) . "%");
  
         } else {
             return 0;
@@ -122,7 +122,8 @@ class GetGeodata {
             return " WHERE `type` = %s ORDER BY id DESC" ;
 
         } else if ($search) {
-            return " WHERE `name` LIKE %s ORDER BY id DESC";
+            
+            return " WHERE (`name` LIKE %s) OR (`name_en` LIKE %s) ORDER BY id DESC";
         } else {
 
             return " WHERE `id` > %d ORDER BY id DESC";
