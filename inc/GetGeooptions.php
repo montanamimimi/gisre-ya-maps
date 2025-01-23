@@ -1,6 +1,10 @@
 <?php 
 
 class GetGeooptions {
+
+    public $types;
+    public $entypes;
+    
     function __construct() {
         $this->types = array(
             'KUR' =>  __('Курильские острова', 'gisre-plugin'), 

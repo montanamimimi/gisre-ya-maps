@@ -1,6 +1,12 @@
 <?php 
 
 class GetTypes {
+    
+    public $types;
+    public $energy;
+    public $orgs;
+    public $colors;
+
     function __construct() {
         $this->types = array(
             "СЭС" => "SES",

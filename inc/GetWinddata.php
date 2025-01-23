@@ -3,6 +3,12 @@ require_once plugin_dir_path(__FILE__) . 'GetWindoptions.php';
 
 
 class GetWinddata {
+
+    public $arg;
+    public $min;
+    public $max;
+    public $data;
+    
     function __construct() {
         global $wpdb;
         $tablename = $wpdb->prefix . 'winddata';

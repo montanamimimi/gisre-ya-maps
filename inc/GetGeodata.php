@@ -3,6 +3,9 @@
 require_once plugin_dir_path(__FILE__) . 'GetGeooptions.php';
 
 class GetGeodata {
+
+    public $data;
+    
     function __construct() {
         $this->data = $this->getData();
     }

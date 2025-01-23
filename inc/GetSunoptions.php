@@ -1,6 +1,9 @@
 <?php 
 
 class GetSunoptions {
+
+    public $surface;
+    
     function __construct() {
         $this->surface = array(
             "gor" => array(

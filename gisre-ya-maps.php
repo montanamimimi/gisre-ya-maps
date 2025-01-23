@@ -17,6 +17,11 @@ require_once(ABSPATH . 'wp-admin/includes/image.php');
 
 
 class GisObjectsMapsPlugin {
+
+  public $tablename;
+  public $orgstable;
+  public $geotable;
+
   function __construct() {
     global $wpdb;
     $this->tablename = $wpdb->prefix . "reomap";

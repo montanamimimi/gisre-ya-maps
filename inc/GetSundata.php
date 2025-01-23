@@ -3,6 +3,10 @@ require_once plugin_dir_path(__FILE__) . 'GetSunoptions.php';
 
 
 class GetSundata {
+
+    public $arg;
+    public $data;
+    
     function __construct() {
         global $wpdb;
         $tablename = $wpdb->prefix . 'mapsun';

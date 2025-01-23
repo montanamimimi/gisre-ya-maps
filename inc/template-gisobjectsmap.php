@@ -17,16 +17,21 @@ if (isset($_GET['thename'])) {
 
 $availableColors = $getTypes->colors;
 
-if (!$typesearch || $typesearch == "ALL") {
+if (!$typesearch || $typesearch == "ALL" || $typesearch == 'unfinished') {
   $colorsArray = $availableColors;
 } else {
   $typesForLegend = $getTypes->energy[$typesearch]['legend']; 
-  $colorsArray = array();
+  $colorsArray = array();  
   foreach ($availableColors as $key => $value) {
     if (in_array($key, $typesForLegend)) {
       $colorsArray[$key] = $value;
     }
   }
+}
+$hideUnfinished = true;
+
+if ($typesearch == 'unfinished' || $searchtext) {
+  $hideUnfinished = false;
 }
 
 get_header();
@@ -127,6 +132,10 @@ $index = 0;
   if ($link) { trim($link); }
   if ($type) { trim($type); }
 
+  if (($status == 'x') && $hideUnfinished) {
+    continue;
+  }
+
 // Определяем цвет иконки. По дефолту розовый - поиск ошибок
 $iconstyle = "{weight: 1, color: '#ff49e7'},";
 
@@ -165,7 +174,8 @@ if ($radius < 4) {
   if ($status == "s") { $status = "строящаяся"; $iconstyle = "{weight: 1, color: '#676767'},";} ;
   if ($status == "d") { $status = "действующая"; };
   if ($status == "z") { $status = "<font color=\"red\">не эксплуатируется</font>"; };
-  if ($status == "x") { $status = "<font color=\"red\">объект не построен</font>"; $iconstyle = "{weight: 1, color: '#DDDDDD'},"; $radius = 4; };
+  // if ($status == "x") { $status = "<font color=\"red\">объект не построен</font>"; $iconstyle = "{weight: 1, color: '#DDDDDD'},"; $radius = 4; };
+  if ($status == "x") { $status = "<font color=\"red\">объект не построен</font>"; };
   if ($status == "p") { $status = " проектируемая "; $iconstyle = "{weight: 1, color: '#DDDDDD'},"; $radius = 4;};
 
   $sprite = " iconPieChartRadius: " . $radius . ", iconPieChartCoreRadius: 0"; 
@@ -268,8 +278,14 @@ if ($radius < 4) {
     <div>
      <h1><?php  
      
-        if (!$typesearch || ($typesearch == 'ALL')) {
+        if (!$typesearch || ($typesearch == 'ALL') ) {
           the_title();
+        } else if ($typesearch == 'unfinished') {
+          if (get_locale() == 'ru_RU') { 
+            echo 'Не построенные объекты' ;         
+          } else { 
+            echo 'Unbuilt objects';
+          }
         } else {
 
           if (get_locale() == 'ru_RU') { 
@@ -347,6 +363,17 @@ if ($radius < 4) {
               </div>                  
 
           <?php } ?>   
+
+            <div class="object-types-form__type">
+                  <input 
+                    type="radio" 
+                    name="type" 
+                    id="unfinished" 
+                    value="unfinished"
+                    <?php echo ($typesearch === 'unfinished') ? ' checked ' : ''; ?>
+                    >
+                  <label for="unfinished">Не построенные объекты</label>
+              </div>             
           </div>
           <button type="submit" class="btn btn--light btn--small"> Применить фильтр </button>
         </form>

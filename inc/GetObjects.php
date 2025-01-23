@@ -4,6 +4,10 @@ require_once plugin_dir_path(__FILE__) . 'GetTypes.php';
 $getTypes = new GetTypes();
 
 class GetObjects {
+
+    public $args;
+    public $objects;
+
     function __construct() {
         global $wpdb;
         $tablename = $wpdb->prefix . 'reomap';
@@ -28,6 +32,11 @@ class GetObjects {
     
         if (isset($_GET['type'])) {
             $typesearch = $_GET['type'];
+
+            if ($typesearch == 'unfinished') {
+                $temp = array('x');
+                return $temp;
+            }
         } else {
             $typesearch = 'ALL';
         }
@@ -41,8 +50,6 @@ class GetObjects {
             foreach ($energyArray as $energy) {
                 array_push($temp, $energy);
             }        
-
-         //   var_dump($temp);
 
             return $temp;
         } else {
@@ -64,6 +71,10 @@ class GetObjects {
 
         if (isset($_GET['type'])) {
             $typesearch = $_GET['type'];
+            if ($typesearch == 'unfinished') {
+                $whereQuery .= " WHERE `status` = %s ORDER BY `id` DESC";
+                return $whereQuery;
+            }
         } else {
             $typesearch = 'ALL';
         }
