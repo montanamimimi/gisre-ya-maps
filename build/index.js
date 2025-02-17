@@ -189,7 +189,7 @@ __webpack_require__.r(__webpack_exports__);
 const isEditorNeeded = document.querySelector('.objects__table');
 const isItDatabase = document.querySelector('.orgdata__form');
 const isItSunres = document.querySelector('.sunres-option');
-const isItWindres = document.querySelector('.windres-option');
+const isItWindres = document.querySelector('.windoptions__selector');
 if (isEditorNeeded) {
   const editor = new _modules_Editor__WEBPACK_IMPORTED_MODULE_1__["default"]();
 }
@@ -323,7 +323,6 @@ if (isItDatabase) {
   }
   selectAllButton.addEventListener('click', () => {
     let isSelected = selectAllButton.classList.contains('selected');
-    console.log(isSelected);
     if (isSelected) {
       selectAllButton.innerText = 'Выбрать все';
       selectAllButton.classList.remove('selected');

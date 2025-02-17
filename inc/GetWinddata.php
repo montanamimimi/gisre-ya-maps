@@ -49,7 +49,7 @@ class GetWinddata {
       if (in_array($data, $availableColumns)) {
         $checkedData = $data;
       } else {
-        $data = "vp30";
+        $checkedData = "lull30";
       }
 
       return $checkedData;

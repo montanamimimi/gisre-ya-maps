@@ -4,7 +4,7 @@ import Editor from './modules/Editor';
 const isEditorNeeded = document.querySelector('.objects__table');
 const isItDatabase = document.querySelector('.orgdata__form');
 const isItSunres = document.querySelector('.sunres-option');
-const isItWindres = document.querySelector('.windres-option');
+const isItWindres = document.querySelector('.windoptions__selector');
 
 if (isEditorNeeded) {
     const editor = new Editor();
@@ -136,7 +136,6 @@ if (isItWindres) {
         ruoption: 'м'
     };
 
-
     datatype.addEventListener('change', changeHeight );
 
     function changeHeight(e) {
@@ -186,7 +185,6 @@ if (isItDatabase) {
 
     selectAllButton.addEventListener('click', () => {
         let isSelected = selectAllButton.classList.contains('selected');
-        console.log(isSelected);
 
         if (isSelected) {
             selectAllButton.innerText = 'Выбрать все';
