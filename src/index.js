@@ -19,9 +19,9 @@ if (isItSunres) {
 
     const sunPeriods = [
         ['year', 'Год'],
-        ['warm', 'Полгода'],
-        ['summer', 'Лето'],
-        ['cold', 'Зима']
+        ['warm', 'Полгода (апрель — сентябрь)'],
+        ['summer', 'Лето (июнь — август)'],
+        ['cold', 'Зима (декабрь — февраль']
     ];
 
     sunOptions['gor'] = {

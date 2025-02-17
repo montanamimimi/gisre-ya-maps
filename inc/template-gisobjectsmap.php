@@ -174,8 +174,7 @@ if ($radius < 4) {
   if ($status == "s") { $status = "строящаяся"; $iconstyle = "{weight: 1, color: '#676767'},";} ;
   if ($status == "d") { $status = "действующая"; };
   if ($status == "z") { $status = "<font color=\"red\">не эксплуатируется</font>"; };
-  // if ($status == "x") { $status = "<font color=\"red\">объект не построен</font>"; $iconstyle = "{weight: 1, color: '#DDDDDD'},"; $radius = 4; };
-  if ($status == "x") { $status = "<font color=\"red\">объект не построен</font>"; };
+  if ($status == "x") { $status = "<font color=\"red\">объект не построен</font>"; $iconstyle = "{weight: 1, color: '#DDDDDD'},"; }; 
   if ($status == "p") { $status = " проектируемая "; $iconstyle = "{weight: 1, color: '#DDDDDD'},"; $radius = 4;};
 
   $sprite = " iconPieChartRadius: " . $radius . ", iconPieChartCoreRadius: 0"; 
@@ -282,9 +281,9 @@ if ($radius < 4) {
           the_title();
         } else if ($typesearch == 'unfinished') {
           if (get_locale() == 'ru_RU') { 
-            echo 'Не построенные объекты' ;         
+            echo 'Не завершенные проекты' ;         
           } else { 
-            echo 'Unbuilt objects';
+            echo 'Not finished objects';
           }
         } else {
 
@@ -372,7 +371,7 @@ if ($radius < 4) {
                     value="unfinished"
                     <?php echo ($typesearch === 'unfinished') ? ' checked ' : ''; ?>
                     >
-                  <label for="unfinished">Не построенные объекты</label>
+                  <label for="unfinished">Не завершенные проекты</label>
               </div>             
           </div>
           <button type="submit" class="btn btn--light btn--small"> Применить фильтр </button>
