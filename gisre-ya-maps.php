@@ -21,6 +21,7 @@ class GisObjectsMapsPlugin {
   public $tablename;
   public $orgstable;
   public $geotable;
+  private static $version = "1.0.3";
 
   function __construct() {
     global $wpdb;
@@ -385,7 +386,6 @@ class GisObjectsMapsPlugin {
         $newdata['translated'] = 0;
       }
 
-    //  var_dump($_POST);
       global $wpdb;
 
       if (isset($_POST['org_id'])) {
@@ -453,8 +453,8 @@ class GisObjectsMapsPlugin {
   }
 
   function loadAssets() {
-    wp_enqueue_style('reomapscss', plugin_dir_url(__FILE__) . 'build/index.css');
-    wp_enqueue_script( 'reomapsjs', plugin_dir_url(__FILE__) . 'build/index.js', array(), null, true );
+    wp_enqueue_style('reomapscss', plugin_dir_url(__FILE__) . 'build/index.css', [], self::$version);
+    wp_enqueue_script( 'reomapsjs', plugin_dir_url(__FILE__) . 'build/index.js', array(), self::$version, true );
   }
 
   function loadTemplate($template) {

@@ -9,10 +9,25 @@ $getTypes = new GetTypes();
 get_header();
 
 $searchtext = "";
+$searchtype = "";
+$searchstatus = "";
 
 if (isset($_GET['thename'])) {
-
   $searchtext = $_GET['thename'];
+}
+
+if (isset($_GET['type'])) {
+  $searchtype = $_GET['type'];
+}
+
+if (isset($_GET['status'])) {
+  $searchstatus = $_GET['status'];
+}
+
+if (isset($_GET['power'])) {
+  $powerFrom = $_GET['power'];
+} else {
+  $powerFrom = 0;
 }
 
 ?>
@@ -51,22 +66,45 @@ if (isset($_GET['thename'])) {
 
 
     if ($searchtext) {
-      echo '<p>Результат поиска для "' . $searchtext . '". </p>';
-    }
+      echo '<p>Фильтр по названию: "' . $searchtext . '". </p>';
+    }    
+
     ?>
 
+    <form class="admin-search" method="GET">
+      <div class="admin-search__fields">      
+        <input name="thename" id="thename" type="text" placeholder="<?php echo __('Введите название...', 'gisre-plugin'); ?>" value="<?php echo $searchtext ?>">
+        <input id="power" type="number" name="power" placeholder="Мощность от (Вт)" value="<?php echo $powerFrom ? $powerFrom : ""; ?>">
+        <select name="type" id="type">
+          <option value="">Все типы</option>
+          <?php 
+          
+          foreach ($getTypes->energy as $key => $type) { ?>
+            <option value="<?php echo $key; ?>" <?php echo ($key == $searchtype) ? " selected " : ""; ?>>
+              <?php echo $type['runame']; ?>
+            </option>          
+          <?php }
+          
+          ?>
+        </select>
+        <select name="status" id="status">
+          <option value="">Все статусы</option>
+          <option value="d" <?php echo ('d' == $searchstatus) ? " selected " : ""; ?>>Действующий</option>         
+          <option value="s" <?php echo ('s' == $searchstatus) ? " selected " : ""; ?>>Строящийся</option>
+           <option value="p" <?php echo ('p' == $searchstatus) ? " selected " : ""; ?>>Проектируемый</option>
+          <option value="z" <?php echo ('z' == $searchstatus) ? " selected " : ""; ?>>Не эксплуатируется</option>
+          <option value="x" <?php echo ('x' == $searchstatus) ? " selected " : ""; ?>>Не построен</option>
+        </select>
+        <button type="submit" style="cursor:pointer;">Поиск</button>
+        <?php
 
+        if ($searchtext || $powerFrom || $searchtype || $searchstatus) {
+          echo '<a href="' . site_url('/gis-objects/') . '">Очистить поиск</a>';
+        }
+        ?>
+      </div>
+      
 
-
-    <form class="search-form__body" method="GET">
-      <input name="thename" id="thename" type="text" placeholder="<?php echo __('Введите название...', 'gisre-plugin'); ?>" value="<?php echo $searchtext ?>">
-      <button type="submit">Поиск</button>
-      <?php
-
-      if ($searchtext) {
-        echo '<a href="' . site_url('/gis-objects/') . '">Очистить поиск</a>';
-      }
-      ?>
 
     </form>
 

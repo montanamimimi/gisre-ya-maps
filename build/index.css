@@ -485,6 +485,19 @@
 .map-container .map-legend h4 {
   margin-bottom: 12px;
 }
+.map-container .square-marker {
+  width: 30px;
+  height: 30px;
+  background: #ff5a5f;
+  border: 2px solid #fff;
+  box-sizing: border-box;
+}
+
+.admin-search__fields {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
 
 @media (max-width: 1000px) {
   .map-container .legend {

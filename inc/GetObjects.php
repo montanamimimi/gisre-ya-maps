@@ -1,106 +1,117 @@
-<?php 
+    <?php 
 
-require_once plugin_dir_path(__FILE__) . 'GetTypes.php';
-$getTypes = new GetTypes();
+    require_once plugin_dir_path(__FILE__) . 'GetTypes.php';
 
-class GetObjects {
+    class GetObjects {
 
-    public $args;
-    public $objects;
+    public array $objects = [];
 
-    function __construct() {
+    public function __construct() {
         global $wpdb;
-        $tablename = $wpdb->prefix . 'reomap';
-        $this->args = $this->getArgs();       
-        $query = "SELECT * FROM $tablename ";
-        $query .= $this->createWhereText();
-        $this->objects = $wpdb->get_results($wpdb->prepare($query, $this->args));
-    }
 
-    function getArgs() {
+        $table = $wpdb->prefix . 'reomap';
 
-        if (isset($_GET['thename'])) {
-            $temp = array(        
-                'name' => "%" . sanitize_text_field($_GET['thename']) . "%"
-                );
+        $filters = $this->getFilters();
 
-            return $temp;
-        }      
+        $params = [];
+        $where  = $this->buildWhere($filters, $params);
 
-        $temp = array();
+        $sql = "
+            SELECT *
+            FROM {$table}
+            {$where}
+            ORDER BY id DESC
+        ";
 
-    
-        if (isset($_GET['type'])) {
-            $typesearch = $_GET['type'];
-
-            if ($typesearch == 'unfinished') {
-                $temp = array('x');
-                return $temp;
-            }
-        } else {
-            $typesearch = 'ALL';
+        if ($params) {
+            $sql = $wpdb->prepare($sql, $params);
         }
 
-        if ($typesearch != "ALL") {
-            $getTypes = new GetTypes();
-
-            $typesearch = $_GET['type'];
-            $energyArray = $getTypes->energy[$typesearch]['types'];
-
-            foreach ($energyArray as $energy) {
-                array_push($temp, $energy);
-            }        
-
-            return $temp;
-        } else {
-            return 0;
-        }
-
-        
-
-     
+        $this->objects = $wpdb->get_results($sql);
     }
 
-    function createWhereText() {
-        $whereQuery = "";
+    /**
+     * Normalize GET into filters
+     */
+    private function getFilters(): array {
 
-        if (isset($_GET['thename'])) {
-            $whereQuery .= " WHERE `name` LIKE %s ORDER BY `id` DESC";
-            return $whereQuery;
+        $filters = [];
+
+        if (!empty($_GET['thename'])) {
+            $filters['name'] = sanitize_text_field($_GET['thename']);
+        }
+
+        if (!empty($_GET['type'])) {
+            $filters['type'] = sanitize_text_field($_GET['type']);            
         } 
 
-        if (isset($_GET['type'])) {
-            $typesearch = $_GET['type'];
-            if ($typesearch == 'unfinished') {
-                $whereQuery .= " WHERE `status` = %s ORDER BY `id` DESC";
-                return $whereQuery;
-            }
-        } else {
-            $typesearch = 'ALL';
+        if (!empty($_GET['power'])) {
+            $filters['power'] = (int) $_GET['power'];
         }
 
-        if ($typesearch != "ALL") {
-            $whereQuery .= " WHERE ";
+        if (!empty($_GET['status'])) {            
+            $filters['status'] = sanitize_text_field($_GET['status']);
+        }       
 
-            $currentPosition = 0;
-            
-            foreach($this->args as $arg) {
-
-                $whereQuery .= " `type` = %s";
-
-                if ($currentPosition != count($this->args) - 1)  {
-                    $whereQuery .= " OR ";
-                }
-                $currentPosition++;
-            }
-        } else {
-            $whereQuery .= " WHERE `id` > %d ";
-        }
-
-        $whereQuery .= " ORDER BY `id` DESC";
-        return $whereQuery;
+        return $filters;
     }
 
-}
+    /**
+     * Build SQL WHERE + params for wpdb->prepare
+     */
+    private function buildWhere(array $filters, array &$params): string {
 
-?>
+        global $wpdb;
+
+        $where = [];
+
+        /* name LIKE */
+        if (!empty($filters['name'])) {
+            $where[]  = "`name` LIKE %s";
+            $params[] = '%' . $wpdb->esc_like($filters['name']) . '%';
+        }
+
+        /* type logic */
+        if (!empty($filters['type'])) {
+            
+            // unfinished → status = 'x'
+            if ($filters['type'] === 'unfinished') {
+                $where[]  = "`status` = %s";
+                $params[] = 'x';
+            } 
+            else {
+                // energy group → IN (...)
+                $getTypes = new GetTypes();
+
+                if (isset($getTypes->energy[$filters['type']]['types'])) {
+
+                    $types = $getTypes->energy[$filters['type']]['types'];
+
+                    $placeholders = implode(',', array_fill(0, count($types), '%s'));
+                    $where[] = "`type` IN ($placeholders)";
+
+                    foreach ($types as $t) {
+                        $params[] = $t;
+                    }
+                }
+            }
+        }
+
+        if (!empty($filters['power'])) {
+            $where[]  = "`power` > %d";
+            $params[] = $filters['power'];
+        }
+
+        if (!empty($filters['status'])) {            
+            $where[]  = "`status` = %s";
+            $params[] = $filters['status'];
+        }
+
+
+        if (!$where) {
+            return '';
+        }
+
+        return 'WHERE ' . implode(' AND ', $where);
+    }
+}

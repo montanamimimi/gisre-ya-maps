@@ -66,11 +66,30 @@ $myCounter = 0;
         })
 
 
-    var customItemContentLayout = ymaps.templateLayoutFactory.createClass(
+    const customItemContentLayout = ymaps.templateLayoutFactory.createClass(
         '<h4 class=ballon_header>{{ properties.balloonContentHeader|raw }}</h4>' +
         '<div class=ballon_body>{{ properties.balloonContentBody|raw }}</div>' +
         '<div class=ballon_footer><small>{{ properties.balloonContentFooter|raw }}<small></div>'
     );
+
+    const SquareLayout = ymaps.templateLayoutFactory.createClass(
+      '<div class="square-marker"></div>',
+      {
+      build: function () {
+        SquareLayout.superclass.build.call(this);
+        this.applyElementOffset();
+      },
+
+
+      applyElementOffset: function () {
+        const el = this.getElement();
+        el.style.marginLeft = '-15px';
+        el.style.marginTop = '-15px';
+      }
+      }
+    );
+
+    const 
 
          clusterer = new ymaps.Clusterer({
             preset: 'islands#blackClusterIcons',
@@ -78,20 +97,9 @@ $myCounter = 0;
             clusterDisableClickZoom: true,
             clusterHideIconOnBalloonOpen: false,
             geoObjectHideIconOnBalloonOpen: false,
-	        clusterBalloonItemContentLayout: customItemContentLayout,
+	          clusterBalloonItemContentLayout: customItemContentLayout,
             gridSize: 5
         }),
-	
- 
-        getPointData = function (index) {
-            return {
-                balloonContentHeader: '<font size=3><b><a target="_blank" href="https://yandex.ru">Здесь может быть ваша ссылка</a></b></font>',
-                balloonContentBody: '<p>Ваше имя: <input name="login"></p><p>Телефон в формате 2xxx-xxx:  <input></p><p><input type="submit" value="Отправить"></p>',
-                balloonContentFooter: '<font size=1>Информация предоставлена: </font> балуном <strong>метки ' + index + '</strong>',
-                clusterCaption: 'метка <strong>' + index + '</strong>'
-            };
-
-        },
 
         getPointOptions = function () {
             return {
@@ -255,8 +263,12 @@ if ($radius < 4) {
 
   $objrequest.= " ', balloonContentFooter: 'Обновление данных: " . $pubdate . "' }, { preset: 'islands#icon', iconLayout: 'default#pieChart', "; 
   $objrequest.= $sprite . ", })";  
+  
+  // $objrequest.= " ', balloonContentFooter: 'Обновление данных: " . $pubdate . "' }, { preset: 'islands#icon', iconLayout: SquareLayout, iconShape: {type: 'Rectangle', coordinates: [[-15, -15], [15, 15]]}"; 
+  
+  // $objrequest.= " })";   
 
-  // echo 'geoObjects[' . $index .'] = new ymaps.Placemark([' . $lat . ', ' . $lon . '], getPointData(' . $index .'), getPointOptions());';
+  
   echo $objrequest . PHP_EOL;
   $index++;
 
