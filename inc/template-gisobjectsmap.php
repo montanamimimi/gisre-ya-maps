@@ -72,22 +72,9 @@ $myCounter = 0;
         '<div class=ballon_footer><small>{{ properties.balloonContentFooter|raw }}<small></div>'
     );
 
-    const SquareLayout = ymaps.templateLayoutFactory.createClass(
-      '<div class="square-marker"></div>',
-      {
-      build: function () {
-        SquareLayout.superclass.build.call(this);
-        this.applyElementOffset();
-      },
-
-
-      applyElementOffset: function () {
-        const el = this.getElement();
-        el.style.marginLeft = '-15px';
-        el.style.marginTop = '-15px';
-      }
-      }
-    );
+const SquareLayout = ymaps.templateLayoutFactory.createClass(
+  '<div class="square-marker"></div>'
+);
 
     const 
 
@@ -155,7 +142,7 @@ $iconstyle = "{weight: 1, color: '#ff49e7'},";
     if ($type == "VES") {$iconstyle = "{weight: 1, color: '#116889'},";};
     if ($type == "VDES") {$iconstyle = "{weight: 1, color: '#116889'},{weight: 1, color: '#000000'},";};
     if ($type == "BIO") {$iconstyle = "{weight: 1, color: '#4d9c29'},";};
-    if (($type== "BIOC") OR ($type == "BIOI") OR ($type == "BIOT") OR ($type == "BIOZ")) {$iconstyle = "{weight: 1, color: '#93de00'},";};
+    if (($type == "BIOC") OR ($type == "BIOI") OR ($type == "BIOT") OR ($type == "BIOZ")) {$iconstyle = "{weight: 1, color: '#93de00'},";};
     if (($type == "GEOE") OR ($type == "GEOT") OR ($type == "GEOTE")) {$iconstyle = "{weight: 1, color: '#e32e0f'},";};
     if ($type == "TN") {$iconstyle = "{weight: 1, color: '#510337'},";};
     if ($type == "TNSVU") {$iconstyle = "{weight: 1, color: '#510337'},{weight: 1, color: '#f5a10a'},";};
@@ -261,12 +248,17 @@ if ($radius < 4) {
   if ($link != null and $link != " ") {
   $objrequest.= "<b>Ссылка: </b> <a href=\"" . $link . "\" target=\"_blank\"> " . $linkshort . "</a> <br>" ; }; 
 
-  $objrequest.= " ', balloonContentFooter: 'Обновление данных: " . $pubdate . "' }, { preset: 'islands#icon', iconLayout: 'default#pieChart', "; 
-  $objrequest.= $sprite . ", })";  
+  if ($type == "BIOC") {
+    $objrequest.= " ', balloonContentFooter: 'Обновление данных: " . $pubdate . "' }, {iconLayout: SquareLayout, iconShape: {type: 'Rectangle', coordinates: [[0, 0], [20, 20]]}, iconOffset: [-10, -10], hasBalloon: true, openBalloonOnClick: true"; 
+    $objrequest.= " })";  
+  } else {
+    $objrequest.= " ', balloonContentFooter: 'Обновление данных: " . $pubdate . "' }, { preset: 'islands#icon', iconLayout: 'default#pieChart', "; 
+    $objrequest.= $sprite . ", })";  
+  }
+
+
   
-  // $objrequest.= " ', balloonContentFooter: 'Обновление данных: " . $pubdate . "' }, { preset: 'islands#icon', iconLayout: SquareLayout, iconShape: {type: 'Rectangle', coordinates: [[-15, -15], [15, 15]]}"; 
-  
-  // $objrequest.= " })";   
+
 
   
   echo $objrequest . PHP_EOL;
@@ -393,9 +385,15 @@ if ($radius < 4) {
             <h4>Условные обозначения:</h4>
             <div class="legend__items">
               <?php 
-                foreach ($colorsArray as $key => $value) { ?>
+                foreach ($colorsArray as $key => $value) { 
+                  if ($key == "BIOC") {
+                    $class = "square";
+                  } else {
+                    $class = "round";
+                  }
+                  ?>
                   <div class="legend__item">
-                    <div class="legend__round" style="background-color: <?php echo $value['color'] ?>">
+                    <div class="legend__<?php echo $class; ?>" style="background-color: <?php echo $value['color'] ?>">
 
                     </div>
                     <div class="legend__desc">

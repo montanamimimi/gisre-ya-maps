@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Gis Objects on maps
-  Version: 1.0
+  Version: 1.0.4
   Author: montana_mimimi
   Author URI: https://github.com/montanamimimi/
   Text domain: gisre-plugin
@@ -21,7 +21,7 @@ class GisObjectsMapsPlugin {
   public $tablename;
   public $orgstable;
   public $geotable;
-  private static $version = "1.0.3";
+  private static $version = "1.0.4";
 
   function __construct() {
     global $wpdb;

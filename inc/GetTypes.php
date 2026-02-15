@@ -17,7 +17,7 @@ class GetTypes {
             "ВЭС" => "VES",
             "Ветер+дизель" => "VDES",
             "Био" => "BIO",
-            "Био-кластер" => "BIOC",
+            "Производители биотоплива" => "BIOC",
             "Гео" => "GEOE",
             "Насос" => "TN",
             "Насос+вода" => "TNSVU",
@@ -54,7 +54,7 @@ class GetTypes {
                 "runame" => "Биоэнергетика", 
                 "enname" => "Bio energy",
                 "types" => array("BIO", "BIOC"),
-                "legend" => array("BIO", "STR", "PRO")
+                "legend" => array("BIO", "BIOC", "STR", "PRO")
             ),
             "e-geo" => array(
                 "runame" => "Геотермальные объекты", 
@@ -120,6 +120,10 @@ class GetTypes {
                 'color' => '#4d9c29',
                 'name' => 'Биоэнергетика'
             ),
+            'BIOC' => array (
+                'color' => '#4d9c29',
+                'name' => 'Биотопливо'
+            ),            
             'GEO' => array (
                 'color' => '#e32e0f',
                 'name' => 'Электро-снабжение'

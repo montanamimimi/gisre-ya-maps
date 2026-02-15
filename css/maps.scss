@@ -25,11 +25,12 @@
     }
 
     .square-marker {
-        width: 30px;
-        height: 30px;
-        background: #ff5a5f;
+        width: 20px;
+        height: 20px;
+        background: #4d9c29;
         border: 2px solid #fff;
         box-sizing: border-box;
+        pointer-events: auto;   /* important */
     }
 
 }
@@ -38,8 +39,23 @@
 
     &__fields {
         display: flex;
+        flex-direction: column;
+        align-items: flex-start;
         gap: 12px;
         margin-bottom: 24px;        
+    }
+
+    &__field {
+        min-width: 40%;
+
+        input, select {
+            width: 100%;
+        }
+
+        input[type="checkbox"] {
+            width: unset;
+            margin-right: 12px;
+        }
     }
 }
 

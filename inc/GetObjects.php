@@ -49,9 +49,17 @@
             $filters['power'] = (int) $_GET['power'];
         }
 
+        if (!empty($_GET['smallonly'])) {
+            $filters['smallonly'] = $_GET['smallonly'];
+        }
+
         if (!empty($_GET['status'])) {            
             $filters['status'] = sanitize_text_field($_GET['status']);
-        }       
+        }      
+
+        if (!empty($_GET['funct'])) {            
+            $filters['function'] = sanitize_text_field($_GET['funct']);
+        }   
 
         return $filters;
     }
@@ -102,9 +110,24 @@
             $params[] = $filters['power'];
         }
 
+        if (!empty($filters['smallonly'])) {
+            $where[]  = "`power` < 10000000";
+        }        
+
         if (!empty($filters['status'])) {            
             $where[]  = "`status` = %s";
             $params[] = $filters['status'];
+        }
+
+        if (!empty($filters['function'])) {   
+            
+            if ($filters['function'] == "none") {
+                $where[]  = "(`function` IS NULL OR TRIM(`function`) = '')";
+            } else {
+                $where[]  = "`function` = %s";
+                $params[] = $filters['function'];
+            }
+
         }
 
 

@@ -1,29 +1,54 @@
-<?php get_header();
+<?php get_header(); ?>
 
+<?php 
 
 require_once plugin_dir_path(__FILE__) . 'GetWinddata.php';
 require_once plugin_dir_path(__FILE__) . 'GetWindoptions.php';
+
 $winddata = new GetWinddata();
 $windoptions = new GetWindoptions();
+$min = 0;
+$max = 0;
 
-
-$min = $winddata->min;
-$max = $winddata->max;
+if (isset($winddata->minmax[0])) {
+  $min = $winddata->minmax[0]->min;
+  $max = $winddata->minmax[0]->max;
+}
 $delta = $max - $min;
 
-//$colorArray = array();
+if (isset($_GET['datatype'])) {
+  $currentType = $_GET['datatype'];
+} else {
+  $currentType = '1';
+}
 
-$currentType = $_GET['datatype'];
-$currentHeight = $_GET['height'];
-
-$currentPosition = $currentType . $currentHeight;
-
-
+if (isset($_GET['period'])) {
+  $currentPeriod = $_GET['period'];
+} else {
+  $$currentPeriod = 'mean_year';
+}
 
 $windtype = $windoptions->options[$currentType]['runame'];
 $unittype = $windoptions->options[$currentType]['ruunit'];
-
+$windcolors = array(
+  strval(ceil($min + $delta*0.1)) => 'd1d4ee',
+  strval(ceil($min + $delta*0.2)) => 'b3b7dc',
+  strval(ceil($min + $delta*0.3)) => '979ece',
+  strval(ceil($min + $delta*0.4)) => '7f86bd',
+  strval(ceil($min + $delta*0.5)) => '636ba8',
+  strval(ceil($min + $delta*0.6)) => '424b8d',
+  strval(ceil($min + $delta*0.7)) => '2c367a',
+  strval(ceil($min + $delta*0.8)) => '1c266d',
+  strval(ceil($min + $delta*0.9)) => '0c1457',
+  'Более' => '040b4d'
+);
 ?>
+
+<script>
+<?php echo 'const rectanglesData = ' . wp_json_encode($winddata->data) . ';'; ?>
+<?php echo 'const max = ' . wp_json_encode($max) . ';'; ?>
+<?php echo 'const min = ' . wp_json_encode($min) . ';'; ?>
+</script>
 
 <script src="https://api-maps.yandex.ru/2.1/?apikey=c7787d5f-f9be-45c4-986a-6fa101bd672d&lang=ru_RU" type="text/javascript"></script>
     <script type="text/javascript">
@@ -39,55 +64,35 @@ function init () {
         searchControlProvider: 'yandex#search'
     });
 
+    const delta = +max - +min;
 
+    rectanglesData.forEach((item, index) => {
 
- <?php foreach ($winddata->data as $row): 
- 
+      let color = "040b4d";
 
-  $lat = $row -> lat;
-  $lon = $row -> lon;
-  $id = $row -> id;
-  $data = $row -> data;
+      if (item.data < (+min + delta*0.1)) {
+        color = "d1d4ee";
+      }
+      else if (item.data < (+min + delta*0.2)) {color = "b3b7dc";}
+      else if (item.data < (+min + delta*0.3)) {color = "979ece";}
+      else if (item.data < (+min + delta*0.4)) {color = "7f86bd";}
+      else if (item.data < (+min + delta*0.5)) {color = "636ba8";} 
+      else if (item.data < (+min + delta*0.6)) {color = "424b8d";} 
+      else if (item.data < (+min + delta*0.7)) {color = "2c367a";} 
+      else if (item.data < (+min + delta*0.8)) {color = "1c266d";} 
+      else if (item.data < (+min + delta*0.9)) {color = "0c1457";} 
 
-$lat1 = $lat + 1;
-$lon1 = $lon + 1;
+      let lat1 = +item.lat + 0.25;
+      let lon1 = +item.lon + 0.25;
+      const testRectangle = new ymaps.Rectangle(
+          [[item.lat, item.lon], [lat1, lon1]],
+          { hintContent: 'Test rectangle' },
+          { fillColor: '#' + color, fillOpacity: 0.8, strokeWidth: 0 }
+      );
 
-
-if ($data < $min + $delta*0.1) {$color = "d1d4ee";} 
-elseif ($data < $min + $delta*0.2) {$color = "b3b7dc";}
-elseif ($data < $min + $delta*0.3) {$color = "979ece";}
-elseif ($data < $min + $delta*0.4) {$color = "7f86bd";}
-elseif ($data < $min + $delta*0.5) {$color = "636ba8";} 
-elseif ($data < $min + $delta*0.6) {$color = "424b8d";} 
-elseif ($data < $min + $delta*0.7) {$color = "2c367a";} 
-elseif ($data < $min + $delta*0.8) {$color = "1c266d";} 
-elseif ($data < $min + $delta*0.9) {$color = "0c1457";} 
-else { $color = "040b4d"; };
-
-
-$windcolors = array(
-  strval(ceil($min + $delta*0.1)) => 'd1d4ee',
-  strval(ceil($min + $delta*0.2)) => 'b3b7dc',
-  strval(ceil($min + $delta*0.3)) => '979ece',
-  strval(ceil($min + $delta*0.4)) => '7f86bd',
-  strval(ceil($min + $delta*0.5)) => '636ba8',
-  strval(ceil($min + $delta*0.6)) => '424b8d',
-  strval(ceil($min + $delta*0.7)) => '2c367a',
-  strval(ceil($min + $delta*0.8)) => '1c266d',
-  strval(ceil($min + $delta*0.9)) => '0c1457',
-  'Более' => '040b4d'
-);
-
-
-$mrect = "myRectangle" . $id . " = new ymaps.Rectangle([ [ ";
-$mrect .= $lat . ", " . $lon . "] , [" . $lat1 . ", " . $lon1 . "] ], ";
-$mrect .= " { hintContent: ' " . $windtype . " <br> " . $data . " " . $unittype . " ";
-$mrect .= " <br> <br> Широта: " . $lat . "&deg; <br> Долгота: " . $lon . "&deg; ' }, { fillColor: '#" . $color . "', fillOpacity: 0.8, strokeWidth: 0, });";
-$mrect .= "  myMap.geoObjects .add(myRectangle" . $id . ");";
-
-  echo $mrect;
-  endforeach;  ?>
-
+      myMap.geoObjects.add(testRectangle);
+      
+    })
 }
 
 </script>
@@ -118,29 +123,26 @@ $mrect .= "  myMap.geoObjects .add(myRectangle" . $id . ");";
         <div class="windoptions__form-item">
 
           <select id="datatype" name="datatype" class="windoptions__selector" required>
-              <option value=""> -- тип данных -- </option>
-              <?php 
-              foreach ($windoptions->options as $key => $value) { ?>
-                <option value="<?php echo $key ?>" 
-                <?php if ($key == $_GET['datatype']) { echo 'selected';} ?>
-                ><?php echo $value['runame']; ?></option>
-              <?php }
-              ?>              
+              <option value="1" <?php echo $currentType == '1' ? "selected" : "";  ?>>Скорость ветра на 10м</option>  
+              <option value="2" <?php echo $currentType == '2' ? "selected" : "";  ?>>Скорость ветра на 100м</option>
+              <option value="3" <?php echo $currentType == '3' ? "selected" : "";  ?>>Плотность потока энергии ветра на 100м</option>         
           </select> 
         </div>
         <div class="windoptions__form-item">
-          <select id="height" name="height" class="windoptions__selector" required>
-            <option value=""> -- параметр -- </option>
-            <?php 
-              $currentDatatype = $_GET['datatype'];
-              $currentHeight = $windoptions->options[$currentDatatype]['height'];        
-              
-              foreach ($currentHeight as $item) { ?>
-                <option class="height-option" value="<?php echo $item; ?>"
-                <?php if ($item == $_GET['height']) { echo 'selected';} ?>
-                ><?php echo $item . ' ' . $windoptions->options[$currentDatatype]['ruoption']; ?></option>
-              <?php }
-            ?>                        
+          <select id="period" name="period" class="windoptions__selector" required>
+            <option value="mean_year" <?php echo $currentPeriod == 'mean_year' ? "selected" : "";  ?>> Год </option>  
+            <option value="mean_month1" <?php echo $currentPeriod == 'mean_month1' ? "selected" : "";  ?>>Январь</option>
+            <option value="mean_month2" <?php echo $currentPeriod == 'mean_month2' ? "selected" : "";  ?>>Февраль</option>
+            <option value="mean_month3" <?php echo $currentPeriod == 'mean_month3' ? "selected" : "";  ?>>Март</option>
+            <option value="mean_month4" <?php echo $currentPeriod == 'mean_month4' ? "selected" : "";  ?>>Апрель</option>
+            <option value="mean_month5" <?php echo $currentPeriod == 'mean_month5' ? "selected" : "";  ?>>Май</option>
+            <option value="mean_month6" <?php echo $currentPeriod == 'mean_month6' ? "selected" : "";  ?>>Июнь</option>
+            <option value="mean_month7" <?php echo $currentPeriod == 'mean_month7' ? "selected" : "";  ?>>Июль</option>
+            <option value="mean_month8" <?php echo $currentPeriod == 'mean_month8' ? "selected" : "";  ?>>Август</option>
+            <option value="mean_month9" <?php echo $currentPeriod == 'mean_month9' ? "selected" : "";  ?>>Сентябрь</option>
+            <option value="mean_month10" <?php echo $currentPeriod == 'mean_month10' ? "selected" : "";  ?>>Октябрь</option>
+            <option value="mean_month11" <?php echo $currentPeriod == 'mean_month11' ? "selected" : "";  ?>>Ноябрь</option>
+            <option value="mean_month12" <?php echo $currentPeriod == 'mean_month12' ? "selected" : "";  ?>>Декабрь</option>
           </select> 
         </div>
         <div class="windoptions__form-item">
@@ -175,16 +177,4 @@ $mrect .= "  myMap.geoObjects .add(myRectangle" . $id . ");";
   </div>
 </section>
 
-
-  
-<section>
-  <div class="container">
-
-  </div>
-</section>
-
-
-
-
-
-<?php get_footer(); ?>
+<?php get_footer();

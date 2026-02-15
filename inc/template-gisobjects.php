@@ -11,6 +11,8 @@ get_header();
 $searchtext = "";
 $searchtype = "";
 $searchstatus = "";
+$searchoption = "";
+$smallonly = "";
 
 if (isset($_GET['thename'])) {
   $searchtext = $_GET['thename'];
@@ -22,6 +24,14 @@ if (isset($_GET['type'])) {
 
 if (isset($_GET['status'])) {
   $searchstatus = $_GET['status'];
+}
+
+if (isset($_GET['smallonly'])) {
+  $smallonly = $_GET['smallonly'];
+}
+
+if (isset($_GET['funct'])) {
+  $searchoption = $_GET['funct'];
 }
 
 if (isset($_GET['power'])) {
@@ -72,40 +82,63 @@ if (isset($_GET['power'])) {
     ?>
 
     <form class="admin-search" method="GET">
-      <div class="admin-search__fields">      
-        <input name="thename" id="thename" type="text" placeholder="<?php echo __('Введите название...', 'gisre-plugin'); ?>" value="<?php echo $searchtext ?>">
-        <input id="power" type="number" name="power" placeholder="Мощность от (Вт)" value="<?php echo $powerFrom ? $powerFrom : ""; ?>">
-        <select name="type" id="type">
-          <option value="">Все типы</option>
-          <?php 
-          
-          foreach ($getTypes->energy as $key => $type) { ?>
-            <option value="<?php echo $key; ?>" <?php echo ($key == $searchtype) ? " selected " : ""; ?>>
-              <?php echo $type['runame']; ?>
-            </option>          
-          <?php }
-          
+      <div class="admin-search__fields">    
+        <div class="admin-search__field">
+          <input name="thename" id="thename" type="text" placeholder="<?php echo __('Введите название...', 'gisre-plugin'); ?>" value="<?php echo $searchtext ?>">
+        </div>
+        <div class="admin-search__field">
+          <input id="power" type="number" name="power" placeholder="Мощность от (Вт)" value="<?php echo $powerFrom ? $powerFrom : ""; ?>">
+        </div>
+        <div class="admin-search__field">
+          <select name="type" id="type">
+            <option value="">Все типы</option>
+            <?php 
+            
+            foreach ($getTypes->energy as $key => $type) { ?>
+              <option value="<?php echo $key; ?>" <?php echo ($key == $searchtype) ? " selected " : ""; ?>>
+                <?php echo $type['runame']; ?>
+              </option>          
+            <?php }
+            
+            ?>
+          </select>          
+        </div>
+        <div class="admin-search__field">
+          <select name="status" id="status">
+            <option value="">Все статусы</option>
+            <option value="d" <?php echo ('d' == $searchstatus) ? " selected " : ""; ?>>Действующий</option>         
+            <option value="s" <?php echo ('s' == $searchstatus) ? " selected " : ""; ?>>Строящийся</option>
+            <option value="p" <?php echo ('p' == $searchstatus) ? " selected " : ""; ?>>Проектируемый</option>
+            <option value="z" <?php echo ('z' == $searchstatus) ? " selected " : ""; ?>>Не эксплуатируется</option>
+            <option value="x" <?php echo ('x' == $searchstatus) ? " selected " : ""; ?>>Не построен</option>
+          </select>
+        </div>
+        <div class="admin-search__field">
+          <select name="funct" id="funct">
+            <option value="">Все варианты</option>
+            <option value="a" <?php echo ('a' == $searchoption) ? " selected " : ""; ?>>Автономная</option>         
+            <option value="s" <?php echo ('s' == $searchoption) ? " selected " : ""; ?>>Сетевая</option>
+            <option value="none" <?php echo ('none' == $searchoption) ? " selected " : ""; ?>>Не указано</option>
+          </select>  
+        </div>
+        <div class="admin-search__field">
+          <input id="smallonly" name="smallonly" type="checkbox" <?php echo $smallonly ? "checked" : ""; ?>>
+          <label for="smallonly">
+            Мощность менее 10 МВт
+          </label>
+        </div>
+        <div class="admin-search__field">
+          <button type="submit" style="cursor:pointer;">Поиск</button>
+        </div>
+        <div class="admin-search__field">
+          <?php
+
+          if ($searchtext || $powerFrom || $searchtype || $searchstatus || $searchoption) {
+            echo '<a href="' . site_url('/gis-objects/') . '">Очистить поиск</a>';
+          }
           ?>
-        </select>
-        <select name="status" id="status">
-          <option value="">Все статусы</option>
-          <option value="d" <?php echo ('d' == $searchstatus) ? " selected " : ""; ?>>Действующий</option>         
-          <option value="s" <?php echo ('s' == $searchstatus) ? " selected " : ""; ?>>Строящийся</option>
-           <option value="p" <?php echo ('p' == $searchstatus) ? " selected " : ""; ?>>Проектируемый</option>
-          <option value="z" <?php echo ('z' == $searchstatus) ? " selected " : ""; ?>>Не эксплуатируется</option>
-          <option value="x" <?php echo ('x' == $searchstatus) ? " selected " : ""; ?>>Не построен</option>
-        </select>
-        <button type="submit" style="cursor:pointer;">Поиск</button>
-        <?php
-
-        if ($searchtext || $powerFrom || $searchtype || $searchstatus) {
-          echo '<a href="' . site_url('/gis-objects/') . '">Очистить поиск</a>';
-        }
-        ?>
+        </div>
       </div>
-      
-
-
     </form>
 
   </div>
