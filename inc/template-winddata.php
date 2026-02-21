@@ -48,6 +48,17 @@ $windcolors = array(
 <?php echo 'const rectanglesData = ' . wp_json_encode($winddata->data) . ';'; ?>
 <?php echo 'const max = ' . wp_json_encode($max) . ';'; ?>
 <?php echo 'const min = ' . wp_json_encode($min) . ';'; ?>
+<?php if (($currentType == 1) || ($currentType == 2) ) {
+
+  echo 'const label = ' . wp_json_encode('Скорость ветра') . ';'; 
+  echo 'const unit = ' . wp_json_encode('м/с') . ';'; 
+
+} else if ($currentType == 3) {
+  echo 'const label = ' . wp_json_encode('Плотность потока') . ';'; 
+  echo 'const unit = ' . wp_json_encode('Вт/м2') . ';'; 
+} 
+
+?>
 </script>
 
 <script src="https://api-maps.yandex.ru/2.1/?apikey=c7787d5f-f9be-45c4-986a-6fa101bd672d&lang=ru_RU" type="text/javascript"></script>
@@ -86,7 +97,7 @@ function init () {
       let lon1 = +item.lon + 0.25;
       const testRectangle = new ymaps.Rectangle(
           [[item.lat, item.lon], [lat1, lon1]],
-          { hintContent: 'Test rectangle' },
+          { hintContent: `Широта: ${item.lat}</br> Долгота: ${lon1} </br> ${label}: ${item.data}${unit}` },
           { fillColor: '#' + color, fillOpacity: 0.8, strokeWidth: 0 }
       );
 
