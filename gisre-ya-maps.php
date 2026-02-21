@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: Gis Objects on maps
-  Version: 1.0.4
+  Version: 1.0.5
   Author: montana_mimimi
   Author URI: https://github.com/montanamimimi/
   Text domain: gisre-plugin
@@ -21,7 +21,7 @@ class GisObjectsMapsPlugin {
   public $tablename;
   public $orgstable;
   public $geotable;
-  private static $version = "1.0.4";
+  private static $version = "1.0.5";
 
   function __construct() {
     global $wpdb;
@@ -473,6 +473,10 @@ class GisObjectsMapsPlugin {
     if (is_page('winddata') OR is_page(1237)) {
       return plugin_dir_path(__FILE__) . 'inc/template-winddata.php';
     } 
+    
+    if (is_page('winddata-lull') || is_page('winddata-lull-en')) {
+      return plugin_dir_path(__FILE__) . 'inc/template-winddata-old.php';
+    }     
 
     if (is_page('geodata') OR is_page(1256)) {
       return plugin_dir_path(__FILE__) . 'inc/template-geodata.php';

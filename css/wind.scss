@@ -1,0 +1,19 @@
+.windswitcher  {
+
+    margin-bottom: 32px;
+
+    &__items {
+        display: flex;
+        gap: 16px;
+    }
+
+    &__item {
+        padding: 8px 16px;
+        border: 1px solid rgb(211, 211, 211);
+        color: black;
+
+        &--active {
+            border: 1px solid grey;
+        }
+    }
+}

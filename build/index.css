@@ -536,6 +536,22 @@
     width: 100%;
   }
 }
+.windswitcher {
+  margin-bottom: 32px;
+}
+.windswitcher__items {
+  display: flex;
+  gap: 16px;
+}
+.windswitcher__item {
+  padding: 8px 16px;
+  border: 1px solid rgb(211, 211, 211);
+  color: black;
+}
+.windswitcher__item--active {
+  border: 1px solid grey;
+}
+
 .yandex-map {
   position: relative;
   width: 100%;

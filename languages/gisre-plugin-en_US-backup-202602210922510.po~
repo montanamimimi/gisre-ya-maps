@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Gis Objects on maps\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-26 05:11+0000\n"
-"PO-Revision-Date: 2026-02-21 09:22+0000\n"
+"PO-Revision-Date: 2024-05-28 10:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -40,7 +40,7 @@ msgid "В состав какого ООПТ входит"
 msgstr "Which protected area is included in"
 
 #: inc/template-editgeodata.php:46 inc/template-geomap.php:196
-#: inc/template-gisobjects.php:87 inc/template-organizations.php:58
+#: inc/template-gisobjects.php:62 inc/template-organizations.php:58
 msgid "Введите название..."
 msgstr "Enter the title..."
 
@@ -52,7 +52,7 @@ msgstr "All regions"
 msgid "Геотермальная провинция"
 msgstr "Geothermal province"
 
-#: inc/GetGeooptions.php:11
+#: inc/GetGeooptions.php:7
 msgid "Камчатка"
 msgstr "Kamchatka"
 
@@ -76,7 +76,7 @@ msgstr "Number of wells"
 msgid "Координаты"
 msgstr "Coordinates"
 
-#: inc/GetGeooptions.php:10
+#: inc/GetGeooptions.php:6
 msgid "Курильские острова"
 msgstr "Kurile Islands"
 
@@ -89,17 +89,13 @@ msgid "Минерализация г/л"
 msgstr "Mineralization g/l"
 
 #: inc/template-editgeodata.php:51 inc/template-geomap.php:204
-#: inc/template-gisobjectsmap.php:333 inc/template-organizations.php:63
+#: inc/template-gisobjectsmap.php:314 inc/template-organizations.php:63
 msgid "Очистить поиск"
 msgstr "Clear search"
 
 #: inc/template-geodata.php:130 inc/template-geomap.php:10
 msgid "Перспективная область эксплуатации"
 msgstr "Promising area of operation"
-
-#: inc/template-winddata-old.php:119 inc/template-winddata.php:137
-msgid "Повторяемость и энергетические затишья"
-msgstr "Repeatability and low wind periods "
 
 #: inc/template-geomap.php:197
 msgid "Поиск"
@@ -113,13 +109,9 @@ msgstr "Forecast parameters"
 msgid "Применить фильтр"
 msgstr "Apply filter"
 
-#: inc/GetGeooptions.php:12
+#: inc/GetGeooptions.php:8
 msgid "Северный Кавказ"
 msgstr "North Caucasus"
-
-#: inc/template-winddata-old.php:116 inc/template-winddata.php:134
-msgid "Скорость ветра и плотность потока"
-msgstr "Wind speed and energy density"
 
 #: inc/template-geodata.php:127 inc/template-geomap.php:9
 msgid "Современное использование"

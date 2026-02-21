@@ -119,6 +119,25 @@ function init () {
 
 <section class="single-text">
   <div class="container">
+      <div class="windswitcher">
+        <?php 
+        
+          if (get_locale() == 'ru_RU') { 
+            $link = get_permalink( get_page_by_path( 'winddata-lull' ) );
+          } else { 
+            $link = get_permalink( get_page_by_path( 'winddata-lull-en' ) );
+          }
+        
+        ?>
+        <div class="windswitcher__items">
+          <div class="windswitcher__item windswitcher__item--active">            
+              <?php echo __('Скорость ветра и плотность потока', 'gisre-plugin'); ?>                     
+          </div>
+          <a href="<?php echo $link . '?datatype=lull&height=30'; ?>" class="windswitcher__item ">            
+             <?php echo __('Повторяемость и энергетические затишья', 'gisre-plugin'); ?>                       
+          </a>
+        </div>
+      </div>
       <div >            
           <?php the_content(); ?>        
       </div>
