@@ -6,6 +6,7 @@ class GetWinddata {
 
     public array $data = [];
     public array $minmax = [];
+    public array $convertedData = [];
     
     function __construct() {
         global $wpdb;
@@ -56,6 +57,47 @@ class GetWinddata {
 
         $this->data = $wpdb->get_results($sql);
         $this->minmax = $wpdb->get_results($sql2);
+        $this->convertedData = $this->convert($this->data);        
+    }
+
+    private function convert($data) {
+        $points = [];
+
+        $min = 0;
+        $max = 0;
+
+        if (isset($this->minmax[0])) {
+            $min = (float)$this->minmax[0]->min;
+            $max = (float)$this->minmax[0]->max;
+            $delta = $max - $min;
+        }
+
+        foreach ($data as $i => $obj) {
+
+            $data = (float)$obj->data;
+
+            
+            if ($data < ($min + $delta*0.1)) {                
+                $color = "#d1d4ee";
+            } else if ($data < ($min + $delta*0.2)) {$color = "#b3b7dc";}
+            else if ($data < ($min + $delta*0.3)) {$color = "#979ece";}
+            else if ($data < ($min + $delta*0.4)) {$color = "#7f86bd";}
+            else if ($data < ($min + $delta*0.5)) {$color = "#636ba8";} 
+            else if ($data < ($min + $delta*0.6)) {$color = "#424b8d";} 
+            else if ($data < ($min + $delta*0.7)) {$color = "#2c367a";} 
+            else if ($data < ($min + $delta*0.8)) {$color = "#1c266d";} 
+            else if ($data < ($min + $delta*0.9)) {$color = "#0c1457";}                 
+
+            $point = [
+                'coords' => [(float)$obj->lat, (float)$obj->lon],
+                'value'  => (float)$obj->data, 
+                'color' => $color
+            ];
+            array_push($points, $point);
+
+        }
+
+        return $points;
     }
  
     private function getFilters(): array {
