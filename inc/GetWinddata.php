@@ -1,6 +1,4 @@
 <?php 
-require_once plugin_dir_path(__FILE__) . 'GetWindoptions.php';
-
 
 class GetWinddata {
 
@@ -86,7 +84,10 @@ class GetWinddata {
             else if ($data < ($min + $delta*0.6)) {$color = "#424b8d";} 
             else if ($data < ($min + $delta*0.7)) {$color = "#2c367a";} 
             else if ($data < ($min + $delta*0.8)) {$color = "#1c266d";} 
-            else if ($data < ($min + $delta*0.9)) {$color = "#0c1457";}                 
+            else if ($data < ($min + $delta*0.9)) {$color = "#0c1457";}      
+            else {
+                $color = "040b4d";
+            }            
 
             $point = [
                 'coords' => [(float)$obj->lat, (float)$obj->lon],

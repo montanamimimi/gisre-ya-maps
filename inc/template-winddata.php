@@ -25,7 +25,7 @@ if (isset($_GET['datatype'])) {
 if (isset($_GET['period'])) {
   $currentPeriod = $_GET['period'];
 } else {
-  $$currentPeriod = 'mean_year';
+  $currentPeriod = 'mean_year';
 }
 
 $windtype = $windoptions->options[$currentType]['runame'];
@@ -121,7 +121,7 @@ function init() {
                 const cell = grid[key];
 
                 if (cell) {
-                    ctx.globalAlpha = 0.9; // или убери, если цвет уже с альфой
+                    ctx.globalAlpha = 0.9; 
                     ctx.fillStyle = cell.color;
                     ctx.fillRect(x, y, 4, 4);
                 }
@@ -131,7 +131,7 @@ function init() {
         return canvas.toDataURL();
     });
 
-    map.layers.add(layer); // 👈 вместо MapType
+    map.layers.add(layer); 
 
     map.events.add('click', function (e) {
         const geo = e.get('coords');

@@ -467,7 +467,7 @@ class GisObjectsMapsPlugin {
     } 
 
     if (is_page('map-sunres') OR is_page(1233)) {
-      return plugin_dir_path(__FILE__) . 'inc/template-map-sunres.php';
+      return plugin_dir_path(__FILE__) . 'inc/template-sunres-new.php';
     } 
 
     if (is_page('winddata') OR is_page(1237)) {
