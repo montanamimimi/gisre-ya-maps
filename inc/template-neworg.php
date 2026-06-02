@@ -6,7 +6,7 @@ if (is_user_logged_in()) {
 
   $roles = (array) $user->roles;
 
-  if (!($roles[0] == 'administrator')) {
+  if (!(in_array($roles[0], array('administrator', 'editor')))) {
     wp_redirect(home_url());
   }
 } else {

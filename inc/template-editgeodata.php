@@ -59,7 +59,7 @@ if (isset($_GET['thename'])) {
 <section class="new-button">
   <div class="container">
     <?php
-    if (current_user_can('administrator')) { ?>
+    if (current_user_can('edit_others_posts')) { ?>
       <a class="button" href="<?php echo home_url() . '/newgeodata'; ?>">Добавить месторождение</a>
 
     <?php }
@@ -77,7 +77,7 @@ if (isset($_GET['thename'])) {
           <th>Регион</th>
           <th>Перевод?</th>
           <?php
-          if (current_user_can('administrator')) { ?>
+          if (current_user_can('edit_others_posts')) { ?>
             <th>Редактировать</th>
             <th>x</th>
           <?php }
@@ -94,7 +94,7 @@ if (isset($_GET['thename'])) {
             <td><?php echo $item->location; ?></td>
             <td><?php echo $item->translated ? '&#10004;' : '&#10006;'; ?></td>
             <?php
-            if (current_user_can('administrator')) { ?>
+            if (current_user_can('edit_others_posts')) { ?>
               <td class="button-td">
                 <a class="button" href="<?php echo site_url() . '/editgeo/?id=' . $item->id; ?>" class="edit-object-button">Редактировать</a>
               </td>

@@ -70,7 +70,7 @@ if (isset($_GET['type'])){
 <section class="new-button">
   <div class="container">
     <?php
-    if (current_user_can('administrator')) { ?>
+    if (current_user_can('edit_others_posts')) { ?>
       <a class="button" href="<?php echo home_url() . '/neworg'; ?>">Добавить организацию</a>
 
     <?php }
@@ -88,7 +88,7 @@ if (isset($_GET['type'])){
           <th>Название</th>
           <th>Регион</th>
           <?php
-          if (current_user_can('administrator')) { ?>
+          if (current_user_can('edit_others_posts')) { ?>
             <th>Редактировать</th>
             <th>x</th>
           <?php }
@@ -104,7 +104,7 @@ if (isset($_GET['type'])){
             <td><?php echo $item->name ?></td>
             <td><?php echo $ruRegions[$item->region]; ?></td>
             <?php
-            if (current_user_can('administrator')) { ?>
+            if (current_user_can('edit_others_posts')) { ?>
               <td class="button-td">
                 <a class="button" href="<?php echo site_url() . '/editorg/?id=' . $item->id; ?>" class="edit-object-button">Редактировать</a>
               </td>

@@ -67,7 +67,7 @@ class GisObjectsMapsPlugin {
      
         $roles = ( array ) $user->roles;
      
-        if ($roles[0] == 'administrator') {
+        if (in_array($roles[0], array('administrator', 'editor'))) {
            $items      .= "<li class='menu-item item__cases'><a href='" . home_url() . "/gis-objects'>АДМИН</a></li>";
         }
      
@@ -100,7 +100,7 @@ class GisObjectsMapsPlugin {
 
 
   function editObject() {
-    if (current_user_can('administrator')) {
+    if (current_user_can('edit_others_posts')) {
 
       $id = sanitize_text_field($_POST['idtoedit']);
 
@@ -192,7 +192,7 @@ class GisObjectsMapsPlugin {
 
 
   function createObject() {
-    if (current_user_can('administrator')) {
+    if (current_user_can('edit_others_posts')) {
 
       $date = getdate();
       $date = date( 'Y-m-d H:i:s', $date[0] );     
@@ -275,7 +275,7 @@ class GisObjectsMapsPlugin {
   }
 
   function createOrg() {
-    if (current_user_can('administrator')) {
+    if (current_user_can('edit_others_posts')) {
 
       $newdata = array (
         "name" => sanitize_text_field($_POST['orgname']),
@@ -328,7 +328,7 @@ class GisObjectsMapsPlugin {
 
     error_log('creating');
 
-    if (current_user_can('administrator')) {
+    if (current_user_can('edit_others_posts')) {
 
       $newdata = array (
         "name" => sanitize_text_field($_POST['orgname']),
@@ -407,7 +407,7 @@ class GisObjectsMapsPlugin {
   }
 
   function deleteObject() {
-    if (current_user_can('administrator')) {
+    if (current_user_can('edit_others_posts')) {
      
       $id = sanitize_text_field($_POST['idtodelete']);
       global $wpdb;
@@ -422,7 +422,7 @@ class GisObjectsMapsPlugin {
   }
 
   function deleteOrg() {
-    if (current_user_can('administrator')) {
+    if (current_user_can('edit_others_posts')) {
      
       $id = sanitize_text_field($_POST['idtodelete']);
       global $wpdb;
@@ -438,7 +438,7 @@ class GisObjectsMapsPlugin {
 
   
   function deleteGeoItem() {
-    if (current_user_can('administrator')) {
+    if (current_user_can('edit_others_posts')) {
      
       $id = sanitize_text_field($_POST['idtodelete']);
       global $wpdb;

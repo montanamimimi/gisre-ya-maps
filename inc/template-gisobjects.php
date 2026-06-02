@@ -147,7 +147,7 @@ if (isset($_GET['power'])) {
 <section class="new-button">
   <div class="container">
     <?php
-    if (current_user_can('administrator')) { ?>
+    if (current_user_can('edit_others_posts') ) { ?>
       <a class="button" href="<?php echo home_url() . '/newobject'; ?>">Добавить новый объект</a>
 
     <?php }
@@ -167,7 +167,7 @@ if (isset($_GET['power'])) {
           <th>Мощность</th>
           <th>Статус</th>
           <?php
-          if (current_user_can('administrator')) { ?>
+          if (current_user_can('edit_others_posts')) { ?>
             <th>Редактировать</th>
             <th>x</th>
           <?php }
@@ -207,7 +207,7 @@ if (isset($_GET['power'])) {
             <td><?php echo $object->power ?></td>
             <td><?php echo $stat; ?></td>
             <?php
-            if (current_user_can('administrator')) { ?>
+            if (current_user_can('edit_others_posts')) { ?>
               <td class="button-td">
                 <a class="button" href="<?php echo site_url() . '/editobject/?id=' . $object->id; ?>" class="edit-object-button">Редактировать</a>
               </td>
