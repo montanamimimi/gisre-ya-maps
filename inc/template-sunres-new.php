@@ -48,7 +48,7 @@ $suncolors = array(
 <?php echo 'const max = ' . wp_json_encode($max) . ';'; ?>
 <?php echo 'const min = ' . wp_json_encode($min) . ';'; ?>
 <?php echo 'const label = ' . wp_json_encode('Солнечная радиация') . ';';  ?>
-<?php echo 'const unit = ' . wp_json_encode('кВтч/м²') . ';'; ?>
+<?php echo 'const unit = ' . wp_json_encode('кВтч/м² в сутки') . ';'; ?>
 
 </script>
 
@@ -200,7 +200,7 @@ function init() {
         
       </form>
       <div class="suncolors__legend">
-        <p>Значение в единицах: кВтч/м²</p>
+        <p>Значение в единицах: кВтч/м² в сутки</p>
         <div class="suncolors__items">
           
           <?php 
